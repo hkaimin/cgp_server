@@ -1,0 +1,13 @@
+#!/bin/sh
+# This file must be used with "source env.source" *from bash*
+# you cannot run it directly
+curdir=`pwd`
+CURDIR=`cygpath -d "$curdir"`
+#export OLDGOPATH="$GOPATH"
+export GOPATH="$CURDIR"
+#export GOPATH="$CURDIR;$GOPATH"
+echo $GOPATH
+
+unenv() {
+	export GOPATH="$OLDGOPATH"
+}

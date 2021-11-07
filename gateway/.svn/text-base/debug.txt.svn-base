@@ -1,0 +1,17 @@
+
+cd ~/work/rich/trunk/gateway
+scp -r ./src game@dev.zl.efun.com:/home/game/richpub/gateway/src
+
+
+cd ~/work/my/gateway
+scp *.go game@10.96.130.150:/home/game/go/gopath/src/bitbucket.org/efun/gateway/
+
+
+150:
+go get bitbucket.org/efun/gateway
+cd ~/richpub/gateway
+./install.sh
+rich -c gw stop
+rich -c gw start
+
+

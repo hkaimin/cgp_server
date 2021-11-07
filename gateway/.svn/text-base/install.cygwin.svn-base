@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+source cygwin.source
+
+gofmt -w src
+
+go install main
+
+echo 'finished'
