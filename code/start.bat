@@ -1,0 +1,1 @@
+start "game" ./gameserver.exe main.py game start

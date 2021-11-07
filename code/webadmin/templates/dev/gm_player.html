@@ -1,0 +1,59 @@
+{% extends 'dev/dev.html' %}
+
+{% block main_content %}
+
+
+
+<form class="form-inline" method="post" role="form">
+    <div>查询(PID,用户名)</div>
+
+    <input id="value" name="value" type="text" class="input-xxlarge" >
+    <div>
+        <br><button type="submit" class="btn btn-success">查询</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover table-striped" id='plist'>
+    <tr>
+        <td>id</td><td>用户名</td><td>点卷</td><td>级别</td><td>创建时间</td><td>操作</td>
+    </tr>
+
+     {% for player in list %}
+    <tr>
+        <td>{{ player._id }}</td>
+        <td>{{ player.name }}</td>
+        <td>{{ player.coin1 }}</td>
+        <td>{{ player.level }}</td>
+        <td>{{ player.tNew }}</td>
+        <td><a href="javascript:void(0);"
+                       data-fileid="{{ player._id }}"
+                       class="cls-cache">清空缓存</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+    $('a.cls-cache').click(function() {
+        var link = $(this);
+        var fileid =(link.data('fileid'));
+        $.post('./nocache/', {id: fileid})
+                .done(function(data) {
+                    if (data.success) {
+                        alert('清空缓存成功!');
+                    } else {
+                        alert('清空缓存失败!');
+                    }
+                });
+    });
+
+})
+
+</script>
+{% endblock %}

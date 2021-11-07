@@ -1,0 +1,30 @@
+{% import 'admin/model/layout.html' as model_layout with context %}
+
+{% macro tabbar_menuitem(endpoint_postfix, name, hidden=False) %}
+
+{% if admin_view.is_active(endpoint_postfix) %}
+    <li class="active"><a href="javascript:void(0);">{{ name }}</a></li>
+{% elif not hidden%}
+    <li><a href="{{ url_for('.' + endpoint_postfix) }}">{{ name }}</a></li>
+{% endif %}
+
+{% endmacro %}
+
+<ul class="nav nav-tabs">
+    {{ tabbar_menuitem('index_view', '列表') }}
+
+    {% if admin_view.can_create %}
+        {{ tabbar_menuitem('create_view', '创建') }}
+    {% endif %}
+
+    {% if admin_view.can_upload %}
+        {{ tabbar_menuitem('upload_view', '上传') }}
+    {% endif %}
+
+    {% if admin_view.can_download %}
+        {{ tabbar_menuitem('download_view', '下载') }}
+    {% endif %}
+
+    {{ tabbar_menuitem('edit_view', '编辑', True) }}
+
+</ul>

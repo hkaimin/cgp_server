@@ -1,0 +1,27 @@
+{% extends 'admin/master.html' %}
+
+
+{% block wrap %}
+
+<div id="wrap" class="container-fluid">
+
+    <div id="main" style="margin: auto; width: 100%;">
+
+        <div class="title">错误</div>
+
+        <div class="text-error" style="margin: 20px; text-align: center;">
+            <p style="font-size: 2em;">{{ code }}<p>
+            <p>{{ desc }}<p>
+        </div>
+
+        <div class="well" style="text-align: center;">
+            <a class="btn btn-success" href="/">首页</a>
+            <a class="btn" href="javascript:history.back();">返回</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

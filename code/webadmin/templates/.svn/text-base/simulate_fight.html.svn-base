@@ -1,0 +1,98 @@
+{% extends 'dev.html' %}
+
+
+{% macro render_input(title, name, default) %}
+
+<label title="{{ name }}">{{ title }}</label><input name="{{ name }}" title="{{ name }}" type="text" class="input-small" value="{{ args[name] or default }}">
+
+{% endmacro %}
+
+
+{% block head %}
+{{ super() }}
+<style>
+
+.side-label, #pid label {
+    font-weight: bold;
+}
+
+#servers {
+    font-family: monospace;
+}
+
+label {
+    margin-right: 8px;
+}
+
+#result {
+    border: 1px solid #DDDDDD;
+    padding: 1em;
+}
+</style>
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<form class="form-inline" method="get" role="form" style="display: inline-block">
+    <div class="control-group">
+        <span class="side-label">同组服务器：</span>
+        <select id="servers" name="server" class="input-xlarge">
+            {% for server in servers %}
+                <option value="{{ server.name }}" {{ 'selected' if server.name == args.server }}>
+                        {{ server.name }} {{ server.host }}:{{ server.port }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="control-group" id="pid">
+        {{ render_input('玩家ID：', 'pid', '1') }}
+    </div>
+    <div class="control-group">
+        <span class="side-label">攻击方：</span>
+        {{ render_input('道具卡ID', 'atk_pcid', '0') }}
+        {{ render_input('生物卡ID', 'atk_mcid', '1') }}
+        {{ render_input('生物等级', 'atk_mlv', '1') }}
+    </div>
+    <div class="control-group">
+        <span class="side-label">防守方：</span>
+        {{ render_input('道具卡ID', 'def_pcid', '0') }}
+        {{ render_input('生物卡ID', 'def_mcid', '1') }}
+        {{ render_input('生物等级', 'def_mlv', '1') }}
+    </div>
+    <button type="submit" class="btn btn-success">模拟</button>
+    <button type="reset" class="btn">重置</button>
+</form>
+
+{% if result %}
+<div id="result">
+    <div class="pretty">
+    </div>
+    <pre class="source">
+        {% autoescape true %}
+        {{ result|tojson|safe }}
+        {% endautoescape %}
+    </pre>
+<div>
+{% endif %}
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+var sourceNode = $('#result .source');
+var text = sourceNode.text();
+text = JSON.stringify(JSON.parse(text), null, '    ');
+sourceNode.text(text);
+sourceNode.addClass('prettyprint lang-javascript');
+prettyPrint();
+
+});
+</script>
+{% endblock %}

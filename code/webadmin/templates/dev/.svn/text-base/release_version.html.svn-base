@@ -1,0 +1,103 @@
+{% extends 'dev/dev.html' %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<h4>创建新版本</h4>
+
+<p>使用的数据库：<span style="font-style: italic;">mongodb://{{ info.host }}:{{ info.port }}/{{ info.database }}</span></p>
+<p>本地保存目录：<span style="font-style: italic;">{{ parent_path }}</span></p>
+<p>远程下载目录：<a href="{{ http_path }}">{{ http_path }}</a></p>
+
+<form class="form-inline" method="post" role="form" style="display: inline-block">
+    <input type="hidden" name="action" value="new_backup">
+    <button type="submit" class="btn btn-default">创建新版本</button>
+</form>
+<form class="form-inline" method="post" role="form" style="display: inline-block">
+    <input type="hidden" name="action" value="update_cfg">
+    <button type="submit" class="btn btn-default">更新配置</button>
+</form>
+
+
+<h4>已创建版本</h4>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="span2">版本号</th>
+            <th>MD5</th>
+            <th>创建日期</th>
+            <th>远程下载</th>
+            <th>本地下载</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for id, hash, create_time in files %}
+        <tr id="id-{{ id }}">
+            <td>{{ id }}</td>
+            <td>{{ hash }}</td>
+            <td>{{ create_time }}</td>
+            <td><a href="{{ http_path }}/{{ id }}.dbe">{{ http_path }}/{{ id }}.dbe</a></td>
+            <td>
+                <a href="{{ url_for('.download_view', id=id, type='json') }}" class="btn btn-mini" title="json 文件">json</a>
+                <a href="{{ url_for('.download_view', id=id, type='jze') }}" class="btn btn-mini" title="json + zlib + encrypt 后的文件">jze</a>
+            </td>
+            <td>
+                <a href="javascript:void(0);"
+                   data-fileid="{{ id }}"
+                   class="btn btn-mini btn-danger btn-restore">恢复</a> ||
+            {% if loop.index > 2 %}
+                <a href="javascript:void(0);"
+                       data-fileid="{{ id }}"
+                       class="btn btn-mini btn-danger btn-delete">删除</a>
+            {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+$('a.btn-delete').click(function() {
+    var link = $(this);
+    var fileid =(link.data('fileid'));
+    $.post('./delete/', {id: fileid})
+    .done(function(data) {
+        var trNode = link.parents('tr');
+        if (data.success) {
+            trNode.find('td').css('background-color', '#F2DEDE');
+            trNode.hide('slow');
+        } else {
+            alert('删除失败');
+        }
+    });
+});
+
+$('a.btn-restore').click(function() {
+    var link = $(this);
+    var fileid =(link.data('fileid'));
+    alert('准备恢复数据');
+    $.post('./restore/', {id: fileid})
+            .done(function(data) {
+                var trNode = link.parents('tr');
+                if (data.success) {
+                    alert('恢复数据成功!');
+                } else {
+                    alert('恢复数据失败!');
+                }
+            });
+});
+
+});
+</script>
+{% endblock %}

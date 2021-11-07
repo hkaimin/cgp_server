@@ -1,0 +1,357 @@
+/* reset */
+
+* {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+a {
+    color: #006499;
+}
+
+h4 {
+    border-left: 5px solid #5FADD6;
+    padding-left: 10px;
+}
+
+/* layout */
+
+body {
+    margin: 20px auto;
+    font-family: monospace;
+    padding-top: 0;
+}
+
+body > .container {
+    margin: 0 20px;
+    width: auto;
+}
+
+@media (min-width: 1200px) {
+
+    #sidebar {
+        width: 140px;
+    }
+
+    #main {
+        margin-left: 20px;
+        width: calc(100% - 160px);
+    }
+}
+
+#wrap {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* header and sidebar */
+
+.navbar .brand {
+    font-weight: bold;
+    color: #008DFF;
+}
+
+.navbar-inner {
+    background-image: none;
+}
+
+.navbar .nav > li > a {
+    color: #4D4D4D;
+}
+
+.navbar .nav > li.gamesvr > a {
+    color: #3C9F00;
+    font-weight: bold;
+}
+
+#login-info {
+    padding: 10px;
+}
+
+.breadcrumb {
+    border: 1px solid #E6E6E6;
+    background: none;
+    border-bottom: 2px solid #5FADD6;
+}
+
+.breadcrumb .active {
+    color: #4D4D4D;
+}
+
+.sidebar-nav {
+    border: 1px solid #E6E6E6;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.sidebar-nav .nav-title {
+    background-color: #F9F9F9;
+    border-bottom: 1px solid #E6E6E6;
+    margin-bottom: 5px;
+    font-weight: bold;
+    padding: 5px 15px;
+}
+
+.sidebar-nav .nav-subtitle {
+    color: #888686;
+    font-weight: bold;
+    padding: 1px 15px;
+}
+
+.sidebar-nav .nav-list > li > a {
+    padding: 1px 30px;
+}
+
+.sidebar-nav .nav-list > li.active > a {
+    font-weight: bold;
+    background-color: #5FADD6;
+}
+
+/* main */
+
+#main > .title {
+    border-bottom: 1px solid #EEEEEE;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+#main .nav-tabs > li.active > a {
+    border-top: 2px solid #5FADD6;
+}
+
+#main .toolbar {
+    margin-bottom: 20px;
+}
+
+.toolbar .count {
+    float: right;
+    line-height: 30px;
+}
+
+.toolbar .count .number {
+    font-style: italic;
+}
+
+.toolbar .search-form {
+    display: inline-block;
+    margin-top: 0;
+}
+
+.toolbar .search-form div.input-append,
+.toolbar .search-form input {
+    margin-bottom: 0;
+}
+
+/* model table */
+
+.model-list .column-header i {
+    background-image: none;
+}
+
+.model-list .column-header .icon-chevron-up:after {
+    content: "↑";
+    color: #000000;
+}
+
+.model-list .column-header .icon-chevron-down:after {
+    content: "↓";
+    color: #000000;
+}
+
+.modal-list td.model-header-image {
+    text-align: center;
+    max-width: 100px;
+}
+
+/* normal table */
+
+table,
+textarea,
+input[type="text"],
+input[type="password"]
+{
+    font-family: mono;
+}
+
+table caption {
+    border-top: 1px solid #DDDDDD;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    border-bottom: none;
+    text-align: left;
+    padding: 4px 5px;
+    font-weight: bold;
+}
+
+table.table-sorted th {
+    cursor: pointer;
+}
+
+table tbody th {
+    text-align: right !important;
+}
+
+table td:nth-child(2) {
+    white-space: nowrap;
+}
+
+table.table-vertical th {
+    width: 120px;
+}
+
+.table-hover tbody tr:hover > td,
+.table-hover tbody tr:hover > th {
+    background-color: #FFF1DA;
+}
+
+.table th, .table td {
+    padding: 4px 5px;
+}
+
+/* form */
+
+.form-horizontal .controls {
+    width: calc(100% - 300px);
+}
+
+.form-horizontal .control-label {
+    font-weight: bold;
+    text-align: right;
+    width: 200px;
+    margin-right: 20px;
+}
+
+.form-horizontal .help-block {
+    margin-left: 114px;
+}
+
+.help-block {
+    margin-top: 5px;
+}
+
+.control-label {
+    font-weight: bold;
+}
+
+input.btn[type="submit"] {
+    padding: 6px 12px;
+}
+
+label.checkbox input[type="checkbox"] {
+    margin-top: 0;
+}
+
+label.radio input[type="radio"] {
+    margin-top: 0;
+}
+
+.btn .caret {
+    margin-left: 3px;
+}
+
+.required-mark {
+    color: red;
+}
+
+.input-errors {
+    color: #B94A48;
+    margin-left: 127px;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+/* others */
+
+pre.prettyprint {
+    border: none !important;
+    padding: 9px !important;
+    margin-bottom: 0 !important;
+    background-color: transparent;
+    tab-size: 4;
+    -moz-tab-size: 4;
+}
+
+pre.prettyprint.compact {
+    padding: 0 !important;
+}
+
+.modal-backdrop, .modal-backdrop.fade.in {
+    opacity: 0.1;
+}
+
+:target {
+    -webkit-animation: target-fade 6s 1;
+    -moz-animation: target-fade 6s 1;
+}
+
+@-webkit-keyframes target-fade {
+    0% { background-color: rgba(255, 255, 0, 0.8); }
+    100% { background-color: rgba(0, 0, 0, 0); }
+}
+
+@-moz-keyframes target-fade {
+    0% { background-color: rgba(255, 255, 0, 0.8); }
+    100% { background-color: rgba(0, 0, 0, 0); }
+}
+
+/* rich-text editor */
+
+.ace_editor {
+    border: 1px solid #CCCCCC;
+    line-height: 1.4 !important;
+    font-size: 13px !important;
+}
+
+.jsoneditor a.poweredBy {
+    display: none;
+}
+
+/* filter form */
+
+#filter_form  {
+    border: 1px solid #E6E6E6;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+#filter_form .actions {
+    margin: 5px;
+}
+
+/* prettyprint */
+.pun, .opn, .clo {
+    color: #565656;
+}
+
+.lit {
+    color: #F50E4B;
+}
+
+/* icon */
+.add-on i.fa[data-date-icon] {
+    line-height: 18px;
+}
+
+/* chart */
+
+.chart {
+    margin-bottom: 20px;
+}
+
+.nvtooltip h3 {
+    font-size: 14px;
+    padding: 6px;
+}
+
+/* datetimepicker */
+
+.bootstrap-datetimepicker-widget li.collapse {
+    height: auto; !important;
+}
+
+.bootstrap-datetimepicker-widget .picker-switch {
+    display: none;
+}

@@ -1,0 +1,21 @@
+{% extends 'ctr.html' %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<form class="form-inline" method="post" role="form">
+    <button type="submit" class="btn btn-default"
+            title="从后台数据库设置表重载，可能和运行时的服务器信息不同步"
+            >从数据库重载</button>
+</form>
+
+<form class="form-inline" method="post" role="form" action="rebuild">
+    <button type="submit" class="btn btn-default"
+            title="向每运行时的服务器请求最新信息，需要较长时间"
+            >从运行中的服务器重建服务器表</button>
+</form>
+
+{% endblock %}
+

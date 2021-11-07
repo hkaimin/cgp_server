@@ -1,0 +1,106 @@
+2019-04-02 06:30:06|010001|app_logic1|[04-02 06:30:06]p10656{log:132}ERROR-export(rpc_sub_player_mgr).load_player('\x92\x91\xce\x0b\xeb\xe9\x11\x80'):
+Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 668, in _handle_request_call
+    log_except('export(%s).%s(%s)', obj_id, name, repr(argkw))
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\log.py", line 122, in log_except
+    st = traceback.extract_stack(f=ei[2].tb_frame.f_back)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 660, in _handle_request_call
+    rs = func(*args, **kw) if kw is not None else func(*args)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 596, in load_player
+    p = Player.load_player(pid)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 233, in load_player
+    p = cls()
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\message.py", line 133, in __init__
+    t(self, *a, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 157, in __init__
+    self.mail = PlayerMail(self)  # 邮件
+NameError: global name 'PlayerMail' is not defined
+
+2019-04-02 06:31:46|010001|app_logic1|[04-02 06:31:46]p10604{log:132}ERROR-export(rpc_sub_player_mgr).load_player('\x92\x91\xce\x0b\xeb\xe9\x11\x80'):
+Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 668, in _handle_request_call
+    log_except('export(%s).%s(%s)', obj_id, name, repr(argkw))
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\log.py", line 122, in log_except
+    st = traceback.extract_stack(f=ei[2].tb_frame.f_back)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 660, in _handle_request_call
+    rs = func(*args, **kw) if kw is not None else func(*args)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 596, in load_player
+    p = Player.load_player(pid)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 236, in load_player
+    p.load()
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 202, in load
+    self.bag = game.core.item.itemctn.CItemContainer(self.id, "itemCtn", self)
+AttributeError: 'module' object has no attribute 'itemctn'
+
+2019-04-02 06:33:39|010001|app_logic1|[04-02 06:33:39]p21232{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 88, in _spawn_enter
+    log.log_except()
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\log.py", line 122, in log_except
+    st = traceback.extract_stack(f=ei[2].tb_frame.f_back)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\protocal\player.py", line 116, in on_close
+    self.player.on_close()
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 103, in on_close
+    self.logout()
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 311, in logout
+    self.save(forced=True)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 39, in _func
+    return func(self, *args, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 191, in save
+    self.data.save(Game.store, forced=forced)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\models\player.py", line 71, in save
+    StoreObj.save(self,store, forced=forced)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\store\store.py", line 92, in save
+    store.save(self.TABLE_NAME, self.to_save_dict(forced=forced), no_let=no_let)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\models\player.py", line 59, in to_save_dict
+    save['mail'] = self.owner.mail.to_save_dict(forced=forced)  # 角色邮件
+AttributeError: 'Player' object has no attribute 'mail'
+
+2019-04-02 06:33:55|010001|app_logic1|[04-02 06:33:54]p21232{player:521}ERROR-[player_mgr]player(200010001) in mgr.players, is None or not logined
+2019-04-02 06:35:11|010001|app_logic1|[04-02 06:35:11]p17120{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 88, in _spawn_enter
+    log.log_except()
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\log.py", line 122, in log_except
+    st = traceback.extract_stack(f=ei[2].tb_frame.f_back)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\protocal\player.py", line 116, in on_close
+    self.player.on_close()
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 103, in on_close
+    self.logout()
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 311, in logout
+    self.save(forced=True)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 39, in _func
+    return func(self, *args, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\core\player.py", line 191, in save
+    self.data.save(Game.store, forced=forced)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\models\player.py", line 73, in save
+    self.owner.mail.cleanDirty()  # 角色邮件
+AttributeError: 'Player' object has no attribute 'mail'
+
+2019-04-02 06:35:19|010001|app_logic1|[04-02 06:35:19]p17120{player:521}ERROR-[player_mgr]player(200010001) in mgr.players, is None or not logined
+2019-04-02 06:48:04|010001|app_logic1|[04-02 06:48:04]p23396{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 527, in _loop
+    p.save_task()
+AttributeError: 'Player' object has no attribute 'save_task'
+
+2019-04-02 06:48:23|010001|app_logic1|[04-02 06:48:23]p23396{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 88, in _spawn_enter
+    log.log_except()
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\log.py", line 122, in log_except
+    st = traceback.extract_stack(f=ei[2].tb_frame.f_back)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\store\mongodb.py", line 199, in _func
+    raise ConnectionError(str(e))
+ConnectionError: 123.207.241.91:27017: [Errno 10054] 
+

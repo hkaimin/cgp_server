@@ -1,0 +1,105 @@
+/* reset */
+
+* {
+    border-radius: 0 !important;
+}
+
+a {
+    color: #006499;
+}
+
+body {
+    background: none repeat scroll 0 0 #F2F2F2;
+    padding: 20px;
+}
+
+#header {
+    margin-bottom: 15px;
+    padding: 0;
+    max-width: 960px;
+}
+
+#logo {
+    display: inline-block;
+    border-right: 1px solid #CCCCCC;
+    margin-right: 10px;
+    padding-right: 10px;
+}
+
+#logo h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+#subtitle {
+    font-size: 26px;
+    color: #787878;
+    display: inline-block;
+    line-height: 42px;
+    vertical-align: top;
+}
+
+#wrap {
+    border: 5px solid #C7DEE6;
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding: 0;
+    max-width: 960px;
+}
+
+#welcome-image {
+    float: left;
+    overflow: hidden;
+    width: 50%;
+    height: 320px;
+}
+
+#welcome-image img {
+    max-width: none;
+}
+
+#login-form {
+    float: left;
+    padding: 30px;
+    margin-bottom: 0;
+    width: 40%;
+}
+
+#login-form .message {
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+#login-form .input-prepend {
+    width: 100%;
+}
+
+#login-form .add-on {
+    padding: 6px 8px;
+}
+
+#login-form input {
+    padding: 6px 12px;
+    width: calc(100% - 34px);
+}
+
+#login-form .checkbox {
+    margin: 0 auto 15px;
+}
+
+#login-form input[type="checkbox"] {
+    margin-top: 0;
+    width: auto;
+}
+
+#login-form button[type="submit"] {
+    width: 60%;
+}
+
+@media (max-width: 650px) {
+
+    #welcome-image {
+        width: 100%;
+    }
+
+}

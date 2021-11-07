@@ -1,0 +1,16 @@
+{% extends 'dev/dev.html' %}
+
+{% block main_content %}
+
+上传资源包
+
+<form  method="post"  enctype="multipart/form-data">
+    想要恢复的版本号(选填)<input type="text" id="ver" name="ver">
+    <br>
+    <button type="submit" class="btn btn-success"> 同步git资源 </button>
+
+</form>
+
+{{ rs_msg }}
+
+{% endblock %}

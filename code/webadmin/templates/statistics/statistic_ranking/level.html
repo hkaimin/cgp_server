@@ -1,0 +1,56 @@
+{% extends 'ope.html' %}
+{% from '_macro/datetime.html' import render_input %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="./level">等级排行</a></li>
+</ul>
+
+<table class="table table-bordered table-hover table-striped table-sorted">
+    <thead><tr>
+        <th class="span1">序号</th>
+        <th>玩家ID</th>
+        <th>玩家名</th>
+        <th>等级</th>
+        <th class="span3">创建时间</th>
+    </tr></thead>
+    <tbody></tbody>
+</table>
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+var renderTable = function(data) {
+    var createRowHtml = function(d, i) {
+        return '<td>' + (i + 1) +'</td>' +
+               '<td>' + d.pid + '</td>' +
+               '<td>' + d.name + '</td>' +
+               '<td>' + d.level + '</td>' +
+               '<td>' + $.cvReadableTime(d.register_time) + '</td>' +
+               '';
+    };
+    lib.initD3Table(createRowHtml, data.entries);
+    $('table').trigger('update');
+};
+
+var refreshRender = function() {
+    $.getJSON('level.json?limit=100')
+     .done(renderTable);
+};
+
+refreshRender();
+
+});
+
+</script>
+{% endblock %}

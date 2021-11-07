@@ -1,0 +1,142 @@
+{% extends 'dev/dev.html' %}
+
+
+{% block head %}
+{{ super() }}
+
+<style>
+
+#left {
+    display: inline-block;
+    float: left;
+    width: 60%;
+}
+
+#right {
+    float: left;
+    width: 35%;
+    margin-left: 10px;
+}
+
+form {
+    display: inline-block;
+    width: 100%;
+}
+
+.control-label {
+    font-weight: bold;
+    display: inline-block;
+    text-align: right;
+    width: 90px;
+}
+
+#reward-group > label {
+    vertical-align: top;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#servers {
+    font-family: monospace;
+}
+
+#result {
+    margin-top: 10px;
+    border: 1px solid #DDDDDD;
+    padding: 1em;
+}
+
+#reward, .jsoneditor {
+    width: calc(100% - 300px);
+    display: inline-block;
+    height: 200px;
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<form class="form-inline" method="post" role="form">
+    <div id="left">
+        <div class="control-group">
+            <label class="control-label">同组服务器：</label>
+            <select id="servers" name="server" class="input-xlarge">
+                {% for server in servers %}
+                    <option value="{{ server.name }}" {{ 'selected' if server.name == args.server }}>
+                            {{ server.name }} {{ server.host }}:{{ server.port }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="control-group" id="reward-id">
+            <label class="control-label">PID:</label>
+            <input id="pid" type="text" name="pid" class="input-xxlarge" value="{{ args.pid }}">
+            <label class="control-label">发放奖励ID:</label>
+            <input id="rewardid" type="text" name="rewardid" class="input-xxlarge" value="{{ args.rewardid }}">
+        </div>
+        <div class="control-group" id="params-group">
+            <label class="control-label">附加参数：</label>
+            <input id="params" type="text" name="params" class="input-xxlarge" value="{{ args.params }}">
+        </div>
+        <div class="control-group" id="reward-group">
+            <label class="control-label">奖励值：</label>
+            <textarea id="reward" rows="6" cols="12" name="reward">{{ args.reward }}</textarea>
+        </div>
+    </div>
+
+    <div id="right">
+
+        <button type="submit" class="btn btn-success">测试</button>
+        <button type="reset" class="btn">重置</button>
+
+        {% if result %}
+        <div id="result">
+            <pre class="source">
+                {% autoescape true %}
+                {{ result|tojson|safe }}
+                {% endautoescape %}
+            </pre>
+        <div>
+        {% endif %}
+    <div>
+
+</form>
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+var sourceNode = $('#result .source');
+var text = sourceNode.text();
+if (text) {
+    text = JSON.stringify(JSON.parse(text), null, '    ');
+    sourceNode.text(text);
+    sourceNode.addClass('prettyprint lang-javascript');
+    prettyPrint();
+}
+
+$('form').submit(function() {
+    var params_text = $('#params').val();
+    if (params_text.time() !== '') {
+        try {
+            JSON.parse(params_text);
+        } catch(e) {
+            alert('附加参数格式错误：\n' + e);
+            return false;
+        }
+    }
+    return true;
+});
+
+});
+</script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends layout_template %}
+
+
+{% block main_content %}
+
+{% include 'admin/model/_tabbar.html' %}
+{% include('_include/message.html') %}
+
+<div class="upload_form">
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file" class="control-label">选择 mm 文件</label>
+            <input type="file" id="file" name="file">
+            <p class="help-block">上传的文件必须符合此资源的定义格式</p>
+            <label class="checkbox">
+                <input type="checkbox" name="update" value="yes" autocomplete="off" checked>更新到数据库
+            </label>
+            <p class="help-block">不勾选则仅作修改预览和数据检查</p>
+        </div>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+</div>
+
+{% if diff %}
+<p>此 mm 修改情况如下</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>个数</th>
+            <th>条目ID</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>新建条目</th>
+        <td>{{ diff.create|length }}</td>
+        <td>{{ diff.create }}</td>
+    </tr>
+    <tr>
+        <th>更新条目</th>
+        <td>{{ diff['update']|length }}</td>
+        <td>{{ diff['update'] }}</td>
+    </tr>
+    <tr>
+        <th>删除条目</th>
+        <td>{{ diff.remove|length }}</td>
+        <td>{{ diff.remove }}</td>
+    </tr>
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

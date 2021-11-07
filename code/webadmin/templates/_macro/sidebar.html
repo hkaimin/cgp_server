@@ -1,0 +1,43 @@
+{% macro menuitem(endpoint, name) %}
+
+{% if request.endpoint == endpoint %}
+    <li class="active">
+        <a href="{{ url_for(endpoint) }}">{{ name }}</a>
+    </li>
+{% else %}
+    <li>
+        <a href="{{ url_for(endpoint) }}">{{ name }}</a>
+    </li>
+{% endif %}
+
+{% endmacro %}
+
+
+{% macro menuitem2(endpoint_prefix, name) %}
+
+{% if request.endpoint.startswith(endpoint_prefix + '.') %}
+    <li class="active">
+        <a href="{{ url_for(endpoint_prefix + '.index_view') }}">{{ name }}</a>
+    </li>
+{% else %}
+    <li>
+        <a href="{{ url_for(endpoint_prefix + '.index_view') }}">{{ name }}</a>
+    </li>
+{% endif %}
+
+{% endmacro %}
+
+
+{% macro model_menuitem(endpoint_prefix, name) %}
+
+{% if request.endpoint.startswith(endpoint_prefix + '.') %}
+    <li class="active">
+        <a href="javascript:void(0);">{{ name }}</a>
+    </li>
+{% else %}
+    <li>
+        <a href="{{ url_for(endpoint_prefix + '.index_view') }}">{{ name }}</a>
+    </li>
+{% endif %}
+
+{% endmacro %}

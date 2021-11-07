@@ -1,0 +1,50 @@
+{% extends 'dev/dev.html' %}
+
+
+{% block main_content %}
+
+<table class="table table-bordered table-hover table-striped" id='plist'>
+
+</table>
+
+{% endblock %}
+{% block tail %}
+
+{{ super() }}
+
+
+
+<script>
+    function openRoomPlayer(pid,roomid){
+        if(roomid>0){
+            location.assign("./roomplayer/?pid="+pid);
+        }
+    }
+
+    $(function() {
+
+        function load_plist(){
+
+            $.post('./plist/').done(function(rs) {
+                    data = rs.rs;
+                    $("#plist").empty();
+                    $("#plist").append("<tr><td>PID</td><td>名字</td><td>金币</td><td>幸运星</td><td>vip</td><td>房间号码</td></tr>")
+                    $.each(data,function(i,ele){
+                        trs = "<tr onClick=openRoomPlayer("+ele.data.id+","+ele.roominfo.id+") >"
+                        trs += "<td>" + ele.data.id + "</td>";
+                        trs += "<td>" + ele.data.name + "</td>";
+                        trs += "<td>" + ele.data.coin1 + "</td>";
+                        trs += "<td>" + ele.data.coin2 + "</td>";
+                        trs += "<td>" + ele.data.vip + "</td>";
+                        trs += "<td>" + ele.roominfo.id + "</td>";
+                        trs +="</tr>"
+                        $("#plist").append(trs);
+                    });
+                });
+            };
+
+        setInterval(load_plist,2000)
+    });
+
+</script>
+{% endblock %}

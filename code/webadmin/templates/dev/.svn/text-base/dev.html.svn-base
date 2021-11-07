@@ -1,0 +1,115 @@
+{% extends 'admin/master.html' %}
+{% from '_macro/sidebar.html' import menuitem, model_menuitem %}
+
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ url_for('dev.index') }}">开发调试</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">{{ admin_view.name }}</li>
+    </ul>
+{% endblock %}
+
+
+{% block wrap %}
+
+<div id="wrap" class="container-fluid">
+
+    <div class="row-fluid">
+
+        <div class="span2" id="sidebar">
+
+            <div class="sidebar-nav">
+                <div class="nav-title">独立工具</div>
+                <ul class="nav nav-list">
+                    {% if guard.allow_me('cache_control') %}
+                        {{ menuitem('cache_control.index_view', '数据缓存') }}
+                    {% endif %}
+                    {% if guard.allow_me('clone_database') %}
+                        {{ menuitem('clone_database.index_view', '复制数据库') }}
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="sidebar-nav">
+                <div class="nav-title">服务器工具</div>
+                <ul class="nav nav-list">
+                    {% if guard.allow_me('release_version') %}
+                        {{ menuitem('release_version.index_view', '发布版本') }}
+                    {% endif %}
+                    {% if 1 or guard.allow_me('ctrl_svr') %}
+                    {{ menuitem('ctrl_svr.index_view', '服控制') }}
+                    {% endif %}
+                    {% if 1 or guard.allow_me('mail_test') %}
+                        {{ menuitem('mail_test.index_view', '邮件测试') }}
+                    {% endif %}
+                    {{ menuitem('run_code.index_view', '执行代码') }}
+                    {% if guard.allow_me('reward_test') %}
+                        {{ menuitem('reward_test.index_view', '奖励测试') }}
+                    {% endif %}
+                    {% if guard.allow_me('ai_test') %}
+                        {{ menuitem('ai_test.index_view', 'AI 测试') }}
+                    {% endif %}
+                    {% if guard.allow_me('statistic') %}
+                        {{ menuitem('statistic_rpc.index_view', 'RPC 统计') }}
+                    {% endif %}
+                    {% if guard.allow_me('ctrl_svr') %}
+                     {{ menuitem('gm_room.index_view', '房间GM') }}
+                    {% endif %}
+                    {% if guard.allow_me('ctrl_svr') %}
+                     {{ menuitem('gm_player.index_view', '玩家GM') }}
+                    {% endif %}
+                    {% if guard.allow_me('ctrl_svr') %}
+                     {{ menuitem('stot_ttos.index_view', '数据库简繁互转') }}
+                    {% endif %}
+                    {% if guard.allow_me('ctrl_svr') %}
+                     {{ menuitem('upload_lng.index_view', '上传资源包') }}
+                    {% endif %}
+                    {{ menuitem('addExchangeCode.index_view', '增加兑换码') }}
+
+                </ul>
+            </div>
+
+            <div class="sidebar-nav">
+                <div class="nav-title">服务器工具</div>
+                <ul class="nav nav-list">
+                     {{ menuitem('block.index_view', '禁止玩家登陆') }}
+                     {{ menuitem('unblock.index_view', '取消禁止玩家登陆') }}
+                     {{ menuitem('is_block.index_view', '查询玩家是否被禁止登陆') }}
+                     {{ menuitem('kick.index_view', '踢玩家下线') }}
+                     {{ menuitem('name.index_view', '设置玩家名字') }}
+                     {{ menuitem('limitspeak.index_view', '禁止玩家发言') }}
+                     {{ menuitem('unlimitspeak.index_view', '取消禁止玩家发言') }}
+                     {{ menuitem('speakspeed.index_view', '限制玩法发言频率') }}
+                     {{ menuitem('add_coin1.index_view', '增加金币') }}
+                     {{ menuitem('add_coin2.index_view', '增加幸运星') }}
+                     {{ menuitem('cost_coin1.index_view', '扣除金币') }}
+                     {{ menuitem('cost_coin2.index_view', '扣除幸运星') }}
+                     {{ menuitem('add_objs.index_view', '增加游戏物品') }}
+                     {{ menuitem('del_objs.index_view', '扣除游戏物品') }}
+                     {{ menuitem('send_mail.index_view', '发送邮件') }}
+                     {{ menuitem('announcement.index_view', '系统公告') }}
+                     {{ menuitem('notice_board.index_view', '公告栏') }}
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="main" class="span10">
+
+            <div class="title">{{ admin_view.name }}</div>
+
+            {% block main_content %}
+
+                请从左边选择操作
+
+            {% endblock %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

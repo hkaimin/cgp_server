@@ -1,0 +1,91 @@
+<div id="tile-dialog" class="modal hide">
+    <form class="form-horizontal">
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>编辑地格：<span class="tid">#0</span> <span class="pos">(x,y)</span></h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="control-group">
+                <label class="control-label">名称(name)</label>
+                <div class="controls">
+                    <input type="text" name="name">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">简介(info)</label>
+                <div class="controls">
+                    <input type="text" name="info">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">动画(act)</label>
+                <div class="controls">
+                    <input type="text" name="act">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">路由表(route)</label>
+                <div class="controls">
+                    <textarea name="route" rows="6">
+                    </textarea>
+                </div>
+                <p class="help-block">需为 JSON 字符串</p>
+            </div>
+            <div class="control-group">
+                <label class="control-label">建筑物(bid)</label>
+                <div class="controls">
+                    <input type="text" name="bid">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">基础地价(price)</label>
+                <div class="controls">
+                    <input type="text" name="price">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">所属地域(area)</label>
+                <div class="controls">
+                    <input type="text" name="area">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">所属街(street)</label>
+                <div class="controls">
+                    <input type="text" name="street">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">地标建筑动画(mark)</label>
+                <div class="controls">
+                    <input type="text" name="mark">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">初始主人(owner)</label>
+                <div class="controls">
+                    <input type="text" name="owner">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">赛车场车型(car)</label>
+                <div class="controls">
+                    <input type="text" name="car">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn"
+                    data-dismiss="modal" aria-hidden="true">取消</button>
+            <a id="reset-btn" class="btn" href="javascript:void(0);">重置</a>
+            <button type="submit" class="btn btn-success">确定</button>
+        </div>
+
+    </form>
+</div>
+

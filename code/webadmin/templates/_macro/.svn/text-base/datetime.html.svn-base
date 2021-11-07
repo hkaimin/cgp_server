@@ -1,0 +1,12 @@
+{% macro render_input(name) %}
+
+<div class="datetimepicker input-append datetime">
+    <input id="{{ name }}" data-format="yyyy-MM-dd hh:mm:ss" type="text"
+           name="{{ name }}" value="">
+    <span class="add-on">
+        <i data-date-icon="fa fa-calendar"
+            data-time-icon="fa fa-clock-o"></i>
+    </span>
+</div>
+
+{% endmacro %}

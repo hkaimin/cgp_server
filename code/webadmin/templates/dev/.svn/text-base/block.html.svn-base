@@ -1,0 +1,129 @@
+{% extends 'dev/dev.html' %}
+
+
+{% block head %}
+{{ super() }}
+
+<style>
+
+#left {
+    display: inline-block;
+    float: left;
+    width: 60%;
+}
+
+#right {
+    float: left;
+    width: 35%;
+    margin-left: 10px;
+}
+
+form {
+    display: inline-block;
+    width: 100%;
+}
+
+.control-label {
+    font-weight: bold;
+    display: inline-block;
+    text-align: right;
+    width: 90px;
+}
+
+#param-group > label {
+    vertical-align: top;
+    margin-bottom: 10px;
+}
+
+#param-group > div {
+    display: inline-block;
+    width: calc(100% - 100px);
+    height: auto;
+
+}
+
+#servers {
+    font-family: monospace;
+}
+
+#result {
+    margin-top: 10px;
+    border: 1px solid #DDDDDD;
+    padding: 1em;
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<form class="form-inline" method="post" role="form">
+    <div id="left">
+
+        <div class="control-group">
+            <label class="control-label">服务器：</label>
+            <select id="servers" name="server" class="input-xlarge">
+                {% for server in servers %}
+                    <option value="{{ server.name }}" {{ 'selected' if server.name == args.server }}>
+                            {{ server.name }} {{ server.host }}:{{ server.port }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="control-group" id="pid-group">
+            <label class="control-label">PID：</label>
+            <input type="text" class="input-xlarge" id="pid" name="pid" value="{{ args.pid }}">
+        </div>
+
+        <div class="control-group" id="block-time-group">
+            <label class="control-label">持续秒数：</label>
+            <input type="text" class="input-xlarge" id="time" name="time" value="{{ args.aid }}">
+        </div>
+
+    </div>
+
+    <div id="right">
+
+        <button type="submit" class="btn btn-success">提交</button>
+
+
+        {% if result %}
+        <div id="result">
+            <pre class="source">
+                {% autoescape true %}
+                {{ result|tojson|safe }}
+                {% endautoescape %}
+            </pre>
+        <div>
+        {% else %} <div id="result"> <pre class="source"> done </pre> <div>
+        {% endif %}
+    <div>
+
+</form>
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+var sourceNode = $('#result .source');
+var text = sourceNode.text();
+if (text) {
+    text = JSON.stringify(JSON.parse(text), null, '    ');
+    sourceNode.text(text);
+    sourceNode.addClass('prettyprint lang-javascript');
+    prettyPrint();
+}
+
+});
+</script>
+{% endblock %}
+

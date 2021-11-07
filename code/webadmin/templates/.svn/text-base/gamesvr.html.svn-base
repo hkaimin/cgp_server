@@ -1,0 +1,80 @@
+{% extends 'admin/master.html' %}
+{% from '_macro/gamesvr.html' import render_detail, render_table %}
+
+
+{% block head %}
+{{ super() }}
+<style>
+#current {
+    width: 100%;
+}
+
+#current h4 {
+    border-left: 5px solid #78D65F;
+}
+
+#left {
+    width: 100%;
+}
+</style>
+{% endblock %}
+
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ url_for('gamesvr.index_view') }}">服务器</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">{{ admin_view.name }}</li>
+    </ul>
+{% endblock %}
+
+
+{% block wrap %}
+
+<div id="wrap" class="container-fluid">
+
+{% include('_include/message.html') %}
+
+<div id="current">
+
+{% if current %}
+
+<h4>当前使用服务器</h4>
+
+    {{ render_detail(current.zone, current.gamesvr) }}
+
+{% else %}
+
+<h4>当前没有选择服务器</h4>
+
+{% endif %}
+
+</div>
+
+<h4>可以选择使用的服务器</h4>
+
+<div id="left">
+    {% for candidate in candidates %}
+
+        {% call(current, gamesvr) render_table(current, candidate.zone, candidate.gamesvrs) %}
+
+            {% if current.gamesvr and current.gamesvr._id == gamesvr._id %}
+                <span class="text-info">当前使用中<span></td>
+            {% else %}
+                <a href="{{ url_for('gamesvr.switch_view') }}?id={{ gamesvr._id }}"
+                        class="btn btn-mini">切换</a>
+            {% endif %}
+
+        {% endcall %}
+
+    {% endfor %}
+</div>
+
+<div id="right">
+</div>
+
+</div>
+
+{% endblock %}

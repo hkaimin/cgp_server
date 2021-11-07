@@ -1,0 +1,112 @@
+{% extends 'admin/base.html' %}
+
+{% block head_css %}
+{{ super() }}
+<link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='vendor/tablesorter/themes/green/style.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='vendor/colorbox/colorbox.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='vendor/google-code-prettify/prettify.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='vendor/jsoneditor/jsoneditor-min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link href="{{ url_for('static', filename='styles/main.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_body %}
+
+<div class="container">
+
+    <div class="navbar">
+
+        <div class="navbar-inner">
+
+            <a href="{{ url_for('index') }}"><span class="brand">{{ admin_view.admin.name }}</span></a>
+
+            <ul class="nav">
+                <li class="divider-vertical"></li>
+                {% if zoning.my_gamesvr_id() %}
+                    <li class="gamesvr">
+                        <a href="/gamesvr/">{{ zoning.my_gamesvr()['title'] }}</a>
+                    </li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="/res/">资源管理</a></li>
+                    <li><a href="/user/">用户数据</a></li>
+                    <li><a href="/dev/">开发调试</a></li>
+                    <li><a href="/ope/">运营管理</a></li>
+                {% else %}
+                    <li class="gamesvr"><a href="/gamesvr/">服务器</a></li>
+                    <li class="divider-vertical"></li>
+                {% endif %}
+            </ul>
+
+            <ul class="nav pull-right">
+
+                {% if config.DEBUG %}
+                    <li><a style="color: red;" href="#">调试模式</a></li>
+                {% endif %}
+
+                {% if guard.allow_me('admin_control') %}
+                    <li><a href="/ctr/">控制面板</a></li>
+                {% endif %}
+
+                <li id="account" class="dropdown">
+                    {% if session['user_id'] %}
+                        <a data-toggle="dropdown" class="dropdown-toggle"
+                           href="javascript:void(0);">{{ guard.my_name() }}<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('account.index_view') }}">我的账号</a></li>
+                            <li><a href="{{ url_for('logout') }}">退出登录</a></li>
+                        </ul>
+                    {% else %}
+                        <a href="{{ url_for('login') }}">未登录</a>
+                    {% endif %}
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    {% set render_ctx = h.resolve_ctx() %}
+
+    {% block breadcrumb %}
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">主页</a>
+                <span class="divider">/</span>
+            </li>
+            <li class="active">{{ admin_view.name }}</li>
+        </ul>
+
+    {% endblock %}
+
+    {% block wrap %}{% endblock %}
+
+</div>
+
+{% endblock %}
+
+{% block tail_js %}
+{{ super() }}
+<script src="{{ url_for('static', filename='vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/tablesorter/jquery.tablesorter.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/colorbox/jquery.colorbox-min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/d3/d3.v3.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/google-code-prettify/prettify.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/ace/ace.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/jsoneditor/jsoneditor-min.js') }}"></script>
+{% endblock %}
+
+{% block tail %}
+{{ super() }}
+<script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/pages.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+{% endblock %}

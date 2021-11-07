@@ -1,0 +1,153 @@
+{% extends 'dev/dev.html' %}
+{% from '_macro/gamesvr.html' import render_table %}
+
+
+{% block head %}
+{{ super() }}
+<style>
+#source-db, #target-db {
+    font-style: italic;
+}
+#clone-btn {
+    display: none;
+}
+#clone-progress {
+    width: 200px;
+    display: none;
+}
+</style>
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<form method="post">
+
+<h4>服务器列表</h4>
+
+{% for candidate in candidates %}
+
+    {% call(current, gamesvr)
+       render_table(current, candidate.zone, candidate.gamesvrs, resource_db=True) %}
+
+        <label class="radio inline">
+            <input type="radio" name="source" value="{{ gamesvr._id }}">来源
+        </label>
+        <label class="radio inline">
+            <input type="radio" name="target" value="{{ gamesvr._id }}">目标
+        </label>
+
+    {% endcall %}
+
+{% endfor %}
+
+<h4>当前选择</h4>
+
+<div id="clone-options">
+    <p>来源数据库：<span id="source-id"></span><span id="source-db">未选择</span></p>
+    <p>目标数据库：<span id="target-id"></span><span id="target-db">未选择</span></p>
+</div>
+
+<div id="clone-status">
+    <p>当前的状态：<span id="status-text">未选择来源和目标</span></p>
+</div>
+
+<div id="clone-progress">
+    <div class="progress progress-striped active">
+        <div class="bar" style="width: 100%;"></div>
+    </div>
+</div>
+
+<button id="clone-btn" type="submit" class="btn btn-default">开始复制</button>
+
+</form>
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+
+var showResult = function(data) {
+    if (data.success === undefined) {
+        alert('复制失败，原因：服务器信息已过期，请刷新页面再试。');
+        $('#status-text').text('请刷新页面获取最新服务器信息');
+        $('#clone-progress').hide();
+        return;
+    }
+
+    if (data.success) {
+        alert('复制成功');
+    } else{
+        alert('复制失败，原因：\n\n' + data.error);
+    }
+    $('#status-text').text('可以复制');
+    $('#clone-progress').hide();
+    $('#clone-btn').show();
+};
+
+var checkOptions = function() {
+    var statusText = $('#status-text');
+    var cloneBtn = $('#clone-btn');
+
+    var sourceId = $('#source-id').text();
+    var targetId = $('#target-id').text();
+    if (!sourceId || !targetId) {
+        statusText.text('未选择来源或目标服务器');
+        cloneBtn.hide();
+        return;
+    }
+
+    var sourceDb = $('#source-db').text();
+    var targetDb = $('#target-db').text();
+
+    if (sourceDb === targetDb) {
+        statusText.text('来源和目标数据库地址相同。');
+        cloneBtn.hide();
+        return;
+    }
+
+    statusText.text('可以复制');
+    cloneBtn.show();
+};
+
+$('input[type="radio"]').click(function() {
+    if (!this.checked) {
+        return;
+    }
+    var node = $(this);
+    $('#' + this.name + '-id').text(
+        '#' + node.val() + ' '
+    );
+    $('#' + this.name + '-db').text(
+        node.parents('td').prev().text()
+    );
+    checkOptions();
+});
+
+$('form').submit(function() {
+    var sourceId = $('#source-id').text().replace('#', '').trim();
+    var targetId = $('#target-id').text().replace('#', '').trim();
+    var params = {
+        source: sourceId,
+        target: targetId,
+    };
+    var warnning = '确定开始执行？此操作不能撤销。';
+    if (confirm(warnning)) {
+        $('#clone-btn').hide();
+        $('#clone-progress').show();
+        $('#status-text').text('复制中，请稍后，不要关闭本页面');
+        $.post('clone', params, 'json').done(showResult);
+    }
+    return false;
+});
+
+});
+
+</script>
+{% endblock %}
+

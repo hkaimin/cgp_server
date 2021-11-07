@@ -1,0 +1,66 @@
+{% extends 'admin/master.html' %}
+{% from '_macro/sidebar.html' import menuitem, menuitem2 %}
+
+
+{% block head_css %}
+{{ super() }}
+<link href="{{ url_for('static', filename='vendor/nvd3/nv.d3.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ url_for('ope.index') }}">运营管理</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">{{ admin_view.name }}</li>
+    </ul>
+{% endblock %}
+
+
+{% block wrap %}
+
+<div id="wrap" class="container-fluid">
+
+    <div class="row-fluid">
+
+        <div class="span2" id="sidebar">
+
+            <div class="sidebar-nav">
+                <div class="nav-title">数据统计</div>
+                <ul class="nav nav-list">
+                    <!--{{ menuitem('statistic_general.index_view', '综合报表') }}-->
+                    {{ menuitem2('statistic_register', '注册账户') }}
+                    {{ menuitem2('statistic_online', '在线账户') }}
+                    {{ menuitem2('statistic_living', '在线时长') }}
+                    {{ menuitem2('statistic_player', '玩家分布') }}
+                    {{ menuitem2('statistic_ranking', '玩家排行') }}
+                    {{ menuitem2('statistic_retention', '玩家留存率') }}
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="main" class="span10">
+
+            <div class="title">{{ admin_view.name }}</div>
+
+            {% block main_content %}
+
+                请从左边选择操作
+
+            {% endblock %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block tail_js %}
+{{ super() }}
+<script src="{{ url_for('static', filename='vendor/nvd3/nv.d3.min.js') }}"></script>
+{% endblock %}

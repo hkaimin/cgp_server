@@ -1,0 +1,94 @@
+{% extends 'ope.html' %}
+
+{% from '_macro/datetime.html' import render_input %}
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+<form class="form-inline">
+    <div class="control-group">
+            <label class="control-label">同组服务器：</label>
+            <select id="servers" name="server" class="input-xlarge">
+                {% for server in servers %}
+                    <option value="{{ server.id }}" {{ 'selected' if server.id == args.serverid }}>
+                            {{ server.name }} {{ server.host }}:{{ server.port }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    <div class="control-group">
+        <label class="control-label">时间范围：</label>
+        {{ render_input('start') }} - {{ render_input('end') }}
+        <button type="submit" class="btn btn-success">查看</button>
+    </div>
+</form>
+
+<div id="chartContainer" class="chart">
+    <svg height="500"></svg>
+</div>
+
+
+
+{% endblock %}
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+ var chart;
+ var chartData = [];
+    nv.addGraph(function() {
+        var xLabel = function(v, i) {
+            return v
+        }
+        var yLabel = function(v, i) {
+            return v.toFixed(2)
+        }
+        chart = nv.models.multiBarChart();
+        chart.xAxis.tickFormat(xLabel);
+        chart.yAxis.tickFormat(yLabel);
+        //chart.showValues(true)
+        chart.forceY([0])
+             .showControls(false)
+             .noData('请查询');
+        d3.select('#chartContainer svg')
+            .datum(chartData)
+            .transition().duration(500)
+            .call(chart);
+        nv.utils.windowResize(chart.update);
+        return chart;
+    });
+
+    var renderChart = function(data) {
+        chartData[0] = {
+            key: '留存率 (百分比)',
+            values: data.en.map(function(d) {
+                return {x: d.type, y: d.rate};
+            }),
+        };
+        chart.update()
+    };
+
+    function refreshRender(){
+        var formParams = {
+            start: $('#start').val(),
+            server: $('#servers').val(),
+        };
+        $.getJSON('r.json', formParams).done(renderChart)
+    }
+
+    $('form').submit(function() {
+        var data={};
+        //data.en = [{'type':'查询中','rate':0}]
+        renderChart(data)
+        refreshRender();
+        return false;
+    });
+
+
+});
+
+</script>
+{% endblock %}

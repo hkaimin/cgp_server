@@ -1,0 +1,99 @@
+{% extends 'dev/dev.html' %}
+
+
+{% block main_content %}
+
+
+<div class="well form-inline">
+		批次名：
+	  	<input type="text" class="input-small" id="batchName" placeholder="str">
+	  	创建批次时间(日期当日的0时)：
+	  	<input type="text" class="input-small" id="createTime" placeholder="str" onClick="WdatePicker()">
+	  	结束时间(日期当日的23:59时)：
+	  	<input type="text" class="input-small" id="endTime" placeholder="str" onClick="WdatePicker()">
+	  	一个角色是否只能领取一次：
+        <select class="span1" id="roleIsOnce">
+            <option value="1">1-是</option>
+            <option value="0">0-否</option>
+        </select>
+        兑换码长度：
+        <!--
+        <select class="span1" id="length">
+            <option value="10">10位</option>
+            <option value="6">6位</option>
+            <option value="8">8位</option>
+            <option value="16">16位</option>
+            <option value="32">32位</option>
+        </select>
+        -->
+        <input type="text" class="input-small" value=6 id="length" onkeyup="if(!/^\d+$/.test(this.value)) {alert('只能输入数字 !'); this.value=this.value.replace(/[^\d]+/g,'');}" />
+	  	奖励ID：
+	  	<input type="text" class="input-small" id="rewardId" placeholder="int">
+        可用次数：
+        <input type="text" class="input-small" id="useCount" placeholder="int" value="1">
+        <!--特定服务列表：-->
+	  	<!--<input type="text" class="input-small" id="svrs" placeholder="str">-->
+        生成数量：
+        <input type="text" class="input-small" id="addCount" placeholder="int">
+	  	<button type="button" class="btn" id="submit">生成</button>
+
+
+        <button type="button" class="btn" id="ri" disabled="disabled">导入现有</button>
+	</div>
+
+{% endblock %}
+
+{% block tail %}
+{{ super() }}
+
+<script src="{{ url_for('static', filename='vendor/My97DatePicker/WdatePicker.js') }}" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        /*
+        #本地导入文件使用
+        $('#ri').click(function(){
+            $.get('drold/', {}, function(data){
+                alert(data);
+            });
+
+        });
+        */
+
+        $("#submit").click(function(){
+            var batchName = $("#batchName").val();
+            var createTime = $("#createTime").val();
+            var endTime = $("#endTime").val();
+            var roleIsOnce = $("#roleIsOnce").val();
+            var rewardId = $("#rewardId").val();
+            var length = $("#length").val();
+//				var svrs = $("#svrs").val();
+            var useCount = $("#useCount").val();
+            var addCount = $("#addCount").val();
+            $.get('add_code/',{
+                batchName:batchName,
+                createTime:createTime,
+                endTime:endTime,
+                roleIsOnce:roleIsOnce,
+                rewardId:rewardId,
+                length:length,
+                useCount:useCount,
+//                    svrs:svrs,
+                addCount:addCount
+            },function(data){
+
+                alert(data);
+                /*
+                if(data['success'] == "0"){
+                        alert("添加角色等级失败");
+                    }else{
+
+                        alert("添加角色等级失败");
+                        location.reload()
+                    }
+                    */
+                });
+			});
+		});
+	</script>
+{% endblock %}

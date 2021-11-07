@@ -1,0 +1,128 @@
+{% extends 'ope.html' %}
+{% from '_macro/datetime.html' import render_input %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<form class="form-inline">
+    <label class="control-label">时间范围：</label>
+    {{ render_input('start') }}
+    -
+    {{ render_input('end') }}
+
+    <button type="submit" class="btn btn-success">查看</button>
+    <button type="reset" class="btn">重置</button>
+</form>
+
+<div>
+
+<table class="table table-bordered table-hover table-striped table-sorted">
+    <thead>
+        <tr>
+            <th class="span3">日期</th>
+            <th>创号人数</th>
+            <th>登录人数</th>
+            <th>最大在线</th>
+            <th>平均在线</th>
+            <th>活跃用户数</th>
+            <th>充值金额</th>
+            <th>充值笔数</th>
+            <th>充值人数</th>
+            <th>新增充值人数</th>
+            <th>ARPU</th>
+            <th>注册付费比</th>
+            <th>活跃付费比</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+</div>
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+var chart;
+var chartData = [];
+nv.addGraph(function() {
+    var xLabel = function(v, i) {
+        if (i % 2 === 0) {
+            return null;
+        }
+        return $.dateObject2readabletime(new Date(v));
+    }
+    var yLabel = d3.format(',.2d');
+    chart = nv.models.lineWithFocusChart();
+    chart.xAxis.tickFormat(xLabel);
+    chart.x2Axis.tickFormat(xLabel);
+    chart.yAxis.tickFormat(yLabel);
+    chart.forceY([0]);
+    d3.select('#chartContainer svg')
+        .datum(chartData)
+        .transition().duration(500)
+        .call(chart);
+    nv.utils.windowResize(chart.update);
+    return chart;
+});
+
+var drawChart = function(data) {
+    chartData[0] = {
+        key: '在线人数',
+        values: data.entries.map(function(e) {
+            return {x: e.ct * 1000, y: e.c};
+        }),
+    };
+    chart.update();
+};
+
+var locationHash = {
+    get: function() {
+        return location.hash.slice(1).replace(/_/g, ' ');
+    },
+    set: function(value) {
+        location.hash = decodeURIComponent(value).replace(/\+/g, '_');
+    }
+};
+
+var initDefaultFormParams = function() {
+    var formParams;
+    if (location.hash === '') {
+        formParams = $.timerange(-24 * 3600, 0);
+    } else {
+        formParams = $.deparams(locationHash.get());
+    }
+    var startNode = $('#start');
+    var endNode = $('#end');
+    startNode.val(formParams.start);
+    endNode.val(formParams.end);
+};
+
+var updateChart = function() {
+    var formParams = {
+        start: $('#start').val(),
+        end: $('#end').val(),
+    };
+    locationHash.set($.param(formParams));
+    $.getJSON('detail.json', formParams).done(drawChart);
+};
+
+initDefaultFormParams();
+updateChart();
+$('form').submit(function() {
+    updateChart();
+    return false;
+});
+
+});
+
+</script>
+{% endblock %}

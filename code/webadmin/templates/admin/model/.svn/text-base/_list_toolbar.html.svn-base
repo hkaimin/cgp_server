@@ -1,0 +1,28 @@
+{% import 'admin/model/layout.html' as model_layout with context %}
+
+<div class="toolbar">
+
+    {% if actions %}
+    <div class="btn-group">
+        {{ actionlib.dropdown(actions, btn_class='btn dropdown-toggle') }}
+    </div>
+    {% endif %}
+
+    {% if filter_groups %}
+    <div class="btn-group">
+        {{ model_layout.filter_options(btn_class='btn dropdown-toggle') }}
+    </div>
+    {% endif %}
+
+    {% if search_supported %}
+        {{ model_layout.search_form(input_class='') }}
+    {% endif %}
+
+    <span class="count">共 <span class="number">{{ count }}</span> 条数据</span>
+</div>
+
+{% if filter_groups %}
+{{ model_layout.filter_form() }}
+<div class="clearfix"></div>
+{% endif %}
+

@@ -1,0 +1,82 @@
+2019-04-02 06:30:06|010001|app_common|[04-02 06:30:06]p620{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\common\gateway.py", line 237, in _handle
+    self._handle_request(tag, procId, params)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\common\gateway.py", line 203, in _handle_request
+    if kw is not None: rs = func(**kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\protocal\player.py", line 50, in rc_login
+    ok, data = Game.rpc_player_mgr.rc_login(self.rpc, account, password)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 358, in rc_login
+    rs, d = self._login(processor, pid)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 290, in _login
+    app_name, sub_mgr = self.get_sub_mgr(pid, offline=True)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 161, in get_sub_mgr
+    rs = sub_mgr.load_player(pid)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 978, in _func
+    no_result=no_result, timeout=timeout, pickle=pickle, proxy=proxy)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 613, in call
+    result = self._read_response(index, timeout)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 570, in _read_response
+    raise error
+RpcCallError: global name 'PlayerMail' is not defined
+
+2019-04-02 06:30:06|010001|app_common|[04-02 06:30:06]p620{log:132}ERROR-_handle_msg:func(login) {u's': 1, u'd': {u'account': u'gm', u'password': u'1'}, u'f': u'login'}:
+Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\common\gateway.py", line 237, in _handle
+    self._handle_request(tag, procId, params)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\common\gateway.py", line 203, in _handle_request
+    if kw is not None: rs = func(**kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\protocal\player.py", line 50, in rc_login
+    ok, data = Game.rpc_player_mgr.rc_login(self.rpc, account, password)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 358, in rc_login
+    rs, d = self._login(processor, pid)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 292, in _login
+    rs = sub_mgr.player_login(processor.pid, pid)
+AttributeError: 'NoneType' object has no attribute 'player_login'
+
+2019-04-02 06:31:46|010001|app_common|[04-02 06:31:46]p10488{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\common\gateway.py", line 237, in _handle
+    self._handle_request(tag, procId, params)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\common\gateway.py", line 203, in _handle_request
+    if kw is not None: rs = func(**kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\protocal\player.py", line 50, in rc_login
+    ok, data = Game.rpc_player_mgr.rc_login(self.rpc, account, password)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 358, in rc_login
+    rs, d = self._login(processor, pid)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 290, in _login
+    app_name, sub_mgr = self.get_sub_mgr(pid, offline=True)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 161, in get_sub_mgr
+    rs = sub_mgr.load_player(pid)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 978, in _func
+    no_result=no_result, timeout=timeout, pickle=pickle, proxy=proxy)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 613, in call
+    result = self._read_response(index, timeout)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 570, in _read_response
+    raise error
+RpcCallError: 'module' object has no attribute 'itemctn'
+
+2019-04-02 06:31:46|010001|app_common|[04-02 06:31:46]p10488{log:132}ERROR-_handle_msg:func(login) {u's': 1, u'd': {u'account': u'gm', u'password': u'1'}, u'f': u'login'}:
+Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\common\gateway.py", line 237, in _handle
+    self._handle_request(tag, procId, params)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\common\gateway.py", line 203, in _handle_request
+    if kw is not None: rs = func(**kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\protocal\player.py", line 50, in rc_login
+    ok, data = Game.rpc_player_mgr.rc_login(self.rpc, account, password)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 358, in rc_login
+    rs, d = self._login(processor, pid)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 292, in _login
+    rs = sub_mgr.player_login(processor.pid, pid)
+AttributeError: 'NoneType' object has no attribute 'player_login'
+

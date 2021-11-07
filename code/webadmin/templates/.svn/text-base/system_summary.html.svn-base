@@ -1,0 +1,19 @@
+{% extends 'ctr.html' %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<table class="table table-bordered table-hover table-striped">
+    <tbody>
+    {% for key, value in config.iteritems() %}
+        <tr>
+            <th class="span4">{{ key }}</th>
+            <td>{{ value }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

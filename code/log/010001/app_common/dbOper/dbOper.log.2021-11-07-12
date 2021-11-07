@@ -1,0 +1,4 @@
+2021-11-07 12:44:25|010001|app_common|update|singleton|{'dataDict': {'opentime': 1636260265, 'cycleDay': '(dp1\n.', 'mergetime': 0, 'cycleWeek': '(dp1\n.'}, '_id': 'serverInfo'}
+2021-11-07 12:44:25|010001|app_common|update|singleton|{'dataDict': {'lmapNewRank': [], 'dMapInfo': '(dp1\n.', 'lmapLikeRank': [], 'dMapInfoMapKey': '(dp1\n.', 'mapTranceNo': 1000, 'dmapLikeData': {}}, '_id': 'diymap'}
+2021-11-07 12:44:25|010001|app_common|update|singleton|{'dataDict': {'lGuankaRank': [], 'pasBarrRecord': {}, 'lLvRank': [], 'lPvpRank': [], 'barrInfo': {}}, '_id': 'rank'}
+2021-11-07 12:47:23|010001|app_common|insert|player|100010001|{'newTime': 1636260443, 'password': u'1', 'account': u'hkm', 'base': {'pcode': u'11111', 'isAgent': 0}, '_id': 100010001}

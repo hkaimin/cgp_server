@@ -1,0 +1,112 @@
+{% extends 'dev/dev.html' %}
+
+
+{% block head %}
+{{ super() }}
+
+<style>
+
+#left {
+    display: inline-block;
+    float: left;
+    width: 60%;
+}
+
+#right {
+    float: left;
+    width: 35%;
+    margin-left: 10px;
+}
+
+form {
+    display: inline-block;
+    width: 100%;
+}
+
+.control-label {
+    font-weight: bold;
+    display: inline-block;
+    text-align: right;
+    width: 90px;
+}
+
+#servers {
+    font-family: monospace;
+}
+
+#result {
+    margin-top: 10px;
+    border: 1px solid #DDDDDD;
+    padding: 1em;
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<form class="form-inline" method="post" role="form">
+    <div id="left">
+        <div class="control-group">
+            <label class="control-label">同组服务器：</label>
+            <select id="servers" name="server" class="input-xlarge">
+                {% for server in servers %}
+                    <option value="{{ server.name }}" {{ 'selected' if server.name == args.server }}>
+                            {{ server.name }} {{ server.host }}:{{ server.port }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="control-group" id="robot-group">
+            <label class="control-label">比赛机器人：</label>
+            <select id="robot" name="robot" class="input-select">
+                <option value=""></option>
+                <option value=1 {{ 'selected' if args.robot == 1 }}>开启</option>
+                <option value=0 {{ 'selected' if args.robot == 0 }}>关闭</option>
+            </select>
+            <label class="control-label">时间延迟：</label>
+            <input id="robot_time" type="text" name="robot_time" class="input-normal" value="{{ args.robot_time }}">
+        </div>
+    </div>
+
+    <div id="right">
+
+        <button type="submit" class="btn btn-success">设置</button>
+        <a href="javascript:void(0);"
+           class="btn btn-mini btn-refresh">更新状态</a>
+
+        {% if result %}
+        <div id="result">
+            <pre class="source">
+                {% autoescape true %}
+                {{ result|tojson|safe }}
+                {% endautoescape %}
+            </pre>
+        <div>
+        {% endif %}
+    <div>
+
+</form>
+
+{% endblock %}
+
+{% block tail %}
+{{ super() }}
+<script>
+    $(function() {
+        'use strict';
+
+$('a.btn-refresh').click(function() {
+    var name = document.getElementById("servers").value;
+//    alert('servers:' + name);
+    window.location.href= './?refresh=' + name;
+});
+
+    });
+</script>
+{% endblock %}
+
+

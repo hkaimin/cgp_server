@@ -1,0 +1,63 @@
+{% extends 'ctr.html' %}
+
+
+{% block head %}
+{{ super() }}
+<style>
+ul.members {
+    -moz-columns: 2 auto;
+}
+</style>
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="javascript:void(0);">列表</a></li>
+    <li><a href="new">创建</a></li>
+</ul>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="span1">ID</th>
+            <th class="span3">名称</th>
+            <th class="span3">备注</th>
+            <th class="span3">组员</th>
+            <th>允许权限</th>
+            <th class="span3">操作</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for group in groups %}
+        <tr>
+            <td>{{ group._id }}</td>
+            <td>{{ group.name }}</td>
+            <td>{{ group.note }}</td>
+            <td>
+                <ul class="members">
+                {% for user in group.members.itervalues() %}
+                <li>
+                    <a href="../system_user/edit/{{ user._id }}">{{ user.name }}</a></li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                {% for pms_name, pms_title, pms_desc in group.details %}
+                    <li>{{ pms_name }}: {{ pms_title }}</span></li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td><a href="edit/{{ group._id }}">修改</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

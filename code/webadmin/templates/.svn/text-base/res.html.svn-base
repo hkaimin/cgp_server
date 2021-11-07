@@ -1,0 +1,191 @@
+{% extends 'admin/master.html' %}
+{% from '_macro/sidebar.html' import model_menuitem %}
+
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ url_for('res.index') }}">资源管理</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">{{ admin_view.name }}</li>
+    </ul>
+{% endblock %}
+
+
+{% block wrap %}
+
+<div id="wrap" class="container-fluid">
+
+    <div class="row-fluid">
+
+        <div class="span2" id="sidebar">
+
+            <div class="sidebar-nav">
+                <div class="nav-title">资源表数据</div>
+
+                <div class="nav-subtitle">基础系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_hero', '英雄表') }}
+                    {{ model_menuitem('resource_model_heroinfo', '英雄信息表') }}
+                    {{ model_menuitem('resource_model_reward', '奖励表') }}
+                    {{ model_menuitem('resource_model_attr', '属性表') }}
+
+                <div class="nav-subtitle">技能系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_skill', '技能表') }}
+                    {{ model_menuitem('resource_model_skillresetcost', '技能重置消耗表') }}
+                </ul>
+
+                <div class="nav-subtitle">排行挑战</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_rankbattle', '排行挑战表') }}
+                    {{ model_menuitem('resource_model_rankreward', '排行奖励表') }}
+                    {{ model_menuitem('resource_model_rankrefreshcost', '排行界面刷新消耗表') }}
+                </ul>
+
+                <div class="nav-subtitle">日常系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_checkin', '签到表') }}
+                    {{ model_menuitem('resource_model_dailytask', '日常任务表') }}
+                    {{ model_menuitem('resource_model_vip', 'VIP表') }}
+                    {{ model_menuitem('resource_model_ibshop', 'IB商城表') }}
+                    {{ model_menuitem('resource_model_coin2', '幸运星充值表') }}
+                </ul>
+
+                <div class="nav-subtitle">礼包系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_battleegg', '战斗彩蛋表') }}
+                    {{ model_menuitem('resource_model_giftpackage', '礼包表') }}
+                    {{ model_menuitem('resource_model_checkinextrareward', '签到礼包表') }}
+                    {{ model_menuitem('resource_model_dailytaskegg', '日常任务彩蛋奖励表') }}
+                </ul>
+
+                <div class="nav-subtitle">房间系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_pvproommode', 'PVP模式表') }}
+                    {{ model_menuitem('resource_model_npc', 'NPC表') }}
+                    {{ model_menuitem('resource_model_card', '道具卡表') }}
+                    {{ model_menuitem('resource_model_cardpiece', '卡片碎片表') }}
+                    {{ model_menuitem('resource_model_talk', '对话表') }}
+                    {{ model_menuitem('resource_model_fate', '命运表') }}
+                    {{ model_menuitem('resource_model_news', '新闻表') }}
+                    {{ model_menuitem('resource_model_market', '消费表') }}
+                </ul>
+
+                <div class="nav-subtitle">地图系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_map', '地图表') }}
+                    {{ model_menuitem('resource_model_tile', '地格表') }}
+                    {{ model_menuitem('resource_model_building', '建筑物表') }}
+                    {{ model_menuitem('resource_model_mapmodel', '地图模式表') }}
+                </ul>
+
+                <div class="nav-subtitle">AI系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_ai', 'AI表') }}
+                    {{ model_menuitem('resource_model_aicode', 'AI代码表') }}
+                    {{ model_menuitem('resource_model_buff', 'Buff表') }}
+                    {{ model_menuitem('resource_model_robot', '机器人配置') }}
+                </ul>
+
+
+                <div class="nav-subtitle">小游戏</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_minigame', '小游戏表') }}
+                    {{ model_menuitem('resource_model_lhj', '老虎机表') }}
+                    {{ model_menuitem('resource_model_ddd', '点点点表') }}
+                    {{ model_menuitem('resource_model_zxl', '找笑脸表') }}
+                    {{ model_menuitem('resource_model_minigametips', '冠军位置冒泡') }}
+                </ul>
+
+                <div class="nav-subtitle">PVE</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_pve', 'PVE表') }}
+                    {{ model_menuitem('resource_model_pvebattle', 'PVE战斗表') }}
+                    {{ model_menuitem('resource_model_areabox', '区域宝箱表') }}
+                    {{ model_menuitem('resource_model_bquiz', '路点问答表') }}
+                </ul>
+
+                <div class="nav-subtitle">物品系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_item', '物品表') }}
+                    {{ model_menuitem('resource_model_dice', '骰子表') }}
+                    {{ model_menuitem('resource_model_car', '载具表') }}
+                    {{ model_menuitem('resource_model_cloth', '服装表') }}
+                    {{ model_menuitem('resource_model_enhance', '强化表') }}
+                    {{ model_menuitem('resource_model_mall', '商城配置表') }}
+                    {{ model_menuitem('resource_model_goods','货币物品')}}
+                </ul>
+
+
+                <div class="nav-subtitle">成就系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_achieve', '成就表') }}
+                    {{ model_menuitem('resource_model_achieveicon', '徽章描述表') }}
+                </ul>
+
+                <div class="nav-subtitle">活动系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_rewardmail', '邮件配置表') }}
+                    {{ model_menuitem('resource_model_activity', '活动表') }}
+                    {{ model_menuitem('resource_model_spactivity', '推广活动表') }}
+                    {{ model_menuitem('resource_model_activitybattle', '活动战斗表') }}
+                    {{ model_menuitem('resource_model_activitytask', '活动任务表') }}            
+                    {{ model_menuitem('resource_model_movieticket', '电影票兑换码表') }}
+                    {{ model_menuitem('resource_model_exchangecode', '兑换码表') }}
+                </ul>
+
+
+                <div class="nav-subtitle">引导</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_guidemain', '引导汇总表') }}
+                    {{ model_menuitem('resource_model_guide', '引导表') }}
+                    {{ model_menuitem('resource_model_guidebattlemain', '引导战斗节点表') }}
+                    {{ model_menuitem('resource_model_guidebattle', '引导战斗表') }}
+                    {{ model_menuitem('resource_model_guideboard', '对话框表') }}
+                </ul>
+
+                <div class="nav-subtitle">前端配置</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_clienttips', '流程提示表') }}
+                    {{ model_menuitem('resource_model_clientcss', '样式表') }}
+                    {{ model_menuitem('resource_model_tips', '提示语表') }}
+                    {{ model_menuitem('resource_model_notifys', '弱提示表') }}
+                    {{ model_menuitem('resource_model_message', '信息表') }}
+                    {{ model_menuitem('resource_model_names', '名称表') }}
+                    {{ model_menuitem('resource_model_audio', '音频表') }}
+                </ul>
+
+                <div class="nav-subtitle">其它系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_error', '错误表') }}
+                    {{ model_menuitem('resource_model_setting', '设置表') }}
+                    {{ model_menuitem('resource_model_translation', '翻译设置表')}}
+                </ul>
+
+                <div class="nav-subtitle">游戏组</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('resource_model_server', 'Server') }}
+                    {{ model_menuitem('resource_model_gconfig', 'GConfig') }}
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="main" class="span10">
+
+            <div class="title">{{ admin_view.name }}</div>
+
+            {% block main_content %}
+
+                请从左边选择要管理的资源
+
+            {% endblock %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

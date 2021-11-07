@@ -1,0 +1,191 @@
+/* toolbar */
+
+#toolbar {
+    margin-bottom: 20px;
+}
+
+#toolbar i.fa {
+    margin-right: 5px;
+}
+
+#alert-area {
+    display: inline-block;
+    margin-left: 40px;
+    vertical-align: middle;
+    margin-bottom: 0;
+    padding: 4px 30px;
+}
+
+#info-area {
+    display: inline-block;
+    padding: 4px 10px;
+    vertical-align: middle;
+    float: right;
+}
+
+#info-area .info-value {
+    color: gray;
+}
+
+/* workspace */
+
+#workspace {
+    position: relative;
+}
+
+#workspace.isometric {
+    transform: rotate(45deg) skew(-15deg, -15deg);
+    pointer-events: none;
+};
+
+/* gridster */
+
+.gridster .progress {
+    width: 50%;
+}
+
+.gridster ul {
+    list-style: none outside none;
+}
+
+.gridster li {
+    border: 1px solid #9F9F9F;
+    cursor: default;
+}
+
+/* grid */
+
+.grid[data-value-area] {
+    color: #FFFFFF;
+}
+.grid[data-value-area="0"] {
+    background-color: #959595;
+}
+.grid[data-value-area="1"] {
+    background-color: #F96C6C;
+}
+.grid[data-value-area="2"] {
+    background-color: #DAA926;
+}
+.grid[data-value-area="3"] {
+    background-color: #B8B707;
+}
+.grid[data-value-area="4"] {
+    background-color: #90CC34;
+}
+.grid[data-value-area="5"] {
+    background-color: #33C2B1;
+}
+.grid[data-value-area="6"] {
+    background-color: #589AEB;
+}
+.grid[data-value-area="7"] {
+    background-color: #751ACC;
+}
+.grid[data-value-area="8"] {
+    background-color: #C963A0;
+}
+.grid[data-value-area="9"] {
+    background-color: #663300;
+}
+.grid[data-value-area="10"] {
+    background-color: #006633;
+}
+.grid[data-value-area="11"] {
+    background-color: #330066;
+}
+.grid[data-value-area="12"] {
+    background-color: #999900;
+}
+.grid[data-value-area="13"] {
+    background-color: #009999;
+}
+.grid[data-value-area="14"] {
+    background-color: #C963A0;
+}
+.grid[data-value-area="15"] {
+    background-color: #9900CC;
+}
+/* tile */
+
+.tile-summary {
+    font-size: 12px;
+    line-height: 14px;
+    padding: 5px 0;
+    text-align: center;
+}
+.tile-summary .value-name {
+    height: 14px;
+}
+
+.tile-detail .title {
+    display: inline-block;
+    text-align: right;
+    width: 130px;
+}
+.tile-detail .value {
+    color: #EB7C0D;
+}
+
+/* dialog */
+
+.modal-backdrop {
+    opacity: 0;
+}
+
+#tile-dialog {
+    width: 680px;
+    margin-left: -340px;
+    opacity: 0.5;
+}
+
+#tile-dialog:hover {
+    opacity: 1;
+}
+
+#tile-dialog .modal-body {
+    max-height: none;
+}
+
+#tile-dialog form {
+    margin-bottom: 0;
+}
+
+#tile-dialog textarea {
+    width: 306px;
+}
+
+#tile-dialog .controls {
+    width: calc(100% - 200px);
+}
+
+#tile-dialog .control-label {
+    margin-right: 20px;
+}
+
+#tile-dialog .help-block {
+    margin-left: 224px;
+}
+
+/* routepath-layer */
+
+#routepath-layer {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+}
+
+#routepath-layer svg #arrow {
+    fill: #F4F200;
+}
+
+#routepath-layer svg path.link {
+    fill: none;
+    stroke-width: 3px;
+}
+
+#routepath-layer svg circle {
+    fill: #CCCCCC;
+    stroke: #333333;
+    stroke-width: 1.5px;
+}

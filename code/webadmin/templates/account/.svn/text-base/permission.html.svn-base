@@ -1,0 +1,49 @@
+{% extends 'account/_layout.html' %}
+
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ url_for('account.index_view') }}">我的账号</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">我的权限</li>
+    </ul>
+{% endblock %}
+
+
+{% block main_title %}
+    <div class="title">我的权限</div>
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+{% if guard.iam_super_user() %}
+<p>此账户是<strong>超级管理员</strong>账号，不属于任何用户组，拥有全部权限。</p>
+{% else %}
+    <p>所属用户组：{{ groups|join('，') }}</p>
+{% endif %}
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="span3">允许权限</th>
+            <th>说明</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for _, title, desc in permissions %}
+        <tr>
+            <td>{{ title }}</td>
+            <td>{{ desc }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+

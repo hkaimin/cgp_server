@@ -1,0 +1,126 @@
+{% extends 'ope.html' %}
+{% from '_macro/datetime.html' import render_input %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="./detail">原始数据</a></li>
+    <li><a href="./minute">按分统计</a></li>
+    <li><a href="./month">按月统计</a></li>
+</ul>
+
+<form class="form-inline">
+    <label class="control-label">时间范围：</label>
+    {{ render_input('start') }} - {{ render_input('end') }}
+    <button type="submit" class="btn btn-success">查看</button>
+</form>
+
+<div id="chartContainer" class="chart">
+    <svg height="500"></svg>
+</div>
+
+<table class="table table-bordered table-hover table-striped table-sorted">
+    <thead><tr>
+        <th class="span1">序号</th>
+        <th class="span3">时间点</th>
+        <th>同时在线</th>
+        <th>瞬间在线</th>
+    </tr></thead>
+    <tbody></tbody>
+</table>
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+var chart;
+var chartData = [];
+nv.addGraph(function() {
+    var xLabel = function(v, i) {
+        return (i % 2 === 0) ? null : $.cvReadableTime(v).slice(5);
+    }
+    chart = nv.models.lineWithFocusChart();
+    chart.xAxis.tickFormat(xLabel);
+    chart.x2Axis.tickFormat(xLabel);
+    chart.yAxis.tickFormat(lib.integer);
+    chart.forceY([0]);
+    d3.select('#chartContainer svg')
+        .datum(chartData)
+        .transition().duration(500)
+        .call(chart);
+    nv.utils.windowResize(chart.update);
+    return chart;
+});
+var renderChart = function(data) {
+    chartData[0] = {
+        key: '同时在线',
+        values: data.entries.map(function(d) {
+            return {x: d.time, y: d.unique};
+        }),
+    };
+    chartData[1] = {
+        key: '瞬间在线',
+        values: data.entries.map(function(d) {
+            return {x: d.time, y: d.instant};
+        }),
+        color: '#63DE4E',
+    };
+    chart.update();
+};
+
+var renderTable = function(data) {
+    var createRowHtml = function(d, i) {
+        return '<td>' + (i + 1) + '</td>' +
+               '<td>' + $.cvReadableTime(d.time) + '</td>' +
+               '<td>' + d.unique + '</td>' +
+               '<td>' + d.instant + '</td>' +
+               '';
+    };
+    lib.initD3Table(createRowHtml, data.entries);
+    $('table').trigger('update');
+};
+
+var initFormParams = function() {
+    var formParams;
+    if (lib.formStore.empty()) {
+        // 从凌晨开始，午夜结束
+        formParams = $.mkReadableTimeRange(-24 * 3600, 0);
+        formParams.start = formParams.start.slice(0, 10) + ' 00:00:00';
+        formParams.end = formParams.end.slice(0, 10) + ' 23:59:59';
+    } else {
+        formParams = $.deparams(lib.formStore.get());
+    }
+    $('#start').val(formParams.start);
+    $('#end').val(formParams.end);
+};
+
+var refreshRender = function() {
+    var formParams = {
+        start: $('#start').val(),
+        end: $('#end').val(),
+    };
+    lib.formStore.set($.param(formParams));
+    $.getJSON('detail.json', formParams)
+     .done(renderChart)
+     .done(renderTable);
+};
+
+initFormParams();
+refreshRender();
+$('form').submit(function() {
+    refreshRender();
+    return false;
+});
+
+});
+
+</script>
+{% endblock %}

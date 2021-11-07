@@ -1,0 +1,16 @@
+2019-04-02 07:02:10|010001|app_common|[04-02 07:02:10]p26760{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\grpc\rpc.py", line 660, in _handle_request_call
+    rs = func(*args, **kw) if kw is not None else func(*args)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\frame.py", line 465, in add_other_proxy
+    self.application.add_addr_names(app_name, addr, mode, names)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\frame.py", line 157, in add_addr_names
+    cls.pub(MSG_FRAME_APP_ADD, app_name, addr, names)
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\message.py", line 158, in pub
+    self._message_broker.pub(*a, **kw)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\message.py", line 78, in pub
+    func(*a, **kw)
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 114, in _msg_app_add
+    Game.safe_pub(MSG_ALL_LOGIC_START)
+NameError: global name 'MSG_ALL_LOGIC_START' is not defined
+

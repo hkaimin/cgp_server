@@ -1,0 +1,124 @@
+{% extends 'dev/dev.html' %}
+
+
+{% block head %}
+{{ super() }}
+
+<style>
+
+#left {
+    display: inline-block;
+    float: left;
+    width: 60%;
+}
+
+#right {
+    float: left;
+    width: 35%;
+    margin-left: 10px;
+}
+
+form {
+    display: inline-block;
+    width: 100%;
+}
+
+.control-label {
+    font-weight: bold;
+    display: inline-block;
+    text-align: right;
+    width: 90px;
+}
+
+#servers {
+    font-family: monospace;
+}
+
+#result {
+    margin-top: 10px;
+    border: 1px solid #DDDDDD;
+    padding: 1em;
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<form class="form-inline" method="post" role="form">
+    <div id="left">
+        <div class="control-group">
+            <label class="control-label">同组服务器：</label>
+            <select id="servers" name="server" class="input-xlarge">
+                {% for server in servers %}
+                    <option value="{{ server.name }}" {{ 'selected' if server.name == args.server }}>
+                            {{ server.name }} {{ server.host }}:{{ server.port }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="control-group" id="player-id">
+            <label class="control-label">PID:</label>
+            <input id="pid" type="text" name="pid" class="input-xxlarge" value="{{ args.pid }}">
+        </div>
+        <div class="control-group" id="mtype-group">
+            <label class="control-label">邮件类型：</label>
+            <select id="mtype" name="mtype" class="input-select">
+                <option value=1 {{ 'selected' if args.mtype == 1 }}>系统</option>
+            </select>
+        </div>
+        <div class="control-group" id="stype-group">
+            <label class="control-label">子类型：</label>
+            <select id="stype" name="stype" class="input-select">
+                <option value=0 {{ 'selected' if args.stype == 0 }}>普通</option>
+                <option value=1 {{ 'selected' if args.stype == 1 }}>比赛累计奖</option>
+            </select>
+        </div>
+        <div class="control-group" id="save-group">
+            <label class="control-label">是否保留：</label>
+            <select id="save" name="save" class="input-select">
+                <option value=1 {{ 'selected' if args.save == 1 }}>是</option>
+                <option value=0 {{ 'selected' if args.save == 0 }}>否</option>
+            </select>
+        </div>
+        <div class="control-group" id="title-group">
+            <label class="control-label">标题：</label>
+            <input id="title" type="text" name="title" class="input-xxlarge" value="{{ args.title }}">
+        </div>
+        <div class="control-group" id="content-group">
+            <label class="control-label">内容：</label>
+            <textarea id="content" rows="6" cols="12" name="content" class="input-xxlarge" >{{ args.content }}</textarea>
+        </div>
+        <div class="control-group" id="reward-id">
+            <label class="control-label">奖励id:</label>
+            <input id="rid" type="text" name="rid" class="input-normal" value="{{ args.rid }}">
+        </div>
+        <div class="control-group" id="mitems-group">
+            <label class="control-label">奖励物品：</label>
+            <textarea id="mitems" rows="6" cols="12" name="mitems" class="input-xxlarge" >{{ args.mitems }}</textarea>
+        </div>
+    </div>
+
+    <div id="right">
+
+        <button type="submit" class="btn btn-success">测试</button>
+        <button type="reset" class="btn">重置</button>
+
+        {% if result %}
+        <div id="result">
+            <pre class="source">
+                {% autoescape true %}
+                {{ result|tojson|safe }}
+                {% endautoescape %}
+            </pre>
+        <div>
+        {% endif %}
+    <div>
+
+</form>
+
+{% endblock %}
+

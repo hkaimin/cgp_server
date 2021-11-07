@@ -1,0 +1,86 @@
+{% extends 'dev/dev.html' %}
+
+{% block main_content %}
+
+
+<table class="table table-bordered table-hover table-striped" >
+    <tr>
+        <td>PID</td><td id="p_id"></td>
+        <td>玩家名字</td><td id="p_name"></td>
+        <td>角色</td><td id="p_heroname"></td>
+        <td>金钱</td><td id="p_money"></td>
+        <td>资产总值</td><td id="p_assets"></td>
+        <td>位置</td><td id="p_pos"></td>
+        <td>圈数</td><td id="p_ring"></td>
+        <td>地图id</td><td id="p_map"></td>
+    </tr>
+</table>
+
+<table class="table table-bordered table-hover table-striped" >
+    <tr>
+        <td>拥有卡片</td><td id="p_card"></td>
+    </tr>
+</table>
+
+<table class="table table-bordered table-hover table-striped" >
+    <tr>
+        <td>拥有土地</td><td id="p_farm"></td>
+    </tr>
+</table>
+
+<form class="form-inline" method="post" role="form">
+    <div>修改</div>
+     <select id="type" name="type" class="input-select">
+        <option value='cash'  >金钱</option>
+        <option value='pos'>位置</option>
+        <option value='ring'>圈数</option>
+        <option value='dice'>骰子点数</option>
+        <option value='card'>道具卡</option>
+        <option value='end'>比赛结束时间,立即结束填:0</option>
+     </select>
+     <input id="value" name="value" type="text" class="input-xxlarge" >
+    <div>
+        <br><button type="submit" class="btn btn-success">改</button>
+    </div>
+</form>
+
+{% endblock %}
+
+
+{% block tail %}
+
+{{ super() }}
+
+<script>
+    $(function() {
+        function load_player(){
+            $.post('../roomplayerinfo/?pid={{ pid }}').done(function(rs) {
+                    data = rs.rs
+                    if(data.st == 0){
+                        location.assign('../')
+                    }
+                    herodata = data.herodata
+                    playerdata = data.playerdata
+                    roomdata = data.roomdata
+                    $('#p_id').text(herodata.pid)
+                    $('#p_assets').text(herodata.assets)
+                    $('#p_name').text(playerdata.data.name)
+                    $('#p_heroname').text(herodata.heroname)
+                    $('#p_money').text(herodata.cash)
+                    $('#p_pos').text(herodata.pos)
+                    $('#p_ring').text(herodata.ring)
+                    $('#p_farm').text(herodata.farm)
+                    $('#p_map').text(roomdata.mid)
+                    $('#p_card').text(herodata.cards)
+            });
+
+        }
+        $('#type').val('{{ subtype }}')
+        setInterval(load_player,2000)
+        load_player()
+    })
+
+</script>
+
+
+{% endblock %}

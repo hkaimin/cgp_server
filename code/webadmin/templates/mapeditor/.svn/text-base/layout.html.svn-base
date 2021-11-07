@@ -1,0 +1,39 @@
+{% extends 'res.html' %}
+
+
+{% block head_css %}
+{{ super() }}
+<link href="{{ url_for('static', filename='vendor/gridster/jquery.gridster.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='styles/mapeditor.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+{% include('mapeditor/_toolbar.html') %}
+
+<div id="workspace">
+
+    <div class="gridster">
+        <div class="progress progress-striped active">
+            <div class="bar" style="width: 100%;"></div>
+        </div>
+    </div>
+
+    <div id="routepath-layer" style="display: none;">
+        <svg width="100%" height="100%"></svg>
+    </div>
+
+</div>
+
+{% include('mapeditor/_form.html') %}
+
+{% endblock %}
+
+
+{% block tail_js %}
+{{ super() }}
+<script src="{{ url_for('static', filename='vendor/gridster/jquery.gridster.min.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/mapeditor.js') }}"></script>
+{% endblock %}

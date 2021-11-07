@@ -1,0 +1,70 @@
+{% macro render_detail(zone, gamesvr) %}
+
+<table class="table table-bordered table-hover table-striped">
+    <tbody>
+        <tr>
+            <th class="span2">服务器组名</th>
+            <td>{{ zone.title }}</td>
+        </tr>
+        <tr>
+            <th>服务器名</th>
+            <td>{{ gamesvr.title }}</td>
+        </tr>
+        <tr>
+            <th>地址</th>
+            <td>{{ gamesvr.address }}</td>
+        </tr>
+        <tr>
+            <th>资源库</th>
+            <td>{{ gamesvr.safe_resource_db }}</td>
+        </tr>
+        <tr>
+            <th>用户库</th>
+            <td>{{ gamesvr.safe_user_db }}</td>
+        </tr>
+        <tr>
+            <th>日志库</th>
+            <td>{{ gamesvr.safe_logging_db }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endmacro %}
+
+
+{% macro render_table(current, zone, gamesvrs, resource_db=False) %}
+
+<table class="table table-bordered table-hover table-striped">
+    <caption>{{ zone.title }}</caption>
+
+    <thead>
+        <tr>
+            <th class="span1">ID</th>
+            <th class="span3">名称</th>
+            <th class="span3">描述</th>
+            <th class="span3">地址</th>
+            {% if resource_db %}
+                <th>资源库地址</th>
+            {% endif %}
+            <th class="span3">操作</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for gamesvr in gamesvrs %}
+        <tr class="{{ 'success' if current.gamesvr == gamesvr }}">
+            <td>{{ gamesvr._id }}</td>
+            <td>{{ gamesvr.name }}</td>
+            <td>{{ gamesvr.desc }}</td>
+            <td>{{ gamesvr.address }}</td>
+            {% if resource_db %}
+                <td>{{ gamesvr.safe_resource_db }}</td>
+            {% endif %}
+            <td>{{ caller(current, gamesvr) }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+{% endmacro %}

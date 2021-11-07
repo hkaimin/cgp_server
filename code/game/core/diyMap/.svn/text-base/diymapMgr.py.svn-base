@@ -1,0 +1,341 @@
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+import time
+
+from game.common import utility
+
+from corelib.frame import Game, MSG_FRAME_STOP
+from game.models.diymap import ModelDiyMap
+from corelib.gtime import get_days
+from game.common.utility import *
+import cPickle
+
+MAP_RANK_MAX = 50
+MAP_SHOW_RANK = 20
+
+
+class DiyMapInfo(utility.DirtyFlag):
+    """diy地图"""
+    _rpc_name_ = 'rpc_diymap_info'
+
+    def __init__(self):
+        utility.DirtyFlag.__init__(self)
+        self.data = None
+        self.dMapInfo = {} # pid:mapinfo
+        self.dMapInfoMapKey = {} # mapkey:mapinfo
+        self.lmapLikeRank = [] # 点赞排行榜
+        self.lmapNewRank = [] # 最新排行榜
+        self.dmapLikeData = {}
+
+        self.mapTranceNo = 1000
+
+        self.save_cache = {}  # 存储缓存
+
+        Game.sub(MSG_FRAME_STOP, self._frame_stop)
+
+    def start(self):
+        print ">>>>>>>>>>>>>> DiyMapInfo stat 1<<<<<<<<<<<<<<<"
+        self.data = ModelDiyMap.load(Game.store, ModelDiyMap.TABLE_KEY)
+        # print self.data
+        print ">>>>>>>>>>>>>> DiyMapInfo stat 1<<<<<<<<<<<<<<<< 2"
+        if not self.data:
+            self.data = ModelDiyMap()
+            self.data.set_owner(self)
+            self.data.save(Game.store, forced=True)
+        else:
+            self.data.set_owner(self)
+        self.load_from_dict(self.data.dataDict)
+
+    def _frame_stop(self):
+        self.data.save(Game.store, forced=True, no_let=True)
+
+    def markDirty(self):
+        super(DiyMapInfo, self).markDirty()
+        self.data.modify()
+
+    # 存库数据
+    def to_save_dict(self, forced=False):
+        if self.isDirty() or forced or not self.save_cache:
+            save_cache = {}
+            save_cache["dMapInfo"] = cPickle.dumps(self.dMapInfo)
+            save_cache["dMapInfoMapKey"] = cPickle.dumps(self.dMapInfoMapKey)
+            save_cache["lmapLikeRank"] = self.lmapLikeRank
+            save_cache["mapTranceNo"] = self.mapTranceNo
+            save_cache["lmapNewRank"] = self.lmapNewRank
+            save_cache["dmapLikeData"] = self.dmapLikeData
+
+            self.save_cache = save_cache
+        else:
+            save_cache = self.save_cache
+
+        return save_cache
+
+    # 读库数据初始化
+    def load_from_dict(self, data):
+        # print "-55555555555555-------load mapinfo data", data
+        if data.get("dMapInfo", {}):
+            self.dMapInfo = cPickle.loads(str(data.get("dMapInfo", {})))
+        if data.get("dMapInfoMapKey", {}):
+            self.dMapInfoMapKey = cPickle.loads(str(data.get("dMapInfoMapKey", {})))
+        self.lmapLikeRank = data.get("lmapLikeRank",[])
+        self.lmapNewRank = data.get("lmapNewRank",[])
+        self.mapTranceNo = data.get("mapTranceNo", 1000)
+        self.dmapLikeData = data.get("dmapLikeData",{})
+        # print "------------->>>>self.dMapInfo:", self.dMapInfo
+        self.markDirty()
+
+    def SaveMapInfo(self):
+        self.data.save(Game.store, forced=True)
+
+    def GeneraDiyMapTranceNo(self):
+        self.mapTranceNo += 1
+        self.data.modify()
+        return self.mapTranceNo
+
+    # 制作地图
+    # roleId 角色ID
+    # bgConf 背景配置
+    # layerConf 装饰层配置
+    # 'bgConf': [1, 24, 24, 1, 2, 2, 2, 1, 1, 1, 26, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 3, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 25, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 3, 3, 1, 1, 2, 2, 2],
+    # 'layerConf': [119, 0, 7, 7, 16, 21, 16, 7, 7, 0, 0, 0, 4, 4, 20, 21, 4, 21, 20, 4, 4, 0, 0, 0, 9, 9, 16, 4, 16, 9, 9, 0, 0, 6, 19, 5, 5, 11, 4, 11, 5, 5, 16, 6, 6, 19, 5, 11, 0, 4, 0, 11, 5, 16, 6, 6, 19, 5, 5, 11, 4, 11, 7, 5, 16, 6, 0, 0, 0, 4, 16, 4, 16, 4, 0, 0, 0, 0, 4, 4, 4, 12, 19, 12, 4, 4, 4, 0, 0, 20, 20, 12, 16, 19, 16, 12, 20, 20, 120]}
+    def makeDiyMap(self, roleId, name, headpic, bgConf, layerConf, mapName, mapSign, isFight=0):
+        mapkey = self.GeneraDiyMapTranceNo()
+        now = int(time.time())
+        if not self.dMapInfo.has_key(roleId):
+            self.dMapInfo[roleId] = {}
+            mapInfo = {
+                'id':mapkey,
+                'bgconf':bgConf,
+                'layerconf':layerConf,
+                'roleId':roleId,
+                'like':0,
+                'mapName':mapName,
+                'mapSign': mapSign,
+                'isFight':isFight, # 是否出战
+                'time': now,
+            }
+            self.dMapInfo[roleId][mapkey] = mapInfo
+            self.dMapInfoMapKey[mapkey] = mapInfo
+        else:
+            isFightCache = self.dMapInfo[roleId].get('isFight', 0)
+            mapInfo = {
+                'id':mapkey,
+                'bgconf':bgConf,
+                'layerconf':layerConf,
+                'roleId':roleId,
+                'like':0,
+                'mapName': mapName,
+                'mapSign': mapSign,
+                'isFight': isFightCache,
+                'time':now,
+            }
+            self.dMapInfo[roleId][mapkey] = mapInfo
+            self.dMapInfoMapKey[mapkey] = mapInfo
+        self.addNew(roleId, name, headpic, mapkey)
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
+        return {"roleId":roleId, "mapkey":mapkey}
+
+    # 制作地图
+    # roleId 角色ID
+    # bgConf 背景配置
+    # layerConf 装饰层配置
+    # 'bgConf': [1, 24, 24, 1, 2, 2, 2, 1, 1, 1, 26, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 3, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 25, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 3, 3, 1, 1, 2, 2, 2],
+    # 'layerConf': [119, 0, 7, 7, 16, 21, 16, 7, 7, 0, 0, 0, 4, 4, 20, 21, 4, 21, 20, 4, 4, 0, 0, 0, 9, 9, 16, 4, 16, 9, 9, 0, 0, 6, 19, 5, 5, 11, 4, 11, 5, 5, 16, 6, 6, 19, 5, 11, 0, 4, 0, 11, 5, 16, 6, 6, 19, 5, 5, 11, 4, 11, 7, 5, 16, 6, 0, 0, 0, 4, 16, 4, 16, 4, 0, 0, 0, 0, 4, 4, 4, 12, 19, 12, 4, 4, 4, 0, 0, 20, 20, 12, 16, 19, 16, 12, 20, 20, 120]}
+    def updateMakeDiyMap(self, roleId, name, headpic, bgConf, layerConf, mapName, mapSign, mapkey):
+        mapInfo = {}
+        try:
+            mapInfo = self.dMapInfo[roleId][mapkey]
+        except:
+            return self.makeDiyMap(roleId, name, headpic, bgConf, layerConf, mapName, mapSign)
+        mapInfo["bgconf"]       = bgConf
+        mapInfo["layerconf"]    = layerConf
+        mapInfo["mapName"]      = mapName
+        mapInfo["mapSign"]      = mapSign
+        self.dMapInfo[roleId][mapkey] = mapInfo
+        self.dMapInfoMapKey[mapkey] = mapInfo
+        self.markDirty()
+        return {"roleId":roleId, "mapkey":mapkey}
+
+
+    def addLike(self, roleID, mapkey):
+
+        from game.mgr.player import get_rpc_player
+        who = get_rpc_player(roleID)
+        if self.dMapInfo.has_key(roleID):
+            print ".>>>>>>>>>>>>>>>>>>>>..", self.dMapInfo[roleID].keys(), mapkey
+            if self.dMapInfo[roleID].has_key(mapkey):
+                like = self.dMapInfo[roleID][mapkey].get('like',0)
+                now = self.dMapInfo[roleID][mapkey].get('time',0)
+                if not now:
+                    now = int(time.time())
+                    self.dMapInfo[roleID][mapkey]['time'] = now
+                like += 1
+                print "------------like",like
+                self.dMapInfo[roleID][mapkey]['like'] = like
+                # 添加到排行榜
+                roleID = who.getUID()
+                name = who.Name()
+                headpic = who.getIcon()
+                tInfo = [roleID, name, headpic, mapkey, like, now]
+                self.insterNewRank(roleID, tInfo, mapkey)
+                # ======================================================
+                now = int(time.time())
+                tInfo = [roleID, name, headpic, mapkey, like, now]
+                self.insterMapRank(roleID, tInfo, mapkey)
+                return like
+
+        return 0
+
+    def insterMapRank(self, rid, tUpdateInfo, mapkey, forceUpdate=False):
+        for i, tInfo in enumerate(self.lmapLikeRank):
+            if tInfo[0] == rid and tInfo[3] == mapkey:
+                if forceUpdate:
+                    self.lmapLikeRank.pop(i)
+                    break
+                if tUpdateInfo[4] > tInfo[4]:
+                    self.lmapLikeRank.pop(i)
+                    break
+                return
+        BinaryInsertRight(self.lmapLikeRank, tUpdateInfo, self.MapSort)
+        while len(self.lmapLikeRank) > MAP_RANK_MAX:
+            self.lmapLikeRank.pop()
+        self.markDirty()
+        pass
+
+    def MapSort(self, a, b):
+        # tInfo = [roleID, name, headpic, mapkey, like, now]
+        l1 = [a[4],-1*a[5],-1*a[1]]
+        l2 = [b[4],-1*b[5],-1*b[1]]
+        if l1 > l2:
+            return -1
+        else:
+            return 1
+
+    # 最新排行榜
+    def addNew(self, roleID, name, headpic, mapkey):
+        print "------------------sdsdsd ::: ",roleID, name, headpic, mapkey
+        if self.dMapInfo.has_key(roleID):
+            if self.dMapInfo[roleID].has_key(mapkey):
+                like = self.dMapInfo[roleID][mapkey].get('like',0)
+                like += 1
+                self.dMapInfo[roleID][mapkey]['like'] = like
+                # 添加到排行榜
+                now = time.time()
+                tInfo = [roleID, name, headpic, mapkey, like, now]
+                self.insterNewRank(roleID, tInfo, mapkey)
+        pass
+
+    # 插入最新排行榜
+    def insterNewRank(self, rid, tUpdateInfo, mapkey, forceUpdate=False):
+        # print "tUpdateInfo===============", tUpdateInfo
+        for i, tInfo in enumerate(self.lmapNewRank):
+            if tInfo[0] == rid and tInfo[3] == mapkey:
+                if forceUpdate:
+                    self.lmapNewRank.pop(i)
+                    break
+                if tUpdateInfo[5] < tInfo[5]:
+                    self.lmapNewRank.pop(i)
+                    break
+                if tUpdateInfo[4] > tInfo[4]:
+                    self.lmapNewRank.pop(i)
+                    break
+        BinaryInsertRight(self.lmapNewRank, tUpdateInfo, self.NewSort)
+        while len(self.lmapNewRank) > MAP_RANK_MAX:
+            self.lmapNewRank.pop()
+        self.markDirty()
+        pass
+
+    def NewSort(self, a, b):
+        # tInfo = [roleID, name, headpic, mapkey, like, now]
+        l1 = [-1*a[5],-1*a[1]]
+        l2 = [-1*b[5],-1*b[1]]
+        if l1 > l2:
+            return 1
+        else:
+            return -1
+
+    # 点赞榜
+    def getMapLikeRank(self):
+        lrank = self.lmapLikeRank[:MAP_SHOW_RANK]
+        lmapRank = []
+        for tRankInfo in lrank:
+            print tRankInfo
+            dInfo = {} # [roleID, name, headpic, mapkey, like, now]
+            # [200010001, '\xe6\x80\x9d\xe5\xbf\xb5\xe6\xb8\x90\xe6\xb5\x93', '', 1003, 1, 1573513942.426]
+            rid             = tRankInfo[0]
+            name            = tRankInfo[1]
+            headpic         = tRankInfo[2]
+            mapkey          = tRankInfo[3]
+            like            = tRankInfo[4]
+            if not rid in self.dMapInfo:
+                continue
+            if not mapkey in self.dMapInfo[rid]:
+                continue
+            mapInfo             = self.dMapInfo[rid].get(mapkey,{})
+            bgconf              = mapInfo.get("bgconf",[])
+            layerconf           = mapInfo.get("layerconf", [])
+            mapName             = mapInfo.get("mapName", "")
+            mapSign             = mapInfo.get("mapSign", "")
+            dInfo["rid"]        = rid
+            dInfo["name"]       = name
+            dInfo["headpic"]    = headpic
+            dInfo["mapkey"]     = mapkey
+            dInfo["lBgconf"]    = bgconf
+            dInfo["lLayerconf"] = layerconf
+            dInfo["like"]       = like
+            dInfo["mapName"]    = mapName
+            dInfo["mapSign"]    = mapSign
+            lmapRank.append(dInfo)
+        return lmapRank
+
+    # 最新榜
+    def getNewRank(self):
+        lrank = self.lmapNewRank[:MAP_SHOW_RANK]
+        lmapRank = []
+        for tRankInfo in lrank:
+            print tRankInfo
+            dInfo       = {}
+            rid         = tRankInfo[0]
+            name        = tRankInfo[1]
+            headpic     = tRankInfo[2]
+            mapkey      = tRankInfo[3]
+            like        = tRankInfo[4]
+            if not rid in self.dMapInfo:
+                continue
+            if not mapkey in self.dMapInfo[rid]:
+                continue
+            mapInfo             = self.dMapInfo[rid].get(mapkey,{})
+            bgconf              = mapInfo.get("bgconf",[])
+            layerconf           = mapInfo.get("layerconf", [])
+            mapName             = mapInfo.get("mapName", "")
+            mapSign             = mapInfo.get("mapSign", "")
+            dInfo["rid"]        = rid
+            dInfo["name"]       = name
+            dInfo["headpic"]    = headpic
+            dInfo["mapkey"]     = mapkey
+            dInfo["lBgconf"]    = bgconf
+            dInfo["lLayerconf"] = layerconf
+            dInfo["like"]       = like
+            dInfo["mapName"]    = mapName
+            dInfo["mapSign"]    = mapSign
+            lmapRank.append(dInfo)
+        return lmapRank
+
+
+    # 获取我的地图
+    def getMyMaps(self, rid):
+        allMapInfo = self.dMapInfo.get(rid, {})
+        # print "------self.dMapInfo--",self.dMapInfo
+        return allMapInfo
+
+    # 设置出战地图
+    def setFightMap(self, rid, mid):
+        MyMaps = self.getMyMaps(rid)
+        for mapId, mInfo in MyMaps.iteritems():
+            if mapId == mid:
+                mInfo['isFight'] = 1
+            else:
+                mInfo['isFight'] = 0
+        self.dMapInfo[rid] = MyMaps
+        return MyMaps.get(mid, {})

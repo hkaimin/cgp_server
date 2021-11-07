@@ -1,0 +1,1 @@
+start "gateway" ./gameserver.exe main.py gateway start

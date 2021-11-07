@@ -1,0 +1,81 @@
+{% extends 'admin/master.html' %}
+{% from '_macro/sidebar.html' import menuitem, model_menuitem %}
+
+
+{% block breadcrumb %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ url_for('dev.index') }}">用户数据</a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">{{ admin_view.name }}</li>
+    </ul>
+{% endblock %}
+
+
+{% block wrap %}
+
+<div id="wrap" class="container-fluid">
+
+    <div class="row-fluid">
+
+        <div class="span2" id="sidebar">
+
+            <div class="sidebar-nav">
+                <div class="nav-title">用户表数据</div>
+                <div class="nav-subtitle">服数据</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('user_model_status', '服状态表') }}
+                </ul>
+
+                <div class="nav-subtitle">基础系统</div>
+                <ul class="nav nav-list">
+                	{{ model_menuitem('user_model_account', '账号表') }}
+                    {{ model_menuitem('user_model_player', '玩家表') }}
+                    {{ model_menuitem('user_model_phero', '英雄表') }}
+                    {{ model_menuitem('user_model_pattr', '属性表') }}
+                </ul>
+
+                <div class="nav-subtitle">物品系统</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('user_model_pitem', '物品表') }}
+                    {{ model_menuitem('user_model_pdice', '骰子表') }}
+                    {{ model_menuitem('user_model_pcar', '载具表') }}
+                    {{ model_menuitem('user_model_pcloth', '服装表') }}
+                    {{ model_menuitem('user_model_pcard', '道具卡表') }}
+                    {{ model_menuitem('user_model_pmail', '邮件表') }}
+                    {{ model_menuitem('user_model_pannounce', '公告历史表') }}
+                </ul>
+
+            </div>
+
+            <div class="sidebar-nav">
+                <div class="nav-title">日志表数据</div>
+                <ul class="nav nav-list">
+                    {{ model_menuitem('logging_model_logrpc', 'RPC表') }}
+                    {{ model_menuitem('logging_model_logonline', '在线表') }}
+                    {{ model_menuitem('logging_model_loginfo', '上下线表') }}
+                    {{ model_menuitem('logging_model_traceback', 'traceback 表') }}
+                    {{ model_menuitem('logging_model_luatraceback', 'luatraceback 表') }}
+                    {{ model_menuitem('logging_model_luatracebackvar', 'luatracebackvar 变量表') }}
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="main" class="span10">
+
+            <div class="title">{{ admin_view.name }}</div>
+
+            {% block main_content %}
+
+                请从左边选择操作
+
+            {% endblock %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

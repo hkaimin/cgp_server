@@ -1,0 +1,73 @@
+{% extends 'dev/dev.html' %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<h4>缓存状态</h4>
+
+<p>数据库地址：<span style="font-style: italic;">{{ db_url }}</span></p>
+
+{% if error %}
+
+<p class="text-error">{{ error }}</p>
+
+{% else %}
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="span3">KEY</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for key in entries %}
+        <tr>
+            <td>{{ key }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<form class="form-inline" method="post" role="form" style="display: inline-block">
+    <input type="hidden" name="action" value="flush">
+    <button type="submit" class="btn btn-default">清空缓存</button>
+</form>
+
+<h4>服务进程信息</h4>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="span3">KEY</th>
+            <th>VALUE</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for key, value in info %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+    var form = $('form');
+    form.on('submit', function() {
+        return confirm('你确定要清空吗？')
+    });
+});
+</script>
+{% endblock %}
+

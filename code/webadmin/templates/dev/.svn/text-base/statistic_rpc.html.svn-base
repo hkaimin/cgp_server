@@ -1,0 +1,117 @@
+{% extends 'dev/dev.html' %}
+{% from '_macro/datetime.html' import render_input %}
+
+
+{% block head %}
+{{ super() }}
+<style>
+form .rpc_type {
+    display: inline-block;
+}
+</style>
+{% endblock %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<form class="form-inline">
+    <label class="control-label">时间范围：</label>
+    {{ render_input('start') }} - {{ render_input('end') }}
+    <div class="rpc_type">
+        <label class="radio">
+            <input type="radio" name="type" value="0" checked> 普通函数
+        </label>
+        <label class="radio">
+            <input type="radio" name="type" value="1"> grpc 函数
+        </label>
+        <label class="radio">
+            <input type="radio" name="type" value="2"> 数据库接口
+        </label>
+    </div>
+    <button type="submit" class="btn btn-success">查看</button>
+    <button type="reset" class="btn">重置</button>
+</form>
+
+<div>
+
+<table class="table table-bordered table-hover table-striped table-sorted">
+    <thead><tr>
+        <th class="span1">序号</th>
+        <th>函数</th>
+        <th>总调用次数</th>
+        <th>总耗时</th>
+        <th>平均用时</th>
+        <th>分类</th>
+        <th>错误次数</th>
+        <th>时间点区间</th>
+    </tr></thead>
+    <tbody></tbody>
+</table>
+
+</div>
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+var renderTable = function(data) {
+    var createRowHtml = function(d, i) {
+        return '<td>' + (i + 1) + '</td>' +
+               '<td>' + d.key + '</td>' +
+               '<td>' + d.total + '</td>' +
+               '<td>' + d.use + '</td>' +
+               '<td>' + d.use / d.total + '</td>' +
+               '<td>' + d.t + '</td>' +
+               '<td>' + d.err + '</td>' +
+               '<td>' + $.cvLabelTimeRange(d.start, d.end) + '</td>' +
+               '';
+    };
+    lib.initD3Table(createRowHtml, data.entries);
+    $('table').trigger('update');
+};
+
+var initFormParams = function() {
+    var formParams;
+    if (lib.formStore.empty()) {
+        // 从凌晨开始，午夜结束
+        formParams = $.mkReadableTimeRange(-24 * 3600, 0);
+        formParams.start = formParams.start.slice(0, 10) + ' 00:00:00';
+        formParams.end = formParams.end.slice(0, 10) + ' 23:59:59';
+        formParams.type = 1;
+    } else {
+        formParams = $.deparams(lib.formStore.get());
+    }
+    $('#start').val(formParams.start);
+    $('#end').val(formParams.end);
+    var typeNode = $('input[type="radio"][value="' + formParams['type'] + '"]');
+    typeNode[0].checked = true;
+};
+
+var refreshRender = function() {
+    var formParams = {
+        start: $('#start').val(),
+        end: $('#end').val(),
+        type: $('input[type="radio"]:checked').val(),
+    };
+    lib.formStore.set($.param(formParams));
+    $.getJSON('data.json', formParams)
+     .done(renderTable);
+};
+
+initFormParams();
+refreshRender();
+$('form').submit(function() {
+    refreshRender();
+    return false;
+});
+
+});
+</script>
+{% endblock %}

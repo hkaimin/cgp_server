@@ -1,0 +1,46 @@
+{% extends 'ctr.html' %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="javascript:void(0);">列表</a></li>
+    <li><a href="new">创建</a></li>
+</ul>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="span1">ID</th>
+            <th class="span3">用户名</th>
+            <th class="span3">用户组</th>
+            <th class="span3">操作</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for user in users.itervalues() %}
+        <tr>
+            <td>{{ user._id }}</td>
+            <td>{{ user.name }}</td>
+            {% if user._id == 1 %}
+                <td><span>超级管理员</span></td>
+                <td></td>
+            {% else %}
+                <td>
+                    {% for group_id in user.groups %}
+                        <a href="../system_group/edit/{{ group_id }}">{{
+                            groups[group_id].name }}</a>
+                    {% endfor %}
+                </td>
+                <td><a href="edit/{{ user._id }}">修改</a></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

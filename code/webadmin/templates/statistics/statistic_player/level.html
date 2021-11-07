@@ -1,0 +1,84 @@
+{% extends 'ope.html' %}
+{% from '_macro/datetime.html' import render_input %}
+
+
+{% block main_content %}
+
+{% include('_include/message.html') %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="./level">等级分布</a></li>
+</ul>
+
+<div id="chartContainer" class="chart">
+    <svg height="500"></svg>
+</div>
+
+<table class="table table-bordered table-hover table-striped table-sorted">
+    <thead><tr>
+        <th class="span1">序号</th>
+        <th>等级</th>
+        <th>玩家数</th>
+    </tr></thead>
+    <tbody></tbody>
+</table>
+
+{% endblock %}
+
+
+{% block tail %}
+{{ super() }}
+<script>
+$(function() {
+'use strict';
+
+var chart;
+var chartData = [];
+nv.addGraph(function() {
+    chart = nv.models.discreteBarChart();
+    chart.xAxis.tickFormat(lib.integer);
+    chart.yAxis.tickFormat(lib.integer);
+    chart.forceY([0])
+         .valueFormat(lib.integer)
+         .staggerLabels(true)
+         .showValues(true);
+    d3.select('#chartContainer svg')
+        .datum(chartData)
+        .transition().duration(500)
+        .call(chart);
+    nv.utils.windowResize(chart.update);
+    return chart;
+});
+var renderChart = function(data) {
+    chartData[0] = {
+        key: '等级',
+        values: data.entries.map(function(d) {
+            return {x: d.level, y: d.count};
+        }),
+    };
+    chart.update();
+};
+
+var renderTable = function(data) {
+    var createRowHtml = function(d, i) {
+        return '<td>' + (i + 1) +'</td>' +
+               '<td>' + d.level + '</td>' +
+               '<td>' + d.count + '</td>' +
+               '';
+    };
+    lib.initD3Table(createRowHtml, data.entries);
+    $('table').trigger('update');
+};
+
+var refreshRender = function() {
+    $.getJSON('level.json')
+     .done(renderChart)
+     .done(renderTable);
+};
+
+refreshRender();
+
+});
+
+</script>
+{% endblock %}

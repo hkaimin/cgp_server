@@ -1,0 +1,40 @@
+2019-04-02 07:06:57|010001|app_logic1|[04-02 07:06:57]p20920{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 540, in _loop
+    p.save_task()
+AttributeError: 'Player' object has no attribute 'save_task'
+
+2019-04-02 07:09:10|010001|app_logic1|[04-02 07:09:10]p20920{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 540, in _loop
+    p.save_task()
+AttributeError: 'Player' object has no attribute 'save_task'
+
+2019-04-02 07:12:50|010001|app_logic1|[04-02 07:12:50]p24296{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 540, in _loop
+    p.save_task()
+AttributeError: 'Player' object has no attribute 'save_task'
+
+2019-04-02 07:15:32|010001|app_logic1|[04-02 07:15:32]p22688{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 540, in _loop
+    p.save_task()
+AttributeError: 'Player' object has no attribute 'save_task'
+
+2019-04-02 07:17:17|010001|app_logic1|[04-02 07:17:17]p8148{log:134}ERROR-Traceback (most recent call last):
+  File "D:\2018\ddt\ddt\new_server\server\code\lib\corelib\geventfix.py", line 84, in _spawn_enter
+    func(*args, **kw)
+  ****** Traceback ******  
+  File "D:\2018\ddt\ddt\new_server\server\code\game\mgr\player.py", line 540, in _loop
+    p.save_task()
+AttributeError: 'Player' object has no attribute 'save_task'
+
