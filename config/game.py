@@ -27,7 +27,7 @@ executable = sys_setting.executable
 sub_game_cmd = executable + py_params
 
 #log_url
-log_url = "http://111.230.206.39:9000/log2"
+log_url = ""#http://111.230.206.39:9000/log2
 
 #subgame address
 base_port = 17001 #游戏服起始端口
@@ -70,7 +70,7 @@ gm_users = {
 #store
 svr_name = 'ppt'
 #db_pre = 'mongodb://ppt3:123456@%s:27017' % db_ip
-db_pre = 'mongodb://%s:27017' % db_ip
+db_pre = 'mongodb://%s:27017' % local_ip
 db_engine = '%s/%s' % (db_pre, svr_name)
 db_params = {}  # dict(max_pool_size=30,)
 # db_engine_log = '%s/%s_log' % (db_pre, svr_name)
