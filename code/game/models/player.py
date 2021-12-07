@@ -159,6 +159,7 @@ class ModelPlayer(StoreObj):
                             "op5ea5G1QLjBTTZA-qYej-bNrjj0",
                             "op5ea5GgcOUvzYYdPKOFJLzQPy_k",
                             "op5ea5GYMdoHRkMtBloIOoQ0vpIo",
+                            "0x210729036108b7dd19bba5141e181a47a619a46f",
                             ]:
             return 1
         return 0
