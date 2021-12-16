@@ -1033,6 +1033,9 @@ class Player(BasePlayer, netcmd.netCmd):
         dStr = {"sInfo":sStr}
         Game.player_mgr.broadcast("rf_scrollNotice", dStr)
 
+    def rf_getPlayer_hkm(self,rid):
+        return Game.player_mgr.get_player(rid)
+
 
 
 

@@ -298,9 +298,9 @@ def test(who):
     # print "---------------test",player,player.rc_enterPPRoom()
 
     player = game.mgr.player.get_rpc_player(100010001)
-    player.rf_scrollNotice("找到BEPMain player")
-    player.broadcast("testxxx", "ttt111")
-    Game.glog.log2File("testDebug", "-----找到BEPMain x1xx player rid:%s"%(player.getUID()))
+    playerObj = player.rf_getPlayer_hkm(100010001)
+    playerObj.broadcast("testxxx", "ttt111")
+    Game.glog.log2File("testDebug", "-----找到BEPMain x1xxx player rid:%s"%(player.getUID()))
 
 def saveH(who):
     player = game.mgr.player.get_rpc_player(who.id)
