@@ -300,7 +300,7 @@ def test(who):
     player = game.mgr.player.get_rpc_player(100010001)
     player.notify("找到BEPMain player")
     player.broadcast("testxxx", "ttt111")
-    Game.glog.log2File("testDebug", "-----找到BEPMain x1xx player")
+    Game.glog.log2File("testDebug", "-----找到BEPMain x1xx player rid:%s"%(player.id))
 
 def saveH(who):
     player = game.mgr.player.get_rpc_player(who.id)
