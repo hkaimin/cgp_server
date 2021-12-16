@@ -299,6 +299,7 @@ def test(who):
 
     player = game.mgr.player.get_rpc_player(100010001)
     player.notify("找到BEPMain player")
+    Game.glog.log2File("testDebug", "-----找到BEPMain player")
 
 def saveH(who):
     player = game.mgr.player.get_rpc_player(who.id)
