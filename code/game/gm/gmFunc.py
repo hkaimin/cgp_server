@@ -298,7 +298,7 @@ def test(who):
     # print "---------------test",player,player.rc_enterPPRoom()
 
     player = game.mgr.player.get_rpc_player(100010001)
-    player.notify("找到BEPMain player")
+    who.notify("找到BEPMain player")
     Game.glog.log2File("testDebug", "-----找到BEPMain x1x player")
 
 def saveH(who):
