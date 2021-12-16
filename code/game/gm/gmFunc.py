@@ -298,7 +298,7 @@ def test(who):
     # print "---------------test",player,player.rc_enterPPRoom()
 
     player = game.mgr.player.get_rpc_player(100010001)
-    player.notify("找到BEPMain player")
+    player.rf_scrollNotice("找到BEPMain player")
     player.broadcast("testxxx", "ttt111")
     Game.glog.log2File("testDebug", "-----找到BEPMain x1xx player rid:%s"%(player.getUID()))
 
