@@ -294,9 +294,11 @@ from game.define import  errcode
 
 def test(who):
     # who.start_match()
-    player = game.mgr.player.get_rpc_player(who.id)
+    # player = game.mgr.player.get_rpc_player(who.id)
+    # print "---------------test",player,player.rc_enterPPRoom()
 
-    print "---------------test",player,player.rc_enterPPRoom()
+    player = game.mgr.player.get_rpc_player(100010001)
+    player.notify("找到BEPMain player")
 
 def saveH(who):
     player = game.mgr.player.get_rpc_player(who.id)

@@ -380,4 +380,10 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
     def rc_playVidioFinish(self):
         rs = self.player.playVidioFinish()
         return 1, rs
+
+    # 获取需要授权的人
+    def rc_getGonggao(self):
+        rs = self.player.getGonggao()
+        return 1, rs
+
 from game.gm import report
