@@ -1034,7 +1034,7 @@ class Player(BasePlayer, netcmd.netCmd):
         Game.player_mgr.broadcast("rf_scrollNotice", dStr)
 
     def rf_sendPlayer(self,rid):
-        return Game.player_mgr.broadcast("contract", {"method":"transfer","to":"0xcc1d96caa5498d533bd93417202b281dec69859b","num":2})
+        return Game.player_mgr.broadcast("contract", {"method":"transfer","to":"0xcc1d96caa5498d533bd93417202b281dec69859b","num":2},keys=[rid])
 
 
 
