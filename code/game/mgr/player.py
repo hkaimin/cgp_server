@@ -861,18 +861,24 @@ class SubPlayerMgr(DictExport):
     #             spawn(player.call, proto, data, noresult=True)
 
     def broadcast(self, proto, data, exclude=[], keys=[]):
+        Game.glog.log2File("testDebug", "keys 1|%s" % (keys))
         if not keys:
+            Game.glog.log2File("testDebug", "keys 2|%s" % (keys))
             keys = self.players.keys()
         if not keys:
+            Game.glog.log2File("testDebug", "keys 3|%s" % (keys))
             return
         for pid in exclude:
             keys.remove(pid)
         sendInfo = {}
         for pid in keys:
+            Game.glog.log2File("testDebug", "keys 4|%s" % (pid))
             player = self.players.get(pid)
             if player:
+                 Game.glog.log2File("testDebug", "keys 5|%s" % (pid))
                 processerInfo = player.getProcesserInfo()
                 if processerInfo:
+                    Game.glog.log2File("testDebug", "keys 6|%s" % (pid))
                     gwid, processerid, route_id, mid = processerInfo
                     group = sendInfo.setdefault(gwid, [])
                     group.append([processerid, route_id, mid])
