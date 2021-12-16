@@ -875,7 +875,7 @@ class SubPlayerMgr(DictExport):
             Game.glog.log2File("testDebug", "keys 4|%s" % (pid))
             player = self.players.get(pid)
             if player:
-                 Game.glog.log2File("testDebug", "keys 5|%s" % (pid))
+                Game.glog.log2File("testDebug", "keys 5|%s" % (pid))
                 processerInfo = player.getProcesserInfo()
                 if processerInfo:
                     Game.glog.log2File("testDebug", "keys 6|%s" % (pid))
