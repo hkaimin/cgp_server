@@ -510,10 +510,10 @@ class Player(BasePlayer, netcmd.netCmd):
     # 保存代币信息
     def rc_saveCoinInfo(self, mainCoin,subCoin):
         if mainCoin:
-            self.base.setMainCoin(name)
+            self.base.setMainCoin(mainCoin)
             self.markDirty()
         if subCoin:
-            self.base.setSubCoin(name)
+            self.base.setSubCoin(subCoin)
             self.markDirty()
         return {"mainCoin":mainCoin, "subCoin":subCoin}
 
