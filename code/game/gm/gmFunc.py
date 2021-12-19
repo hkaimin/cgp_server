@@ -299,10 +299,10 @@ def test(who):
     # print "---------------test",player,player.rc_enterPPRoom()
 
     import os
-    contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%("0xcc1d96caa5498d533bd93417202b281dec69859b",1,1,time.time(),1))
+    contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%("0xcc1d96caa5498d533bd93417202b281dec69859b",1,1,int(time.time()),1))
     # player = game.mgr.player.get_rpc_player(200010001)
     # playerObj = player.rf_sendPlayer(200010001)
-    Game.glog.log2File("testDebug", "-----找到BEPMain player rid:%s contractVal:%s time.time():%s"%(who.id,contractVal,time.time()))
+    Game.glog.log2File("testDebug", "-----找到BEPMain player rid:%s contractVal:%s time.time():%s"%(who.id,contractVal,int(time.time())))
 
 def saveH(who):
     player = game.mgr.player.get_rpc_player(who.id)
