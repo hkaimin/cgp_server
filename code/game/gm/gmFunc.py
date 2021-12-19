@@ -302,7 +302,7 @@ def test(who):
     contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%("0xcc1d96caa5498d533bd93417202b281dec69859b",1,1,time.time(),1))
     # player = game.mgr.player.get_rpc_player(200010001)
     # playerObj = player.rf_sendPlayer(200010001)
-    Game.glog.log2File("testDebug", "-----找到BEPMain player rid:%s contractVal:"%(player.getUID(),contractVal))
+    Game.glog.log2File("testDebug", "-----找到BEPMain player rid:%s contractVal:"%(who.id,contractVal))
 
 def saveH(who):
     player = game.mgr.player.get_rpc_player(who.id)
