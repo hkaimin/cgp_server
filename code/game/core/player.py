@@ -507,6 +507,16 @@ class Player(BasePlayer, netcmd.netCmd):
         self.Set("bSaveWXInfo", 1)
         return {"head":head, "name":name, "gender":gender}
 
+    # 保存代币信息
+    def rc_saveCoinInfo(self, mainCoin,subCoin):
+        if mainCoin:
+            self.base.setMainCoin(name)
+            self.markDirty()
+        if subCoin:
+            self.base.setSubCoin(name)
+            self.markDirty()
+        return {"mainCoin":mainCoin, "subCoin":subCoin}
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)

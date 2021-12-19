@@ -345,6 +345,11 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_saveWXInfo(head, name, gender)
         return 1, rs
 
+    # 保存代币信息
+    def rc_saveCoinInfo(self, mainCoin,subCoin):
+        rs = self.player.rc_saveCoinInfo(mainCoin,subCoin)
+        return 1, rs
+
     # 帮助界面
     def rc_getHelp(self, helpID):
         rs = self.player.rc_getHelp(helpID)

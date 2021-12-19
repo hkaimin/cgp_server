@@ -82,9 +82,9 @@ class PlayerBase(utility.CEasyPersist):
         if self.coin <=0:
             self.coin = 0
         if iAdd < 0:
-            self.owner.notify("扣除金币x%s"%iAdd)
+            self.owner.notify("扣除主币x%s"%iAdd)
         elif iAdd > 0:
-            self.owner.notify("增加金币x%s" %iAdd)
+            self.owner.notify("增加主币x%s" %iAdd)
 
     # 获取钻石
     def getDiamond(self):
@@ -97,9 +97,19 @@ class PlayerBase(utility.CEasyPersist):
         if self.diamond <=0:
             self.diamond = 0
         if iAdd < 0:
-            self.owner.notify("扣除钻石x%s"%iAdd)
+            self.owner.notify("扣除子币x%s"%iAdd)
         else:
-            self.owner.notify("增加钻石x%s" % iAdd)
+            self.owner.notify("增加子币x%s" % iAdd)
+
+    # 添加主币
+    def setMainCoin(self,iMaincoin):
+        self.coin = int(iMaincoin)
+        self.markDirty()
+
+    # 添加子币币
+    def setSubCoin(self,iSubcoin):
+        self.diamond = int(iSubcoin)
+        self.markDirty()
 
     # 获得技能数据 {id:Lv, id:Lv}
     def getSkill(self):
