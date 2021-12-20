@@ -1,0 +1,21 @@
+表名@表示要导出配置表
+@# 只导出服务器表
+@$ 只导出前端表
+@  导出前端、后端表
+
+表第1行：字段描述注释
+表第2行：类型
+        int             数值,前端对应number,服务器go对应int；
+		string          字符串，前后端都对应string
+		float           前端对应number,服务器对应float64。(劲量别用浮点型)
+        arrayint1       1维数组，数值类型。前端对应Array<number>,服务器对应[]int
+        arrayint2       2维数组，数值类型。前端对应Array<Array<number>>,服务器对应[][]int
+        arrayint3       3维数组，数值类型。前端对应<Array<Array<string>>>,服务器对应[][][]int
+        arraystring1    1维数组，字符串类型。前端对应Array<string>,服务器对应[]string
+        arraystring2    2维数组，字符串类型。前端对应Array<Array<string>>,服务器对应[][]string
+        arraystring3    3维数组，字符串类型。前端对应<Array<Array<string>>>,服务器对应[][][]string
+        类型后面带&client 只前端需要用到，服务器不导出到json配置
+        类型后面带&server 只服务器需要用到，前端不导出到json配置
+
+表第3行：字段名，英文命名
+表第4行开始为数据
