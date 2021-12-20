@@ -82,9 +82,9 @@ class PlayerBase(utility.CEasyPersist):
         if self.coin <=0:
             self.coin = 0
         if iAdd < 0:
-            self.owner.notify("扣除主币x%s"%iAdd)
+            self.owner.notify("cost maincoin x%s"%iAdd)
         elif iAdd > 0:
-            self.owner.notify("增加主币x%s" %iAdd)
+            self.owner.notify("add maincoin x%s" %iAdd)
 
     # 获取钻石
     def getDiamond(self):
@@ -97,9 +97,9 @@ class PlayerBase(utility.CEasyPersist):
         if self.diamond <=0:
             self.diamond = 0
         if iAdd < 0:
-            self.owner.notify("扣除子币x%s"%iAdd)
+            self.owner.notify("cost subcoin x%s"%iAdd)
         else:
-            self.owner.notify("增加子币x%s" % iAdd)
+            self.owner.notify("add subcoin x%s" % iAdd)
 
     # 添加主币
     def setMainCoin(self,iMaincoin):

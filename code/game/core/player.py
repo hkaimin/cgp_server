@@ -30,6 +30,7 @@ from playerBase import PlayerBase
 from game.models.player import ModelPlayer
 import netcmd
 from game.define.constant import *
+import os
 
 
 def _wrap_lock(func):
@@ -516,6 +517,13 @@ class Player(BasePlayer, netcmd.netCmd):
             self.base.setSubCoin(subCoin)
             self.markDirty()
         return {"mainCoin":mainCoin, "subCoin":subCoin}
+
+    # 提取主币信息
+    def rc_AddMainCoin(self, mainCoin):
+        contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(mainCoin),int(time.time()),1))
+        self.base.setCoin(mainCoin)
+        self.markDirty()
+        return {"addmainCoin":mainCoin}
 
     # 获取微信信息
     def G2C_getWXInfo(self):

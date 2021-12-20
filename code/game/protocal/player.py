@@ -387,8 +387,8 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         return 1, rs
 
     # 获取需要授权的人
-    def rc_getGonggao(self):
-        rs = self.player.getGonggao()
+    def rc_AddMainCoin(self,iAdd):
+        rs = self.player.rc_AddMainCoin()
         return 1, rs
 
 from game.gm import report
