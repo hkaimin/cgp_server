@@ -519,11 +519,11 @@ class Player(BasePlayer, netcmd.netCmd):
         return {"mainCoin":mainCoin, "subCoin":subCoin}
 
     # 提取主币信息
-    def rc_AddMainCoin(self, mainCoin):
-        contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(mainCoin),int(time.time()),1))
-        self.base.setCoin(mainCoin)
+    def rc_AddMainCoin(self, iAdd):
+        contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
+        self.base.setCoin(iAdd)
         self.markDirty()
-        return {"addmainCoin":mainCoin}
+        return {"addmainCoin":iAdd}
 
     # 获取微信信息
     def G2C_getWXInfo(self):
