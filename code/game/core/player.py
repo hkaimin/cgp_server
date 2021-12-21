@@ -523,7 +523,7 @@ class Player(BasePlayer, netcmd.netCmd):
         contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
         self.base.setCoin(iAdd)
         self.markDirty()
-        return {"addmainCoin":iAdd}
+        return {"mainCoin":self.base.getCoin()}
 
     # 获取微信信息
     def G2C_getWXInfo(self):
