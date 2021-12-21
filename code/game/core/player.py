@@ -525,6 +525,13 @@ class Player(BasePlayer, netcmd.netCmd):
         self.markDirty()
         return {"mainCoin":self.base.getCoin()}
 
+    # 提取子币信息
+    def rc_AddSubCoin(self, iAdd):
+        contractVal = os.system("sh /root/contract/subcoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
+        self.base.setDiamond(iAdd)
+        self.markDirty()
+        return {"subCoin":self.base.getDiamond()}
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)

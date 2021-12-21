@@ -386,9 +386,14 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.playVidioFinish()
         return 1, rs
 
-    # 获取需要授权的人
+    #主币提取
     def rc_AddMainCoin(self,iAdd):
         rs = self.player.rc_AddMainCoin(iAdd)
+        return 1, rs
+
+    #主币提取
+    def rc_AddSubCoin(self,iAdd):
+        rs = self.player.rc_AddSubCoin(iAdd)
         return 1, rs
 
 from game.gm import report
