@@ -9,6 +9,7 @@ from corelib.gtime import current_time
 from game import Game
 from game.define import msg_define
 from game.define.protocol_define import *
+from game.define import horse_define
 
 import game.core.PaoPaoPVP.net
 import game.core.item.net
@@ -20,6 +21,8 @@ import game.core.PaoPaoPVEGuanKa.net
 import game.core.role.net
 import game.core.guide.net
 import game.core.skill.net
+
+ticket_price_maincoin = 1
 
 # @observable
 # 用Player继承
@@ -78,6 +81,8 @@ class netCmd(game.core.PaoPaoPVP.net.netCmd,    # 泡泡PVP战斗协议处理模
         rs["gm"] = who.data.IsGm()
         rs["token"] = who.relogin_token
         rs["btnCtrlData"] = self.getOpenCtrlData()
+
+        rs["ticketPrice"] = horse_define.TICKET_COST_NUM
         # self.broadcast("entergame", rs)
         return rs
 
