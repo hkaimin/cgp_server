@@ -520,9 +520,12 @@ class Player(BasePlayer, netcmd.netCmd):
 
     # 提取主币信息
     def rc_AddMainCoin(self, iAdd):
-        contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
+        import subprocess
+        pPro = subprocess.Popen(['sh','/root/contract/maincoin/contract.sh',self.data.account,1,int(iAdd),int(time.time()),1],stdout=subprocess.PIPE,shell=False,close_fds=True)
+        #contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
         self.base.setCoin(iAdd)
         self.markDirty()
+        Game.glog.log2File("contract", "%s" % (pPro))
         return {"mainCoin":self.base.getCoin()}
 
     # 提取子币信息
