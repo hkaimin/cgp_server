@@ -523,6 +523,7 @@ class Player(BasePlayer, netcmd.netCmd):
         import subprocess
         pPro = subprocess.Popen(['sh','/root/contract/maincoin/contract.sh','%s'%self.data.account,'1','%s'%int(iAdd),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
         #contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
+        pPro.wait()
         self.base.setCoin(iAdd)
         self.markDirty()
         Game.glog.log2File("contract", "%s" % (pPro.stdout.readlines()))
