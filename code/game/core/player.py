@@ -525,7 +525,7 @@ class Player(BasePlayer, netcmd.netCmd):
         #contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
         self.base.setCoin(iAdd)
         self.markDirty()
-        Game.glog.log2File("contract", "%s" % (pPro))
+        Game.glog.log2File("contract", "%s" % (p.stdout.readlines()))
         return {"mainCoin":self.base.getCoin()}
 
     # 提取子币信息
