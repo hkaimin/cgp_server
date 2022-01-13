@@ -528,7 +528,7 @@ class Player(BasePlayer, netcmd.netCmd):
         pPro2.wait()
         self.base.setCoin(iAdd)
         self.markDirty()
-        Game.glog.log2File("contract", "===pPro2=%s" % (pPro2.stdout.readlines()))
+        Game.glog.log2File("contract", "===pPro=%s===pPro2=%s" % (pPro.stdout.readlines(),pPro2.stdout.readlines()))
         return {"mainCoin":self.base.getCoin()}
 
     # 提取子币信息
