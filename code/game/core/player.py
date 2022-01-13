@@ -527,9 +527,12 @@ class Player(BasePlayer, netcmd.netCmd):
         pPro.wait()
         pPro2 = subprocess.Popen(['sh','/root/contract/maincoin/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
         pPro2.wait()
-        result = "%s"%(pPro2.stdout.readlines()).find("status: true")
-        receiptStatus = "success" if result >= 0 else "fail"
-        if result >= 0:  
+        receiptStatus = "fail"
+        for sRes in pPro2.stdout.readlines():
+            if sRes.find("status: true") >= 0:
+                receiptStatus = "success"
+                break
+        if receiptStatus == "success":  
             self.base.setCoin(iAdd)
             self.markDirty()
         else:
