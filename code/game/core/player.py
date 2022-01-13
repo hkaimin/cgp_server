@@ -523,7 +523,7 @@ class Player(BasePlayer, netcmd.netCmd):
         import subprocess
         pPro = subprocess.Popen(['sh','/root/contract/maincoin/contract.sh','%s'%self.data.account,'1','%s'%int(iAdd),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
         #contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
-        tHash = "%s"%pPro.stdout.readlines()
+        tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
         pPro.wait()
         pPro2 = subprocess.Popen(['sh','/root/contract/maincoin/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
         pPro2.wait()
