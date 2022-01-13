@@ -542,9 +542,23 @@ class Player(BasePlayer, netcmd.netCmd):
 
     # 提取子币信息
     def rc_AddSubCoin(self, iAdd):
-        contractVal = os.system("sh /root/contract/subcoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
-        self.base.setDiamond(iAdd)
-        self.markDirty()
+        import subprocess
+        pPro = subprocess.Popen(['sh','/root/contract/subcoin/contract.sh','%s'%self.data.account,'1','%s'%int(iAdd),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+        tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
+        pPro.wait()
+        pPro2 = subprocess.Popen(['sh','/root/contract/subcoin/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
+        pPro2.wait()
+        receiptStatus = "fail"
+        for sRes in pPro2.stdout.readlines():
+            if sRes.find("status: true") >= 0:
+                receiptStatus = "success"
+                break
+        if receiptStatus == "success":  
+            self.base.setDiamond(iAdd)
+            self.markDirty()
+        else:
+            self.notify("Transaction fail!")
+        Game.glog.log2File("contract", "AddSubCoin|account:%s|iAdd:%s|receiptStatus:%s" % (self.data.account,iAdd,receiptStatus))
         return {"subCoin":self.base.getDiamond()}
 
     # 获取微信信息
