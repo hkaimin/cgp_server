@@ -580,7 +580,7 @@ class Player(BasePlayer, netcmd.netCmd):
                 self.notify("Transaction nft success!")
             else:
                 self.notify("Transaction failed!")
-            Game.glog.log2File("contract", "createNft|account:%s|iAdd:%s|receiptStatus:%s" % (self.data.account,iAdd,receiptStatus))
+            Game.glog.log2File("contract", "createNft|account:%s|iNftIndex:%s|receiptStatus:%s" % (self.data.account,iNftIndex,receiptStatus))
         return {}
 
     # 获取微信信息
