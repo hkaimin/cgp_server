@@ -102,11 +102,9 @@ class DiyMapInfo(utility.DirtyFlag):
         return self.nftPool.get(iIndex,{})
 
     def SaveNftInfo(self,iIndex,dNftData):
-        print ">>>>>SaveNftInfo>>>>>>>>",iIndex,dNftData
         self.nftPool[str(iIndex)] = dNftData
         self.data.modify()
         self.data.save(Game.store, forced=True, no_let=True)
-        Game.glog.log2File("contract", "createNft|iIndex:%s|dNftData:%s" % (iIndex,dNftData))
 
     # 制作地图
     # roleId 角色ID
