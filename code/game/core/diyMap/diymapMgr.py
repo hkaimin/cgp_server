@@ -90,6 +90,7 @@ class DiyMapInfo(utility.DirtyFlag):
     def GeneraDiyMapTranceNo(self):
         self.mapTranceNo += 1
         self.data.modify()
+        self.data.save(Game.store, forced=True, no_let=True)
         return self.mapTranceNo
 
     # 制作地图
