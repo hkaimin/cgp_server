@@ -519,7 +519,7 @@ class Player(BasePlayer, netcmd.netCmd):
         return {"mainCoin":mainCoin, "subCoin":subCoin}
 
     # 提取主币信息
-    def rc_AddMainCoin(self, iAdd):
+    def rc_AddMainCoin(self, iAdd,iOpType):
         import subprocess
         pPro = subprocess.Popen(['sh','/root/contract/maincoin/contract.sh','%s'%self.data.account,'1','%s'%int(iAdd),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
         #contractVal = os.system("sh /root/contract/maincoin/contract.sh %s %s %s %s %s"%(self.data.account,1,int(iAdd),int(time.time()),1))
@@ -541,7 +541,7 @@ class Player(BasePlayer, netcmd.netCmd):
         return {"mainCoin":self.base.getCoin()}
 
     # 提取子币信息
-    def rc_AddSubCoin(self, iAdd):
+    def rc_AddSubCoin(self, iAdd,iOpType):
         import subprocess
         pPro = subprocess.Popen(['sh','/root/contract/subcoin/contract.sh','%s'%self.data.account,'1','%s'%int(iAdd),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
         tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")

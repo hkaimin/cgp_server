@@ -387,13 +387,13 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         return 1, rs
 
     #主币提取
-    def rc_AddMainCoin(self,iAdd):
-        rs = self.player.rc_AddMainCoin(iAdd)
+    def rc_AddMainCoin(self,iAdd,iOpType):
+        rs = self.player.rc_AddMainCoin(iAdd,iOpType)
         return 1, rs
 
     #主币提取
-    def rc_AddSubCoin(self,iAdd):
-        rs = self.player.rc_AddSubCoin(iAdd)
+    def rc_AddSubCoin(self,iAdd,iOpType):
+        rs = self.player.rc_AddSubCoin(iAdd,iOpType)
         return 1, rs
 
 from game.gm import report
