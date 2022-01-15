@@ -396,4 +396,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_AddSubCoin(iAdd,iOpType)
         return 1, rs
 
+    #创建nft
+    def rc_createNft(self,iTickets):
+        rs = self.player.rc_createNft(iTickets)
+        return 1, rs
+
 from game.gm import report

@@ -536,7 +536,7 @@ class Player(BasePlayer, netcmd.netCmd):
             self.base.setCoin(iAdd)
             self.markDirty()
         else:
-            self.notify("Transaction fail!")
+            self.notify("Transaction failed!")
         Game.glog.log2File("contract", "AddMainCoin|account:%s|iAdd:%s|receiptStatus:%s" % (self.data.account,iAdd,receiptStatus))
         return {"mainCoin":self.base.getCoin()}
 
@@ -557,9 +557,31 @@ class Player(BasePlayer, netcmd.netCmd):
             self.base.setDiamond(iAdd)
             self.markDirty()
         else:
-            self.notify("Transaction fail!")
+            self.notify("Transaction failed!")
         Game.glog.log2File("contract", "AddSubCoin|account:%s|iAdd:%s|receiptStatus:%s" % (self.data.account,iAdd,receiptStatus))
         return {"subCoin":self.base.getDiamond()}
+
+    #创建nft
+    def rc_createNft(self,iTicket):
+        for i in xrange(iTicket):
+            iNftIndex = Game.rpc_player_mgr.GeneraDiyMapTranceNo()
+            import subprocess
+            pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%self.data.account,'1','%s'%abs(int(iNftIndex)),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+            tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
+            pPro.wait()
+            pPro2 = subprocess.Popen(['sh','/root/contract/nft/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
+            pPro2.wait()
+            receiptStatus = "fail"
+            for sRes in pPro2.stdout.readlines():
+                if sRes.find("status: true") >= 0:
+                    receiptStatus = "success"
+                    break
+            if receiptStatus == "success":  
+                self.notify("Transaction nft success!")
+            else:
+                self.notify("Transaction failed!")
+            Game.glog.log2File("contract", "createNft|account:%s|iAdd:%s|receiptStatus:%s" % (self.data.account,iAdd,receiptStatus))
+        return {}
 
     # 获取微信信息
     def G2C_getWXInfo(self):
