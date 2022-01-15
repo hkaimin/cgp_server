@@ -28,6 +28,7 @@ class DiyMapInfo(utility.DirtyFlag):
         self.dmapLikeData = {}
 
         self.mapTranceNo = 1000
+        self.nftPool = {} #horse nft info
 
         self.save_cache = {}  # 存储缓存
 
@@ -64,6 +65,8 @@ class DiyMapInfo(utility.DirtyFlag):
             save_cache["lmapNewRank"] = self.lmapNewRank
             save_cache["dmapLikeData"] = self.dmapLikeData
 
+            save_cache["nftPool"] = self.nftPool
+
             self.save_cache = save_cache
         else:
             save_cache = self.save_cache
@@ -81,6 +84,8 @@ class DiyMapInfo(utility.DirtyFlag):
         self.lmapNewRank = data.get("lmapNewRank",[])
         self.mapTranceNo = data.get("mapTranceNo", 1000)
         self.dmapLikeData = data.get("dmapLikeData",{})
+
+        self.nftPool = data.get("nftPool",{})
         # print "------------->>>>self.dMapInfo:", self.dMapInfo
         self.markDirty()
 
@@ -92,6 +97,13 @@ class DiyMapInfo(utility.DirtyFlag):
         self.data.modify()
         self.data.save(Game.store, forced=True, no_let=True)
         return self.mapTranceNo
+
+    def GetNftInfo(self,iIndex):
+        return self.nftPool.get(iIndex,{})
+
+    def SaveNftInfo(self,iIndex,dNftData):
+        self.nftPool[iIndex] = dNftData
+        self.markDirty()
 
     # 制作地图
     # roleId 角色ID

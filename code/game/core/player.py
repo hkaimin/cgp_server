@@ -23,7 +23,7 @@ from corelib.gtime import current_time, current_hour, get_days
 
 from game import Game
 from game.core.playerBase import PlayerBase
-from game.define import errcode, msg_define, constant, protocol_define
+from game.define import errcode, msg_define, constant, protocol_define , horse_define
 from game.models.player import ModelPlayer
 from cycleData import CycleDay, CycleWeek, CycleMonth, CycleHour, CycleCustom
 from playerBase import PlayerBase
@@ -31,7 +31,7 @@ from game.models.player import ModelPlayer
 import netcmd
 from game.define.constant import *
 import os
-
+from game.common import utility
 
 def _wrap_lock(func):
     def _func(self, *args, **kw):
@@ -261,6 +261,16 @@ class Player(BasePlayer, netcmd.netCmd):
             self.data.name = name
             self.base.setName(name)
             self.markDirty()
+
+    # 获取随机名
+    def GetRandomName(self):
+        namedata = Game.res_mgr.res_name
+        if namedata:
+            max_name_key = max(namedata.keys())
+            rank_key = random.randint(1, max_name_key)
+            nameObj = namedata.get(rank_key, "")
+            return nameObj.name
+        return "super hero"
 
     def AddKey(self, key, default):
         return self.base.AddKey(key, default)
@@ -566,7 +576,7 @@ class Player(BasePlayer, netcmd.netCmd):
         for i in xrange(iTickets):
             iNftIndex = Game.rpc_diymap_info.GeneraDiyMapTranceNo()
             import subprocess
-            pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%self.data.account,'1','%s'%abs(int(iNftIndex)),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+            pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%self.data.account,'1','%s'%iNftIndex,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
             tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
             pPro.wait()
             pPro2 = subprocess.Popen(['sh','/root/contract/nft/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
@@ -576,11 +586,15 @@ class Player(BasePlayer, netcmd.netCmd):
                 if sRes.find("status: true") >= 0:
                     receiptStatus = "success"
                     break
-            if receiptStatus == "success":  
-                self.notify("Transaction nft success!")
-            else:
-                self.notify("Transaction failed!")
-            Game.glog.log2File("contract", "createNft|account:%s|iNftIndex:%s|receiptStatus:%s" % (self.data.account,iNftIndex,receiptStatus))
+            iRandomHorseType = 0
+            sRanName = ""
+            if receiptStatus == "success":
+                iRanInt = random.randint(1,1000)
+                sRanName= self.GetRandomName()
+                iRandomHorseType = utility.GetLeftValue(iRanInt,horse_define.HORSE_TYPE_RANDOM)
+                dNftData = {"iRandomHorseType":iRandomHorseType,"sRanName":sRanName,"owner":self.data.account,"sellStatus":0}
+                Game.rpc_diymap_info.SaveNftInfo(iNftIndex,dNftData)
+            Game.glog.log2File("contract", "createNft|account:%s|iNftIndex:%s|iRandomHorseType:%s|sRanName:%s|receiptStatus:%s" % (self.data.account,iNftIndex,iRandomHorseType,sRanName,receiptStatus))
         return {}
 
     # 获取微信信息
