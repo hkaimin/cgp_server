@@ -562,9 +562,9 @@ class Player(BasePlayer, netcmd.netCmd):
         return {"subCoin":self.base.getDiamond()}
 
     #创建nft
-    def rc_createNft(self,iTicket):
-        for i in xrange(iTicket):
-            iNftIndex = Game.rpc_player_mgr.GeneraDiyMapTranceNo()
+    def rc_createNft(self,iTickets):
+        for i in xrange(iTickets):
+            iNftIndex = Game.rpc_diymap_info.GeneraDiyMapTranceNo()
             import subprocess
             pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%self.data.account,'1','%s'%abs(int(iNftIndex)),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
             tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
