@@ -602,6 +602,11 @@ class Player(BasePlayer, netcmd.netCmd):
             Game.glog.log2File("contract", "createNft|account:%s|iNftIndex:%s|iRandomHorseType:%s|sRanName:%s|receiptStatus:%s" % (self.data.account,iNftIndex,iRandomHorseType,sRanName,receiptStatus))
         return {"nftInfo":nftInfo}
 
+    #获取已有nft
+    def rc_getOwnNft(self,lNft):
+        Game.glog.log2File("contract", "getOwnNft|account:%s|lNft:%s" % (self.data.account,str(lNft)))
+        return {}
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)

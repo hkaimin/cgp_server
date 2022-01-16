@@ -401,4 +401,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_createNft(iTickets)
         return 1, rs
 
+    #获取已有nft
+    def rc_getOwnNft(self,lNft):
+        rs = self.player.rc_getOwnNft(lNft)
+        return 1, rs
+
 from game.gm import report
