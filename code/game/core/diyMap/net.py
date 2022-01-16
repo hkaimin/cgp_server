@@ -238,6 +238,11 @@ class netCmd(object):
     def rc_getNftMarket(self):
         return {"nftMarket":Game.rpc_diymap_info.rc_getNftMarket()}
 
+    # sell nft
+    def rc_SellNft(self,nftIndex):
+        self.notify("Sales Success!")
+        return Game.rpc_diymap_info.rc_SellNft(nftIndex)
+
 
 
 import game.core.item

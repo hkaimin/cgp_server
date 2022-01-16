@@ -128,6 +128,11 @@ class DiyMapInfo(utility.DirtyFlag):
             lMarketData.append(dHorse)
         return {"lMarketData":lMarketData}
 
+    def rc_SellNft(self,nftIndex):
+        if int(nftIndex) not in self.nftMarket:
+            self.nftMarket.append(nftIndex)
+        return self.rc_getNftMarket()
+
     def rc_getNftInfo(self,lHorse):
         lOwnNftData = []
         for sIndex in lHorse:
