@@ -604,6 +604,9 @@ class Player(BasePlayer, netcmd.netCmd):
 
     #获取已有nft
     def rc_getOwnNft(self,lNft):
+        for i in lNft:
+            Game.glog.log2File("contract", "getOwnNft|lNft:%s" % (int(i)))
+
         Game.glog.log2File("contract", "getOwnNft|account:%s|lNft:%s" % (self.data.account,str(lNft)))
         return {}
 
