@@ -120,12 +120,31 @@ class DiyMapInfo(utility.DirtyFlag):
                 "iType": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"] ,
                 "res_key": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"] ,
                 "id": iIndex ,
+                "sellStatus": dLoad["sellStatus"],
                 "score": random.randint(300,777) ,
                 "money": random.randint(10,50) ,
                 "star": random.randint(1,5)
             }
-            lMarketData.append(lMarketData)
+            lMarketData.append(dHorse)
         return {"lMarketData":lMarketData}
+
+    def rc_getNftInfo(self,lHorse):
+        lOwnNftData = []
+        for sIndex in lHorse:
+            iIndex = int(sIndex)
+            dLoad = self.nftPool.get(str(iIndex),{})
+            dHorse = {
+                "name":dLoad["sRanName"],
+                "iType": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"] ,
+                "res_key": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"] ,
+                "id": iIndex ,
+                "sellStatus": dLoad["sellStatus"],
+                "score": random.randint(300,777) ,
+                "money": random.randint(10,50) ,
+                "star": random.randint(1,5)
+            }
+            lOwnNftData.append(dHorse)
+        return {"lOwnNftData":lOwnNftData}
 
     # 制作地图
     # roleId 角色ID
