@@ -234,7 +234,9 @@ class netCmd(object):
         who.Set("FightMap", mapInfo)
         return mapInfo
 
-
+    # 获取拍卖场数据
+    def rc_getNftMarket(self):
+        return {"nftMarket":Game.rpc_diymap_info.rc_getNftMarket()}
 
 
 

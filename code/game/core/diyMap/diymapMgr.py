@@ -9,6 +9,8 @@ from game.models.diymap import ModelDiyMap
 from corelib.gtime import get_days
 from game.common.utility import *
 import cPickle
+from game.define import horse_define
+import random
 
 MAP_RANK_MAX = 50
 MAP_SHOW_RANK = 20
@@ -29,6 +31,7 @@ class DiyMapInfo(utility.DirtyFlag):
 
         self.mapTranceNo = 1000
         self.nftPool = {} #horse nft info
+        self.nftMarket = [] #拍卖场
 
         self.save_cache = {}  # 存储缓存
 
@@ -65,7 +68,8 @@ class DiyMapInfo(utility.DirtyFlag):
             save_cache["lmapNewRank"] = self.lmapNewRank
             save_cache["dmapLikeData"] = self.dmapLikeData
 
-            save_cache["nftPool"] = self.nftPool
+            save_cache["nftPool"]   = self.nftPool
+            save_cache["nftMarket"] = self.nftMarket
 
             self.save_cache = save_cache
         else:
@@ -86,6 +90,7 @@ class DiyMapInfo(utility.DirtyFlag):
         self.dmapLikeData = data.get("dmapLikeData",{})
 
         self.nftPool = data.get("nftPool",{})
+        self.nftMarket = data.get("nftMarket",[])
         # print "------------->>>>self.dMapInfo:", self.dMapInfo
         self.markDirty()
 
@@ -105,6 +110,22 @@ class DiyMapInfo(utility.DirtyFlag):
         self.nftPool[str(iIndex)] = dNftData
         self.data.modify()
         self.data.save(Game.store, forced=True, no_let=True)
+
+    def rc_getNftMarket(self):
+        lMarketData = []
+        for iIndex in self.nftMarket:
+            dLoad = self.nftPool.get(str(iIndex),{})
+            dHorse = {
+                "name":dLoad["sRanName"],
+                "iType": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"] ,
+                "res_key": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"] ,
+                "id": iIndex ,
+                "score": random.randint(300,777) ,
+                "money": random.randint(10,50) ,
+                "star": random.randint(1,5)
+            }
+            lMarketData.append(lMarketData)
+        return {"lMarketData":lMarketData}
 
     # 制作地图
     # roleId 角色ID
