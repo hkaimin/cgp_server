@@ -243,7 +243,10 @@ class netCmd(object):
         self.notify("Sales Success!")
         return Game.rpc_diymap_info.rc_SellNft(nftIndex)
 
-
+    # buy nft
+    def rc_BuyNft(self,nftIndex,sAddress):
+        self.notify("Buys Success!")
+        return Game.rpc_diymap_info.rc_BuyNft(nftIndex,sAddress)
 
 import game.core.item
 import game.gm.gmFunc

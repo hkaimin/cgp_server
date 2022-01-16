@@ -131,7 +131,24 @@ class DiyMapInfo(utility.DirtyFlag):
     def rc_SellNft(self,nftIndex):
         if int(nftIndex) not in self.nftMarket:
             self.nftMarket.append(nftIndex)
-            self.markDirty()
+        dLoad = self.nftPool.get(str(nftIndex),{})
+        dLoad["sellStatus"] = 1
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
+        return self.rc_getNftMarket()
+
+    def rc_BuyNft(self,nftIndex,sAddress):
+        lNftMarket = []
+        for index in self.nftMarket:
+            if int(nftIndex) == index:
+                dLoad = self.nftPool.get(str(nftIndex),{})
+                dLoad["sellStatus"] = 0
+                dLoad["owner"] = sAddress
+            else:
+                lNftMarket.append(index)
+        self.nftMarket = lNftMarket
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
         return self.rc_getNftMarket()
 
     def rc_getNftInfo(self,lHorse):

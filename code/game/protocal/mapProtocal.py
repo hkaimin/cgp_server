@@ -62,6 +62,11 @@ class mapProtocal(object):
         rs = self.player.rc_SellNft(nftIndex)
         return 1, rs
 
+    # sell nft
+    def rc_BuyNft(self,nftIndex,sAddress):
+        rs = self.player.rc_BuyNft(nftIndex,sAddress)
+        return 1, rs
+
     # 设置出战地图
     def rc_setFightMap(self, mapId):
         rs = self.player.rc_setFightMap(mapId)
