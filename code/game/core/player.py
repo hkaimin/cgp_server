@@ -573,6 +573,7 @@ class Player(BasePlayer, netcmd.netCmd):
 
     #创建nft
     def rc_createNft(self,iTickets):
+        nftInfo = []
         for i in xrange(iTickets):
             iNftIndex = Game.rpc_diymap_info.GeneraDiyMapTranceNo()
             import subprocess
@@ -592,10 +593,13 @@ class Player(BasePlayer, netcmd.netCmd):
                 iRanInt = random.randint(1,1000)
                 sRanName= self.GetRandomName()
                 iRandomHorseType = utility.GetLeftValue(iRanInt,horse_define.HORSE_TYPE_RANDOM)
-                dNftData = {"iRandomHorseType":iRandomHorseType,"sRanName":sRanName,"owner":self.data.account,"sellStatus":0}
+                dNftData = {"iRandomHorseType":iRandomHorseType,"sRanName":sRanName
+                    ,"owner":self.data.account,"sellStatus":0,"createTime":int(time.time()),"star":0}
                 Game.rpc_diymap_info.SaveNftInfo(iNftIndex,dNftData)
+                nftInfo.append({"name":sRanName,"res_key":horse_define.HORSE_INFO[iRandomHorseType]["res_key"],"star":0})
+
             Game.glog.log2File("contract", "createNft|account:%s|iNftIndex:%s|iRandomHorseType:%s|sRanName:%s|receiptStatus:%s" % (self.data.account,iNftIndex,iRandomHorseType,sRanName,receiptStatus))
-        return {}
+        return {"nftInfo":nftInfo}
 
     # 获取微信信息
     def G2C_getWXInfo(self):
