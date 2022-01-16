@@ -236,7 +236,7 @@ class netCmd(object):
 
     # 获取拍卖场数据
     def rc_getNftMarket(self):
-        return {"nftMarket":Game.rpc_diymap_info.rc_getNftMarket()}
+        return Game.rpc_diymap_info.rc_getNftMarket()
 
     # sell nft
     def rc_SellNft(self,nftIndex):

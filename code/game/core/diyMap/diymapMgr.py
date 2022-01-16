@@ -131,6 +131,7 @@ class DiyMapInfo(utility.DirtyFlag):
     def rc_SellNft(self,nftIndex):
         if int(nftIndex) not in self.nftMarket:
             self.nftMarket.append(nftIndex)
+            self.markDirty()
         return self.rc_getNftMarket()
 
     def rc_getNftInfo(self,lHorse):
