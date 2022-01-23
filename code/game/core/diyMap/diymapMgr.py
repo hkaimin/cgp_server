@@ -155,10 +155,10 @@ class DiyMapInfo(utility.DirtyFlag):
         self.data.save(Game.store, forced=True, no_let=True)
         return self.rc_getNftMarket()
 
-    def getRandomMax(maxNum,tRandomSub):
+    def getRandomMax(self,maxNum,tRandomSub):
         return int(random.randint(tRandomSub[0],tRandomSub[1])/100.0 * maxNum)
 
-    def fixData(dLoad):
+    def fixData(self,dLoad):
         tRandom = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandom"] #主属性
         tRandomSub = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandomSub"]
         iRandomMax = random.randint(tRandom[0],tRandom[1])
