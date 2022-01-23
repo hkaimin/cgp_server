@@ -108,6 +108,10 @@ class DiyMapInfo(utility.DirtyFlag):
 
     def SaveNftInfo(self,iIndex,dNftData):
         self.nftPool[str(iIndex)] = dNftData
+        dLoad = self.nftPool.get(str(iIndex),{})
+        #fix
+        if not dLoad.get("strength",0):
+            self.fixData(dLoad)
         self.data.modify()
         self.data.save(Game.store, forced=True, no_let=True)
 
@@ -151,22 +155,82 @@ class DiyMapInfo(utility.DirtyFlag):
         self.data.save(Game.store, forced=True, no_let=True)
         return self.rc_getNftMarket()
 
+    def getRandomMax(maxNum,tRandomSub):
+        return int(random.randint(tRandomSub[0],tRandomSub[1])/100.0 * maxNum)
+
+    def fixData(dLoad):
+        tRandom = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandom"] #主属性
+        tRandomSub = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandomSub"]
+        iRandomMax = random.randint(tRandom[0],tRandom[1])
+        dLoad["MaxStrength"] = self.getRandomMax(iRandomMax,tRandomSub)
+        dLoad["strength"] = dLoad["MaxStrength"] / 2
+        dLoad["MaxSpeed"] = self.getRandomMax(iRandomMax,tRandomSub)
+        dLoad["speed"] = dLoad["MaxSpeed"] / 2
+        dLoad["MaxDexterity"] = self.getRandomMax(iRandomMax,tRandomSub)
+        dLoad["dexterity"] = dLoad["MaxDexterity"] / 2
+        dLoad["MaxBurse"] = self.getRandomMax(iRandomMax,tRandomSub)
+        dLoad["burse"] = dLoad["MaxBurse"] / 2
+
+        tRandom2 = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandom2"] #副属性
+        tRandomSub2 = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandomSub2"]
+        iRandomMax = random.randint(tRandom2[0],tRandom2[1])
+        dLoad["stamina"] = self.getRandomMax(iRandomMax,tRandomSub2)
+        dLoad["start"] = self.getRandomMax(iRandomMax,tRandomSub2)
+        dLoad["wisdom"] = self.getRandomMax(iRandomMax,tRandomSub2)
+        dLoad["constitution"] = self.getRandomMax(iRandomMax,tRandomSub2)
+
+        tRandom3 = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandom3"] #地形适应
+        tRandomSub3 = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandomSub3"]
+        iRandomMax = random.randint(tRandom3[0],tRandomSub3[1])
+        dLoad["grassland"] = self.getRandomMax(iRandomMax,tRandomSub3)
+        dLoad["sand"] = self.getRandomMax(iRandomMax,tRandomSub3)
+        dLoad["mud"] = self.getRandomMax(iRandomMax,tRandomSub3)
+
     def rc_getNftInfo(self,lHorse):
         lOwnNftData = []
+        bFix = False
         for sIndex in lHorse:
             iIndex = int(sIndex)
             dLoad = self.nftPool.get(str(iIndex),{})
+
+            #fix
+            if not dLoad.get("strength",0):
+                bFix = True
+                self.fixData(dLoad)
+
             dHorse = {
                 "name":dLoad["sRanName"],
                 "iType": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"] ,
                 "res_key": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"] ,
                 "id": iIndex ,
                 "sellStatus": dLoad["sellStatus"],
-                "score": random.randint(300,777) ,
+                "score": dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"],
                 "money": random.randint(10,50) ,
-                "star": random.randint(1,5)
+                "star": random.randint(1,5),#星星数
+                "iSex": dLoad.get("iSex",1),#默认公的
+                "strength": dLoad["strength"],#体力
+                "MaxStrength": dLoad["MaxStrength"],
+                "speed": dLoad["speed"],#速度
+                "MaxSpeed": dLoad["MaxSpeed"],
+                "dexterity": dLoad["dexterity"],#灵巧
+                "MaxDexterity": dLoad["MaxDexterity"],
+                "burse": dLoad["burse"],#爆发
+                "MaxBurse": dLoad["MaxBurse"],
+                "stamina": dLoad["stamina"],#耐力
+                "start": dLoad["start"],#启动
+                "wisdom": dLoad["wisdom"],#智慧
+                "constitution": dLoad["constitution"],#体质
+                "landMax":500,#地形适应最大值
+                "grassland": dLoad["grassland"],#草地
+                "sand": dLoad["sand"],#沙地
+                "mud": dLoad["mud"],#泥地
             }
             lOwnNftData.append(dHorse)
+
+        if bFix:
+            self.markDirty()
+            self.data.save(Game.store, forced=True, no_let=True)
+
         return {"lOwnNftData":lOwnNftData}
 
     # 制作地图

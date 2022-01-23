@@ -1,51 +1,50 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-
-
 TICKET_COST_TYPE = 1 #门票价格消耗类型
 TICKET_COST_NUM  = 1 #门票价格消耗数量
 ENERGY_CONFIG = 100  #游戏体力上限
 HORSE_TYPE_RANDOM = {15:1,30:2,65:3,100:4,175:5,250:6,375:7,500:8,750:9,1000:10}
+
 HORSE_INFO = {
 	1:{
-		"iType":"s","name":"纯血马","strength":132,"MaxStrength":264,"speed":198,"MaxSpeed":396,
-		"dexterity":132,"MaxDexterity":264,"burse":198,"MaxBurse":396,"res_key":"01","grassland":"s","sand":"s","mud":"a"
+		"iType":"s","name":"纯血马","tRandom":(1200,1400),"tRandomSub":(20,30)
+		,"res_key":"01","tRandom2":(410,510),"tRandomSub2":(20,30),"tRandom3":(900,1200),"tRandomSub3":(25,33)
 	},
 	2:{
-		"iType":"s","name":"阿拉伯马","strength":198,"MaxStrength":396,"speed":132,"MaxSpeed":264,
-		"dexterity":198,"MaxDexterity":396,"burse":132,"MaxBurse":264,"res_key":"02","grassland":"s","sand":"a","mud":"s"
+		"iType":"s","name":"阿拉伯马","tRandom":(1200,1400),"tRandomSub":(20,30)
+		,"res_key":"02","tRandom2":(410,510),"tRandomSub2":(20,30),"tRandom3":(900,1200),"tRandomSub3":(25,33)
 	},
 	3:{
-		"iType":"a","name":"安达卢西亚马","strength":88,"MaxStrength":176,"speed":132,"MaxSpeed":264,
-		"dexterity":88,"MaxDexterity":176,"burse":132,"MaxBurse":264,"res_key":"03","grassland":"s","sand":"b","mud":"a"
+		"iType":"a","name":"安达卢西亚马","tRandom":(800,960),"tRandomSub":(20,30)
+		,"res_key":"03","tRandom2":(330,430),"tRandomSub2":(20,30),"tRandom3":(750,1050),"tRandomSub3":(25,33)
 	},
 	4:{
-		"iType":"a","name":"汗诺威马","strength":132,"MaxStrength":264,"speed":88,"MaxSpeed":176,
-		"dexterity":132,"MaxDexterity":264,"burse":88,"MaxBurse":176,"res_key":"04","grassland":"b","sand":"s","mud":"a"
+		"iType":"a","name":"汗诺威马","tRandom":(800,960),"tRandomSub":(20,30)
+		,"res_key":"04","tRandom2":(330,430),"tRandomSub2":(20,30),"tRandom3":(750,1050),"tRandomSub3":(25,33)
 	},
 	5:{
-		"iType":"b","name":"夸特马","strength":50,"MaxStrength":100,"speed":75,"MaxSpeed":150,
-		"dexterity":50,"MaxDexterity":100,"burse":75,"MaxBurse":150,"res_key":"05","grassland":"a","sand":"a","mud":"b"
+		"iType":"b","name":"夸特马","tRandom":(440,528),"tRandomSub":(20,30)
+		,"res_key":"05","tRandom2":(260,360),"tRandomSub2":(20,30),"tRandom3":(600,900),"tRandomSub3":(25,33)
 	},
 	6:{
-		"iType":"b","name":"三河马","strength":75,"MaxStrength":150,"speed":50,"MaxSpeed":100,
-		"dexterity":75,"MaxDexterity":150,"burse":50,"MaxBurse":100,"res_key":"06","grassland":"b","sand":"a","mud":"a"
+		"iType":"b","name":"三河马","tRandom":(440,528),"tRandomSub":(20,30)
+		,"res_key":"06","tRandom2":(260,360),"tRandomSub2":(20,30),"tRandom3":(600,900),"tRandomSub3":(25,33)
 	},
 	7:{
-		"iType":"c","name":"奥尔洛夫马","strength":33,"MaxStrength":66,"speed":45,"MaxSpeed":90,
-		"dexterity":33,"MaxDexterity":66,"burse":45,"MaxBurse":90,"res_key":"07","grassland":"b","sand":"c","mud":"b"
+		"iType":"c","name":"奥尔洛夫马","tRandom":(300,360),"tRandomSub":(20,30)
+		,"res_key":"07","tRandom2":(200,300),"tRandomSub2":(20,30),"tRandom3":(450,750),"tRandomSub3":(25,33)
 	},
 	8:{
-		"iType":"c","name":"利皮扎马","strength":45,"MaxStrength":90,"speed":33,"MaxSpeed":66,
-		"dexterity":45,"MaxDexterity":90,"burse":33,"MaxBurse":66,"res_key":"08","grassland":"b","sand":"b","mud":"c"
+		"iType":"c","name":"利皮扎马","tRandom":(300,360),"tRandomSub":(20,30)
+		,"res_key":"08","tRandom2":(200,300),"tRandomSub2":(20,30),"tRandom3":(450,750),"tRandomSub3":(25,33)
 	},
 	9:{
-		"iType":"d","name":"荷兰温血马","strength":22,"MaxStrength":44,"speed":33,"MaxSpeed":66,
-		"dexterity":22,"MaxDexterity":44,"burse":33,"MaxBurse":66,"res_key":"09","grassland":"c","sand":"c","mud":"d"
+		"iType":"d","name":"荷兰温血马","tRandom":(200,240),"tRandomSub":(20,30)
+		,"res_key":"09","tRandom2":(150,250),"tRandomSub2":(20,30),"tRandom3":(300,600),"tRandomSub3":(25,33)
 	},
 	10:{
-		"iType":"d","name":"阿帕卢萨马","strength":33,"MaxStrength":66,"speed":22,"MaxSpeed":44,
-		"dexterity":33,"MaxDexterity":66,"burse":22,"MaxBurse":44,"res_key":"10","grassland":"c","sand":"d","mud":"c"
+		"iType":"d","name":"阿帕卢萨马","tRandom":(200,240),"tRandomSub":(20,30)
+		,"res_key":"10","tRandom2":(150,250),"tRandomSub2":(20,30),"tRandom3":(300,600),"tRandomSub3":(25,33)
 	}
 }
 
