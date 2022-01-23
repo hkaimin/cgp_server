@@ -181,7 +181,7 @@ class DiyMapInfo(utility.DirtyFlag):
 
         tRandom3 = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandom3"] #地形适应
         tRandomSub3 = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandomSub3"]
-        iRandomMax = random.randint(tRandom3[0],tRandomSub3[1])
+        iRandomMax = random.randint(tRandom3[0],tRandom3[1])
         dLoad["grassland"] = self.getRandomMax(iRandomMax,tRandomSub3)
         dLoad["sand"] = self.getRandomMax(iRandomMax,tRandomSub3)
         dLoad["mud"] = self.getRandomMax(iRandomMax,tRandomSub3)
@@ -194,7 +194,7 @@ class DiyMapInfo(utility.DirtyFlag):
             dLoad = self.nftPool.get(str(iIndex),{})
 
             #fix
-            if not dLoad.get("strength",0):
+            if not dLoad.get("grassland",0):
                 bFix = True
                 self.fixData(dLoad)
 
