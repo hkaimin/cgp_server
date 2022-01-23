@@ -119,15 +119,33 @@ class DiyMapInfo(utility.DirtyFlag):
         lMarketData = []
         for iIndex in self.nftMarket:
             dLoad = self.nftPool.get(str(iIndex),{})
+
             dHorse = {
                 "name":dLoad["sRanName"],
                 "iType": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"] ,
                 "res_key": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"] ,
                 "id": iIndex ,
                 "sellStatus": dLoad["sellStatus"],
-                "score": random.randint(300,777) ,
+                "score": dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"],
                 "money": random.randint(10,50) ,
-                "star": random.randint(1,5)
+                "star": random.randint(1,5),#星星数
+                "iSex": dLoad.get("iSex",1),#默认公的
+                "strength": dLoad["strength"],#体力
+                "MaxStrength": dLoad["MaxStrength"],
+                "speed": dLoad["speed"],#速度
+                "MaxSpeed": dLoad["MaxSpeed"],
+                "dexterity": dLoad["dexterity"],#灵巧
+                "MaxDexterity": dLoad["MaxDexterity"],
+                "burse": dLoad["burse"],#爆发
+                "MaxBurse": dLoad["MaxBurse"],
+                "stamina": dLoad["stamina"],#耐力
+                "start": dLoad["start"],#启动
+                "wisdom": dLoad["wisdom"],#智慧
+                "constitution": dLoad["constitution"],#体质
+                "landMax":horse_define.LAND_MAX_NUM,#地形适应最大值
+                "grassland": dLoad["grassland"],#草地
+                "sand": dLoad["sand"],#沙地
+                "mud": dLoad["mud"],#泥地
             }
             lMarketData.append(dHorse)
         return {"lMarketData":lMarketData}
@@ -220,7 +238,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "start": dLoad["start"],#启动
                 "wisdom": dLoad["wisdom"],#智慧
                 "constitution": dLoad["constitution"],#体质
-                "landMax":500,#地形适应最大值
+                "landMax":horse_define.LAND_MAX_NUM,#地形适应最大值
                 "grassland": dLoad["grassland"],#草地
                 "sand": dLoad["sand"],#沙地
                 "mud": dLoad["mud"],#泥地

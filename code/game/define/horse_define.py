@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-TICKET_COST_TYPE = 1 #门票价格消耗类型
+TICKET_COST_TYPE = 1 #门票价格消耗类型 1为主币
 TICKET_COST_NUM  = 1 #门票价格消耗数量
 ENERGY_CONFIG = 100  #游戏体力上限
-HORSE_TYPE_RANDOM = {15:1,30:2,65:3,100:4,175:5,250:6,375:7,500:8,750:9,1000:10}
+ENERGY_COST = 5 #进行一次马操作的体力消耗
+LAND_MAX_NUM = 500 #地形最大适应值
+HORSE_TYPE_RANDOM = {15:1,30:2,65:3,100:4,175:5,250:6,375:7,500:8,750:9,1000:10} #随机血统概率比例
 
-HORSE_INFO = {
+HORSE_INFO = { #血统配置 tRandom主属性 tRandom2副属性 tRandom3地形适应
 	1:{
 		"iType":"s","name":"纯血马","tRandom":(1200,1400),"tRandomSub":(20,30)
 		,"res_key":"01","tRandom2":(410,510),"tRandomSub2":(20,30),"tRandom3":(900,1200),"tRandomSub3":(25,33)
