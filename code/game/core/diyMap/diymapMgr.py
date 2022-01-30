@@ -146,6 +146,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "grassland": dLoad["grassland"],#草地
                 "sand": dLoad["sand"],#沙地
                 "mud": dLoad["mud"],#泥地
+                "days": (GetDayNo() - GetDayNo(dLoad["createTime"]))+1,#马匹年龄
             }
             lMarketData.append(dHorse)
         return {"lMarketData":lMarketData}
@@ -242,6 +243,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "grassland": dLoad["grassland"],#草地
                 "sand": dLoad["sand"],#沙地
                 "mud": dLoad["mud"],#泥地
+                "days": (GetDayNo() - GetDayNo(dLoad["createTime"]))+1,#马匹年龄
             }
             lOwnNftData.append(dHorse)
 
