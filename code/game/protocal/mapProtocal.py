@@ -58,8 +58,8 @@ class mapProtocal(object):
         return 1, rs
 
     # sell nft
-    def rc_SellNft(self,nftIndex):
-        rs = self.player.rc_SellNft(nftIndex)
+    def rc_SellNft(self,nftIndex,money):
+        rs = self.player.rc_SellNft(nftIndex,money)
         return 1, rs
 
     # sell nft

@@ -151,11 +151,12 @@ class DiyMapInfo(utility.DirtyFlag):
             lMarketData.append(dHorse)
         return {"lMarketData":lMarketData}
 
-    def rc_SellNft(self,nftIndex):
+    def rc_SellNft(self,nftIndex,money):
         if int(nftIndex) not in self.nftMarket:
             self.nftMarket.append(nftIndex)
         dLoad = self.nftPool.get(str(nftIndex),{})
         dLoad["sellStatus"] = 1
+        dLoad["money"] = money
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
         return self.rc_getNftMarket()
