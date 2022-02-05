@@ -127,7 +127,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "id": iIndex ,
                 "sellStatus": dLoad["sellStatus"],
                 "score": dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"],
-                "money": dLoad["money"] ,
+                "money": dLoad.get("money",11) ,
                 "star": random.randint(1,5),#星星数
                 "iSex": dLoad.get("iSex",1),#默认公的
                 "strength": dLoad["strength"],#体力
@@ -225,7 +225,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "id": iIndex ,
                 "sellStatus": dLoad["sellStatus"],
                 "score": dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"],
-                "money": dLoad["money"] ,
+                "money": dLoad.get("money",11) ,
                 "star": random.randint(1,5),#星星数
                 "iSex": dLoad.get("iSex",1),#默认公的
                 "strength": dLoad["strength"],#体力
