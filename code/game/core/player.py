@@ -610,6 +610,7 @@ class Player(BasePlayer, netcmd.netCmd):
             self.notify("no nft error!")
             return {}
         import subprocess
+        #提取nft到creator
         pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%dLoad["owner"],'3','%s'%nftIndex,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
         tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
         pPro.wait()
@@ -620,10 +621,20 @@ class Player(BasePlayer, netcmd.netCmd):
             if sRes.find("status: true") >= 0:
                 receiptStatus = "success"
                 break
-        iRandomHorseType = 0
-        sRanName = ""
         if receiptStatus == "success":
-            self.notify("Buys Success!")
+            #转账给卖家
+            pPro = subprocess.Popen(['sh','/root/contract/maincoin/contract.sh','%s'%dLoad["owner"],'1','%s'%int(dLoad["money"]-int(dLoad["money"]*horse_define.MARKET_GET/100.0)),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+            tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
+            pPro.wait()
+            pPro2 = subprocess.Popen(['sh','/root/contract/maincoin/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
+            pPro2.wait()
+            receiptStatus = "fail"
+            for sRes in pPro2.stdout.readlines():
+                if sRes.find("status: true") >= 0:
+                    receiptStatus = "success"
+                    break
+            if receiptStatus == "success":
+                self.notify("Buys Success!")
             # Game.rpc_diymap_info.rc_BuyNft(nftIndex,sAddress)
         return {}
 
