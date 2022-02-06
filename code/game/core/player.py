@@ -605,9 +605,12 @@ class Player(BasePlayer, netcmd.netCmd):
         return {"nftInfo":nftInfo}
 
     def rc_PBuyNft(self,nftIndex,sAddress):
-        iNftIndex = Game.rpc_diymap_info.GeneraDiyMapTranceNo()
+        dLoad = Game.rpc_diymap_info.GetNftInfo(nftIndex)
+        if not dLoad:
+            self.notify("no nft error!")
+            return {}
         import subprocess
-        pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%self.data.account,'3','%s'%iNftIndex,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+        pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%dLoad["owner"],'3','%s'%nftIndex,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
         tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
         pPro.wait()
         pPro2 = subprocess.Popen(['sh','/root/contract/nft/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
@@ -622,7 +625,7 @@ class Player(BasePlayer, netcmd.netCmd):
         if receiptStatus == "success":
             self.notify("Buys Success!")
             # Game.rpc_diymap_info.rc_BuyNft(nftIndex,sAddress)
-        return 1, rs
+        return {}
 
     #获取已有nft
     def rc_getOwnNft(self,lNft):
