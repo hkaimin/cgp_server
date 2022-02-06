@@ -605,7 +605,7 @@ class Player(BasePlayer, netcmd.netCmd):
         return {"nftInfo":nftInfo}
 
     def rc_PBuyNft(self,nftIndex,sAddress):
-        dLoad = Game.rpc_diymap_info.GetNftInfo(nftIndex)
+        dLoad = Game.rpc_diymap_info.GetNftInfo(str(nftIndex))
         if not dLoad:
             self.notify("no nft error!")
             return {}
