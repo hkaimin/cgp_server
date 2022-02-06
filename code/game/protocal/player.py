@@ -406,4 +406,8 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_getOwnNft(lNft)
         return 1, rs
 
+    def rc_PBuyNft(self,nftIndex,sAddress):
+        rs = self.player.rc_PBuyNft(nftIndex,sAddress)
+        return 1, rs
+
 from game.gm import report
