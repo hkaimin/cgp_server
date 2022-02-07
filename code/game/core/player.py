@@ -610,7 +610,7 @@ class Player(BasePlayer, netcmd.netCmd):
             self.notify("no nft error!")
             return {}
         import subprocess
-        '''
+        
         #提取nft到creator
         pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%dLoad["owner"],'3','%s'%nftIndex,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
         tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
@@ -622,40 +622,38 @@ class Player(BasePlayer, netcmd.netCmd):
             if sRes.find("status: true") >= 0:
                 receiptStatus = "success"
                 break
-        '''
+        
 
-        # if receiptStatus == "success":
-            #转账给卖家
-            # iPay = int(dLoad.get("money",11)-int(dLoad.get("money",11)*horse_define.MARKET_GET/100.0))
-            # pPro = subprocess.Popen(['sh','/root/contract/maincoin/contract.sh','%s'%dLoad["owner"],'1','%s'%iPay,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
-            # tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
-            # pPro.wait()
-            # pPro2 = subprocess.Popen(['sh','/root/contract/maincoin/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
-            # pPro2.wait()
-            # receiptStatus = "fail"
-            # for sRes in pPro2.stdout.readlines():
-            #     if sRes.find("status: true") >= 0:
-            #         receiptStatus = "success"
-            #         break
-            # if receiptStatus == "success":
-            #     self.notify("Buys Success!")
-
-        #授权给买家
-        pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%sAddress,'2','%s'%nftIndex,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
-        tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
-        pPro.wait()
-        pPro2 = subprocess.Popen(['sh','/root/contract/nft/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
-        pPro2.wait()
-        receiptStatus = "fail"
-        for sRes in pPro2.stdout.readlines():
-            if sRes.find("status: true") >= 0:
-                receiptStatus = "success"
-                break
         if receiptStatus == "success":
-            self.notify("Buys Successxx!")
-        # Game.rpc_diymap_info.rc_BuyNft(nftIndex,sAddress)
+            #转账给卖家
+            iPay = int(dLoad.get("money",11)-int(dLoad.get("money",11)*horse_define.MARKET_GET/100.0))
+            pPro = subprocess.Popen(['sh','/root/contract/maincoin/contract.sh','%s'%dLoad["owner"],'1','%s'%iPay,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+            tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
+            pPro.wait()
+            pPro2 = subprocess.Popen(['sh','/root/contract/maincoin/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
+            pPro2.wait()
+            receiptStatus = "fail"
+            for sRes in pPro2.stdout.readlines():
+                if sRes.find("status: true") >= 0:
+                    receiptStatus = "success"
+                    break
+            if receiptStatus == "success":
 
-        return {}
+                #授权给买家
+                pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%sAddress,'2','%s'%nftIndex,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+                tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
+                pPro.wait()
+                pPro2 = subprocess.Popen(['sh','/root/contract/nft/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
+                pPro2.wait()
+                receiptStatus = "fail"
+                for sRes in pPro2.stdout.readlines():
+                    if sRes.find("status: true") >= 0:
+                        receiptStatus = "success"
+                        break
+                if receiptStatus == "success":
+                    return {"nftIndex":nftIndex}
+
+        return {"nftIndex":0}
 
     #获取已有nft
     def rc_getOwnNft(self,lNft):
