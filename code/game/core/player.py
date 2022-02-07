@@ -626,8 +626,9 @@ class Player(BasePlayer, netcmd.netCmd):
 
         # if receiptStatus == "success":
             #转账给卖家
-        pPro = subprocess.Popen(['sh','/root/contract/maincoin/contract.sh','%s'%dLoad["owner"],'1','%s'%int(dLoad["money"]-int(dLoad["money"]*horse_define.MARKET_GET/100.0)),'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
-        print '----pPro111-----',dLoad["owner"],int(dLoad["money"]-int(dLoad["money"]*horse_define.MARKET_GET/100.0))
+        iPay = int(dLoad.get("money",11)-int(dLoad.get("money",11)*horse_define.MARKET_GET/100.0))
+        pPro = subprocess.Popen(['sh','/root/contract/maincoin/contract.sh','%s'%dLoad["owner"],'1','%s'%iPay,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+        print '----pPro111-----',dLoad["owner"],iPay
         tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
         pPro.wait()
         pPro2 = subprocess.Popen(['sh','/root/contract/maincoin/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
