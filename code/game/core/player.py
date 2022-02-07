@@ -621,6 +621,7 @@ class Player(BasePlayer, netcmd.netCmd):
         for sRes in pPro2.stdout.readlines():
             if sRes.find("status: true") >= 0:
                 receiptStatus = "success"
+                self.notify("processing 30%...")
                 break
         
 
@@ -636,6 +637,7 @@ class Player(BasePlayer, netcmd.netCmd):
             for sRes in pPro2.stdout.readlines():
                 if sRes.find("status: true") >= 0:
                     receiptStatus = "success"
+                    self.notify("processing 60%...")
                     break
             if receiptStatus == "success":
 
@@ -649,6 +651,7 @@ class Player(BasePlayer, netcmd.netCmd):
                 for sRes in pPro2.stdout.readlines():
                     if sRes.find("status: true") >= 0:
                         receiptStatus = "success"
+                        self.notify("processing 90%...")
                         break
                 if receiptStatus == "success":
                     return {"nftIndex":nftIndex}
