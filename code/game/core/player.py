@@ -595,11 +595,12 @@ class Player(BasePlayer, netcmd.netCmd):
                 iRanSexInt = random.randint(1,100)
                 iSex = 1 if iRanSexInt > 50 else 0
                 iRandomHorseType = utility.GetLeftValue(iRanInt,horse_define.HORSE_TYPE_RANDOM)
+                iRandomBreedMax = utility.GetLeftValue(iRanInt,horse_define.HORSE_BREED_RANDOM)
                 dNftData = {"iRandomHorseType":iRandomHorseType,"sRanName":sRanName
                     ,"owner":self.data.account,"sellStatus":0,"createTime":int(time.time()),"star":0,"iSex":iSex}
                 Game.rpc_diymap_info.SaveNftInfo(iNftIndex,dNftData)
                 nftInfo.append({"name":sRanName,"res_key":horse_define.HORSE_INFO[iRandomHorseType]["res_key"]
-                    ,"iType":horse_define.HORSE_INFO[iRandomHorseType]["iType"],"star":0})
+                    ,"iType":horse_define.HORSE_INFO[iRandomHorseType]["iType"],"star":1,"breedMax":iRandomBreedMax,"energy":horse_define.ENERGY_CONFIG})
 
             Game.glog.log2File("contract", "createNft|account:%s|iNftIndex:%s|iRandomHorseType:%s|sRanName:%s|receiptStatus:%s" % (self.data.account,iNftIndex,iRandomHorseType,sRanName,receiptStatus))
         return {"nftInfo":nftInfo}

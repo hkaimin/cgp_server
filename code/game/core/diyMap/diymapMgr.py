@@ -110,7 +110,7 @@ class DiyMapInfo(utility.DirtyFlag):
         self.nftPool[str(iIndex)] = dNftData
         dLoad = self.nftPool.get(str(iIndex),{})
         #fix
-        if not dLoad.get("strength",0):
+        if not dLoad.get("breedMax",0):
             self.fixData(dLoad)
         self.data.modify()
         self.data.save(Game.store, forced=True, no_let=True)
@@ -146,6 +146,10 @@ class DiyMapInfo(utility.DirtyFlag):
                 "grassland": dLoad["grassland"],#草地
                 "sand": dLoad["sand"],#沙地
                 "mud": dLoad["mud"],#泥地
+                "breedMax": dLoad["breedMax"],#繁殖次数上限
+                "breed": dLoad.get("breed",0),#当前繁殖次数
+                "energyMax": horse_define.ENERGY_CONFIG,#最大energy
+                "energy": dLoad.get("energy",horse_define.ENERGY_CONFIG),#当前energy
                 "days": (GetDayNo() - GetDayNo(dLoad["createTime"]))+1,#马匹年龄
             }
             lMarketData.append(dHorse)
@@ -205,6 +209,9 @@ class DiyMapInfo(utility.DirtyFlag):
         dLoad["grassland"] = self.getRandomMax(iRandomMax,tRandomSub3)
         dLoad["sand"] = self.getRandomMax(iRandomMax,tRandomSub3)
         dLoad["mud"] = self.getRandomMax(iRandomMax,tRandomSub3)
+        iRanInt = random.randint(1,1000)
+        iRandomBreedMax = utility.GetLeftValue(iRanInt,horse_define.HORSE_BREED_RANDOM)
+        dLoad["breedMax"] = iRandomBreedMax
 
     def rc_getNftInfo(self,lHorse):
         lOwnNftData = []
@@ -214,7 +221,7 @@ class DiyMapInfo(utility.DirtyFlag):
             dLoad = self.nftPool.get(str(iIndex),{})
 
             #fix
-            if not dLoad.get("grassland",0):
+            if not dLoad.get("breedMax",0):
                 bFix = True
                 self.fixData(dLoad)
 
@@ -244,6 +251,10 @@ class DiyMapInfo(utility.DirtyFlag):
                 "grassland": dLoad["grassland"],#草地
                 "sand": dLoad["sand"],#沙地
                 "mud": dLoad["mud"],#泥地
+                "breedMax": dLoad["breedMax"],#繁殖次数上限
+                "breed": dLoad.get("breed",0),#当前繁殖次数
+                "energyMax": horse_define.ENERGY_CONFIG,#最大energy
+                "energy": dLoad.get("energy",horse_define.ENERGY_CONFIG),#当前energy
                 "days": (GetDayNo() - GetDayNo(dLoad["createTime"]))+1,#马匹年龄
             }
             lOwnNftData.append(dHorse)
