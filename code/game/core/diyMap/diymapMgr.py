@@ -117,9 +117,15 @@ class DiyMapInfo(utility.DirtyFlag):
 
     def rc_getNftMarket(self):
         lMarketData = []
+        bFix = False
         for iIndex in self.nftMarket:
             dLoad = self.nftPool.get(str(iIndex),{})
 
+            #fix
+            if not dLoad.get("breedMax",0):
+                bFix = True
+                self.fixData(dLoad)
+            
             dHorse = {
                 "name":dLoad["sRanName"],
                 "iType": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"] ,
@@ -153,6 +159,11 @@ class DiyMapInfo(utility.DirtyFlag):
                 "days": (GetDayNo() - GetDayNo(dLoad["createTime"]))+1,#马匹年龄
             }
             lMarketData.append(dHorse)
+
+        if bFix:
+            self.markDirty()
+            self.data.save(Game.store, forced=True, no_let=True)
+
         return {"lMarketData":lMarketData}
 
     def rc_SellNft(self,nftIndex,money):
