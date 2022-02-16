@@ -590,11 +590,12 @@ class Player(BasePlayer, netcmd.netCmd):
             iRandomHorseType = 0
             sRanName = ""
             if receiptStatus == "success":
-                iRanInt = random.randint(1,1000)
                 sRanName= self.GetRandomName()
                 iRanSexInt = random.randint(1,100)
                 iSex = 1 if iRanSexInt > 50 else 0
+                iRanInt = random.randint(1,1000)
                 iRandomHorseType = utility.GetLeftValue(iRanInt,horse_define.HORSE_TYPE_RANDOM)
+                iRanInt = random.randint(1,1000)
                 iRandomBreedMax = utility.GetLeftValue(iRanInt,horse_define.HORSE_BREED_RANDOM)
                 dNftData = {"iRandomHorseType":iRandomHorseType,"sRanName":sRanName
                     ,"owner":self.data.account,"sellStatus":0,"createTime":int(time.time()),"star":0,"iSex":iSex}
