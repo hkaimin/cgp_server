@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 TICKET_COST_TYPE = 1 #门票价格消耗类型 1为主币
-TICKET_COST_NUM  = 1 #门票价格消耗数量
-ENERGY_CONFIG = 200  #游戏体力上限
-ENERGY_COST = 20 #进行一次马操作的体力消耗
+TICKET_COST_NUM  = 100 #门票价格消耗数量
+ENERGY_CONFIG = 100  #游戏体力上限
+ENERGY_COST = {#1拉力 2快跑 3障碍 4快步 5综合
+	1:10,2:10,3:10,4:10,5:15
+} #进行一次马操作的体力消耗
+ENERGY_RESUME_CYCLE = 12*60*60 #12小时恢复
 LAND_MAX_NUM = 500 #地形最大适应值
 HORSE_TYPE_RANDOM = {15:1,30:2,65:3,100:4,175:5,250:6,375:7,500:8,750:9,1000:10} #随机血统概率比例
 MARKET_GET = 10 #市场交易百分之10税收
