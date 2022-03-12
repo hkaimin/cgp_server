@@ -675,9 +675,9 @@ class Player(BasePlayer, netcmd.netCmd):
         return Game.rpc_diymap_info.rc_gorestExhi(lSelectNft,lNft)
 
     def rc_claimExhi(self,lNft):
-        iClaim = Game.rpc_diymap_info.rc_claimExhi(lNft)
+        iClaim,lOwnNftData = Game.rpc_diymap_info.rc_claimExhi(lNft)
         self.rc_AddMainCoin(iClaim,1)
-        return {}
+        return {"lOwnNftData":lOwnNftData}
 
     # 获取微信信息
     def G2C_getWXInfo(self):

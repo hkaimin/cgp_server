@@ -398,7 +398,7 @@ class DiyMapInfo(utility.DirtyFlag):
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
 
-        return iOwnRewards
+        return iOwnRewards,self.packNftinfo(lNft)
 
     # 制作地图
     # roleId 角色ID
