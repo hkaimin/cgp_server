@@ -243,7 +243,7 @@ class DiyMapInfo(utility.DirtyFlag):
             iTotalHorse = 0
             for sIndex,dNft in self.nftPool.iteritems():
                 if dNft.get("exhibition",0):
-                    iTotalScore += dNft.get("score",0)
+                    iTotalScore += (dNft["strength"] + dNft["speed"] + dNft["dexterity"] + dNft["burse"])
                     iTotalHorse += 1
             self.exbihitionCache["iTotalScore"] = iTotalScore
             self.exbihitionCache["iTotalHorse"] = iTotalHorse
@@ -294,6 +294,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "energyMax": horse_define.ENERGY_CONFIG,#最大energy
                 "energy": dLoad.get("energy",horse_define.ENERGY_CONFIG),#当前energy
                 "days": (GetDayNo() - GetDayNo(dLoad["createTime"]))+1,#马匹年龄
+                "exhibition":dLoad.get("exhibition",0),#牧场质押
             }
             lOwnNftData.append(dHorse)
 
@@ -309,7 +310,8 @@ class DiyMapInfo(utility.DirtyFlag):
         for iIndex in lSelectNft:
             dLoad = self.nftPool.get(str(iIndex),{})
             dLoad["exhibition"] = 1
-        self.exbihitionDirty = 1
+            if not dLoad.get("exhiTime",0):dLoad["exhiTime"] = int(time.time())
+        self.exbihitionDirty = True
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
         return {"lOwnNftData":self.packNftinfo(lNft)}
