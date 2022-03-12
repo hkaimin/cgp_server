@@ -669,6 +669,9 @@ class Player(BasePlayer, netcmd.netCmd):
     def rc_joinExhi(self,lSelectNft,lNft):
         return Game.rpc_diymap_info.rc_joinExhi(lSelectNft,lNft)
 
+    def rc_gorestExhi(self,lSelectNft,lNft):
+        return Game.rpc_diymap_info.rc_gorestExhi(lSelectNft,lNft)
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)

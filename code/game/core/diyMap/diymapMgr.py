@@ -332,6 +332,16 @@ class DiyMapInfo(utility.DirtyFlag):
         self.data.save(Game.store, forced=True, no_let=True)
         return {"lOwnNftData":self.packNftinfo(lNft)}
 
+    def rc_gorestExhi(self,lSelectNft,lNft):
+        for iIndex in lSelectNft:
+            dLoad = self.nftPool.get(str(iIndex),{})
+            dLoad["exhibition"] = 0
+            dLoad["exhiTime"] = 0
+        self.exbihitionDirty = True
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
+        return {"lOwnNftData":self.packNftinfo(lNft)}
+
     # 制作地图
     # roleId 角色ID
     # bgConf 背景配置

@@ -420,4 +420,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_joinExhi(lSelectNft,lNft)
         return 1, rs
 
+    #gorest exhibition
+    def rc_gorestExhi(self,lSelectNft,lNft):
+        rs = self.player.rc_gorestExhi(lSelectNft,lNft)
+        return 1, rs
+
 from game.gm import report
