@@ -415,4 +415,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_getTotalExhi()
         return 1, rs
 
+    #join exhibition
+    def rc_joinExhi(self,lSelectNft,lNft):
+        rs = self.player.rc_joinExhi(lSelectNft,lNft)
+        return 1, rs
+
 from game.gm import report

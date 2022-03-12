@@ -252,12 +252,11 @@ class DiyMapInfo(utility.DirtyFlag):
             self.data.save(Game.store, forced=True, no_let=True)
         return {"iTotalScore":self.exbihitionCache.get("iTotalScore",0),"iTotalHorse":self.exbihitionCache.get("iTotalHorse",0),"iCurTotalRewards":self.exbihitionCache.get("iCurTotalRewards",0)*horse_define.EXCHANGE_RATE}
 
-    def rc_getNftInfo(self,lHorse):
+    def packNftinfo(self,lHorse):
         lOwnNftData = []
         bFix = False
         for sIndex in lHorse:
-            iIndex = int(sIndex)
-            dLoad = self.nftPool.get(str(iIndex),{})
+            dLoad = self.nftPool.get(sIndex,{})
 
             #fix
             if not dLoad.get("breedMax",0):
@@ -301,8 +300,19 @@ class DiyMapInfo(utility.DirtyFlag):
         if bFix:
             self.markDirty()
             self.data.save(Game.store, forced=True, no_let=True)
+        return lOwnNftData
 
-        return {"lOwnNftData":lOwnNftData}
+    def rc_getNftInfo(self,lHorse):
+        return {"lOwnNftData":self.packNftinfo(lHorse)}
+
+    def rc_joinExhi(self,lSelectNft,lNft):
+        for iIndex in lSelectNft:
+            dLoad = self.nftPool.get(str(iIndex),{})
+            dLoad["exhibition"] = 1
+
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
+        return {"lOwnNftData":self.packNftinfo(lNft)}
 
     # 制作地图
     # roleId 角色ID

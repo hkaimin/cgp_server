@@ -660,13 +660,14 @@ class Player(BasePlayer, netcmd.netCmd):
 
         return {"nftIndex":0}
 
-    #获取已有nft
     def rc_getOwnNft(self,lNft):
         return Game.rpc_diymap_info.rc_getNftInfo(lNft)
 
-    #刷新ranch牧场
     def rc_getTotalExhi(self):
         return Game.rpc_diymap_info.rc_getTotalExhi()
+
+    def rc_joinExhi(self,lSelectNft,lNft):
+        return Game.rpc_diymap_info.rc_joinExhi(lSelectNft,lNft)
 
     # 获取微信信息
     def G2C_getWXInfo(self):
