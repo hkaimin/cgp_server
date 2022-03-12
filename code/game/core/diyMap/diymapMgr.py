@@ -250,8 +250,7 @@ class DiyMapInfo(utility.DirtyFlag):
             self.exbihitionDirty = False
             self.markDirty()
             self.data.save(Game.store, forced=True, no_let=True)
-        else:
-            return {"iTotalScore":iTotalScore,"iTotalHorse":iTotalHorse,"iCurTotalRewards":iCurTotalRewards*horse_define.EXCHANGE_RATE}
+        return {"iTotalScore":self.exbihitionCache.get("iTotalScore",0),"iTotalHorse":self.exbihitionCache.get("iTotalHorse",0),"iCurTotalRewards":self.exbihitionCache.get("iCurTotalRewards",0)*horse_define.EXCHANGE_RATE}
 
     def rc_getNftInfo(self,lHorse):
         lOwnNftData = []
