@@ -267,7 +267,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "name":dLoad["sRanName"],
                 "iType": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"] ,
                 "res_key": horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"] ,
-                "id": iIndex ,
+                "id": int(sIndex) ,
                 "sellStatus": dLoad["sellStatus"],
                 "score": dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"],
                 "money": dLoad.get("money",11) ,
