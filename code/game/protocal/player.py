@@ -411,8 +411,8 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         return 1, rs
 
     #刷新exhibition
-    def rc_getTotalExhi(self):
-        rs = self.player.rc_getTotalExhi()
+    def rc_getTotalExhi(self,lNft):
+        rs = self.player.rc_getTotalExhi(lNft)
         return 1, rs
 
     #join exhibition

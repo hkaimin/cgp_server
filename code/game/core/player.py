@@ -663,8 +663,8 @@ class Player(BasePlayer, netcmd.netCmd):
     def rc_getOwnNft(self,lNft):
         return Game.rpc_diymap_info.rc_getNftInfo(lNft)
 
-    def rc_getTotalExhi(self):
-        return Game.rpc_diymap_info.rc_getTotalExhi()
+    def rc_getTotalExhi(self,lNft):
+        return Game.rpc_diymap_info.rc_getTotalExhi(lNft)
 
     def rc_joinExhi(self,lSelectNft,lNft):
         return Game.rpc_diymap_info.rc_joinExhi(lSelectNft,lNft)

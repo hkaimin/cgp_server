@@ -237,7 +237,7 @@ class DiyMapInfo(utility.DirtyFlag):
         iRandomBreedMax = utility.GetLeftValue(iRanInt,horse_define.HORSE_BREED_RANDOM)
         dLoad["breedMax"] = iRandomBreedMax
 
-    def rc_getTotalExhi(self):
+    def rc_getTotalExhi(self,lNft):
         if self.exbihitionDirty:
             iTotalScore = 0
             iTotalHorse = 0
@@ -250,7 +250,23 @@ class DiyMapInfo(utility.DirtyFlag):
             self.exbihitionDirty = False
             self.markDirty()
             self.data.save(Game.store, forced=True, no_let=True)
-        return {"iTotalScore":self.exbihitionCache.get("iTotalScore",0),"iTotalHorse":self.exbihitionCache.get("iTotalHorse",0),"iCurTotalRewards":self.exbihitionCache.get("iCurTotalRewards",0)*horse_define.EXCHANGE_RATE}
+
+        iOwnRewards = 0
+        if self.exbihitionCache.get("iTotalScore",0):
+            for sIndex in lNft:
+                dLoad = self.nftPool.get(sIndex,{})
+                if dLoad.get("exhibition",0) and dLoad.get("exhiTime",0):
+                    iReward = int(
+                        (int(time.time()) - dLoad.get("exhiTime",0))/60.0 * 
+                        horse_define.EXHIBITION_EVERY_MINUTE * horse_define.EXCHANGE_RATE 
+                        * ((dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"])
+                        *1.0 / self.exbihitionCache.get("iTotalScore",0)))
+                    iOwnRewards += iReward
+
+        return {"iTotalScore":self.exbihitionCache.get("iTotalScore",0),
+            "iTotalHorse":self.exbihitionCache.get("iTotalHorse",0),
+            "iCurTotalRewards":self.exbihitionCache.get("iCurTotalRewards",0)*horse_define.EXCHANGE_RATE,
+            "iOwnRewards":iOwnRewards}
 
     def packNftinfo(self,lHorse):
         lOwnNftData = []
