@@ -56,9 +56,13 @@ class DiyMapInfo(utility.DirtyFlag):
     def _frame_stop(self):
         self.data.save(Game.store, forced=True, no_let=True)
 
-    # 半小时事件
+    # 每分钟事件
     def event_one_minute(self):
-        print '--event_one_minute--xx--'   
+        iCurTotalRewards = self.exbihitionCache.get("iCurTotalRewards",0)
+        iCurTotalRewards += horse_define.EXHIBITION_EVERY_MINUTE
+        self.exbihitionCache["iCurTotalRewards"] = iCurTotalRewards
+        self.markDirty()
+        print '--event_one_minute--iCurTotalRewards--' ,iCurTotalRewards
 
     def markDirty(self):
         super(DiyMapInfo, self).markDirty()
@@ -99,6 +103,7 @@ class DiyMapInfo(utility.DirtyFlag):
 
         self.nftPool = data.get("nftPool",{})
         self.nftMarket = data.get("nftMarket",[])
+        self.exbihitionCache = data.get("exbihitionCache",{})
         # print "------------->>>>self.dMapInfo:", self.dMapInfo
         self.markDirty()
 
@@ -246,7 +251,7 @@ class DiyMapInfo(utility.DirtyFlag):
             self.markDirty()
             self.data.save(Game.store, forced=True, no_let=True)
         else:
-            return {"iTotalScore":iTotalScore,"iTotalHorse":iTotalHorse}
+            return {"iTotalScore":iTotalScore,"iTotalHorse":iTotalHorse,"iCurTotalRewards":iCurTotalRewards*horse_define.EXCHANGE_RATE}
 
     def rc_getNftInfo(self,lHorse):
         lOwnNftData = []
