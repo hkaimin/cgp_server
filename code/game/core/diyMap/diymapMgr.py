@@ -260,8 +260,13 @@ class DiyMapInfo(utility.DirtyFlag):
                         (int(time.time()) - dLoad.get("exhiTime",0))/60.0 * 
                         horse_define.EXHIBITION_EVERY_MINUTE * horse_define.EXCHANGE_RATE 
                         * ((dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"])
-                        *1.0 / self.exbihitionCache.get("iTotalScore",0)))
+                        *1.0 / self.exbihitionCache.get("iTotalScore",0))) #贡献公式
                     iOwnRewards += iReward
+
+                else:#看下gorest缓存有没有
+                    dGorestInx = self.exbihitionCache.get("gorestInx", {})
+                    gorestInx = dGorestInx.get(sIndex, 0)
+                    iOwnRewards += gorestInx
 
         return {"iTotalScore":self.exbihitionCache.get("iTotalScore",0),
             "iTotalHorse":self.exbihitionCache.get("iTotalHorse",0),
@@ -335,8 +340,21 @@ class DiyMapInfo(utility.DirtyFlag):
     def rc_gorestExhi(self,lSelectNft,lNft):
         for iIndex in lSelectNft:
             dLoad = self.nftPool.get(str(iIndex),{})
-            dLoad["exhibition"] = 0
-            dLoad["exhiTime"] = 0
+            if dLoad.get("exhibition",0) and dLoad.get("exhiTime",0):
+                iReward = int(
+                    (int(time.time()) - dLoad.get("exhiTime",0))/60.0 * 
+                    horse_define.EXHIBITION_EVERY_MINUTE * horse_define.EXCHANGE_RATE 
+                    * ((dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"])
+                    *1.0 / self.exbihitionCache.get("iTotalScore",0))) #贡献公式
+                #gorest 要把之前还没有提取的币缓存下
+                dGorestInx = self.exbihitionCache.setdefault("gorestInx", {})
+                gorestInx = dGorestInx.setdefault(str(iIndex), 0)
+                gorestInx += iReward
+                dGorestInx[str(iIndex)] = gorestInx
+                self.exbihitionCache["gorestInx"] = dGorestInx
+                del dLoad["exhibition"]
+                del dLoad["exhiTime"]
+
         self.exbihitionDirty = True
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
