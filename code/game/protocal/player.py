@@ -410,4 +410,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_PBuyNft(nftIndex,sAddress)
         return 1, rs
 
+    #刷新exhibition
+    def rc_getTotalExhi(self):
+        rs = self.player.rc_getTotalExhi()
+        return 1, rs
+
 from game.gm import report

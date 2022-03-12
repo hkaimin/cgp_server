@@ -9,7 +9,7 @@ from game.models.diymap import ModelDiyMap
 from corelib.gtime import get_days
 from game.common.utility import *
 import cPickle
-from game.define import horse_define
+from game.define import horse_define , msg_define
 import random
 
 MAP_RANK_MAX = 50
@@ -32,10 +32,13 @@ class DiyMapInfo(utility.DirtyFlag):
         self.mapTranceNo = 1000
         self.nftPool = {} #horse nft info
         self.nftMarket = [] #拍卖场
+        self.exbihitionDirty = True #牧场是否被修改 
+        self.exbihitionCache = {} #牧场总奖励池
 
         self.save_cache = {}  # 存储缓存
 
         Game.sub(MSG_FRAME_STOP, self._frame_stop)
+        Game.sub(msg_define.MSG_ONE_MINUTE, self.event_one_minute)
 
     def start(self):
         print ">>>>>>>>>>>>>> DiyMapInfo stat 1<<<<<<<<<<<<<<<"
@@ -52,6 +55,10 @@ class DiyMapInfo(utility.DirtyFlag):
 
     def _frame_stop(self):
         self.data.save(Game.store, forced=True, no_let=True)
+
+    # 半小时事件
+    def event_one_minute(self):
+        print '--event_one_minute--xx--'   
 
     def markDirty(self):
         super(DiyMapInfo, self).markDirty()
@@ -70,6 +77,7 @@ class DiyMapInfo(utility.DirtyFlag):
 
             save_cache["nftPool"]   = self.nftPool
             save_cache["nftMarket"] = self.nftMarket
+            save_cache["exbihitionCache"] = self.exbihitionCache
 
             self.save_cache = save_cache
         else:
@@ -223,6 +231,22 @@ class DiyMapInfo(utility.DirtyFlag):
         iRanInt = random.randint(1,1000)
         iRandomBreedMax = utility.GetLeftValue(iRanInt,horse_define.HORSE_BREED_RANDOM)
         dLoad["breedMax"] = iRandomBreedMax
+
+    def rc_getTotalExhi(self):
+        if self.exbihitionDirty:
+            iTotalScore = 0
+            iTotalHorse = 0
+            for sIndex,dNft in self.nftPool.iteritems():
+                if dNft.get("exhibition",0):
+                    iTotalScore += dNft.get("score",0)
+                    iTotalHorse += 1
+            self.exbihitionCache["iTotalScore"] = iTotalScore
+            self.exbihitionCache["iTotalHorse"] = iTotalHorse
+            self.exbihitionDirty = False
+            self.markDirty()
+            self.data.save(Game.store, forced=True, no_let=True)
+        else:
+            return {"iTotalScore":iTotalScore,"iTotalHorse":iTotalHorse}
 
     def rc_getNftInfo(self,lHorse):
         lOwnNftData = []

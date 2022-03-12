@@ -664,6 +664,10 @@ class Player(BasePlayer, netcmd.netCmd):
     def rc_getOwnNft(self,lNft):
         return Game.rpc_diymap_info.rc_getNftInfo(lNft)
 
+    #刷新ranch牧场
+    def rc_getTotalExhi(self):
+        return Game.rpc_diymap_info.rc_getTotalExhi()
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)

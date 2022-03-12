@@ -12,6 +12,7 @@ HORSE_TYPE_RANDOM = {15:1,30:2,65:3,100:4,175:5,250:6,375:7,500:8,750:9,1000:10}
 MARKET_GET = 10 #市场交易百分之10税收
 HORSE_BREED_RANDOM = {150:1,450:2,750:3,900:4,970:5,1000:6} #随机繁殖次数上限
 
+
 HORSE_INFO = { #血统配置 tRandom主属性 tRandom2副属性 tRandom3地形适应
 	1:{
 		"iType":"s","name":"纯血马","tRandom":(1200,1400),"tRandomSub":(20,30)

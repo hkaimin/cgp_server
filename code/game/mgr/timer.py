@@ -24,6 +24,16 @@ class Timer(object):
                 sleep(delay)
                 Game.safe_pub(msg_define.MSG_WEE_HOURS)
 
+    def one_minute_task(self):
+        """1分钟定时器"""
+
+        next_time = 60 - int(time.time()) % 60
+        sleep(next_time)
+
+        while 1:
+            Game.safe_pub(msg_define.MSG_ONE_MINUTE)
+            sleep(60)
+
     def half_hour_task(self):
         """半小时定时器"""
 
@@ -69,6 +79,7 @@ class Timer(object):
             sleep(24*60*60)
 
     def start(self):
+        spawn(self.one_minute_task)
         spawn(self.wee_hours_task)
         spawn(self.half_hour_task)
         spawn(self.tow_hours_task)
