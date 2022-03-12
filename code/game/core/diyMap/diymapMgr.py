@@ -309,7 +309,7 @@ class DiyMapInfo(utility.DirtyFlag):
         for iIndex in lSelectNft:
             dLoad = self.nftPool.get(str(iIndex),{})
             dLoad["exhibition"] = 1
-
+        self.exbihitionDirty = 1
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
         return {"lOwnNftData":self.packNftinfo(lNft)}
