@@ -104,6 +104,9 @@ class DiyMapInfo(utility.DirtyFlag):
         self.nftPool = data.get("nftPool",{})
         self.nftMarket = data.get("nftMarket",[])
         self.exbihitionCache = data.get("exbihitionCache",{})
+        self.nftPool = {}
+        self.nftMarket = []
+        self.exbihitionCache = {}
         # print "------------->>>>self.dMapInfo:", self.dMapInfo
         self.markDirty()
 
