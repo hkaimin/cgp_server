@@ -387,8 +387,7 @@ class DiyMapInfo(utility.DirtyFlag):
         for sIndex in lNft:
             dLoad = self.nftPool.get(sIndex,{})
             if dLoad.get("exhibition",0) and dLoad.get("exhiTime",0):
-                del dLoad["exhibition"]
-                del dLoad["exhiTime"]
+                dLoad["exhiTime"] = int(time.time())
             dGorestInx = self.exbihitionCache.setdefault("gorestInx", {})
             if dGorestInx.has_key(sIndex):
                 del dGorestInx[sIndex]
