@@ -264,9 +264,10 @@ class DiyMapInfo(utility.DirtyFlag):
                     iOwnRewards += iReward
 
         #看下gorest缓存有没有
-        dGorestInx = self.exbihitionCache.get("gorestInx", {})
-        gorestInx = dGorestInx.get(sIndex, 0)
-        iOwnRewards += gorestInx
+        for sIndex in lNft:
+            dGorestInx = self.exbihitionCache.get("gorestInx", {})
+            gorestInx = dGorestInx.get(sIndex, 0)
+            iOwnRewards += gorestInx
 
         return {"iTotalScore":self.exbihitionCache.get("iTotalScore",0),
             "iTotalHorse":self.exbihitionCache.get("iTotalHorse",0),
