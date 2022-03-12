@@ -383,6 +383,21 @@ class DiyMapInfo(utility.DirtyFlag):
             gorestInx = dGorestInx.get(sIndex, 0)
             iOwnRewards += gorestInx
 
+        #清理干净
+        for sIndex in lNft:
+            dLoad = self.nftPool.get(str(iIndex),{})
+            if dLoad.get("exhibition",0) and dLoad.get("exhiTime",0):
+                dGorestInx = self.exbihitionCache.setdefault("gorestInx", {})
+                if dGorestInx.has_key(sIndex):
+                    del dGorestInx[sIndex]
+                self.exbihitionCache["gorestInx"] = dGorestInx
+                del dLoad["exhibition"]
+                del dLoad["exhiTime"]
+
+        self.exbihitionDirty = True
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
+
         return iOwnRewards
 
     # 制作地图
