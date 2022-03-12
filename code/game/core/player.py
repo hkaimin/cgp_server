@@ -547,7 +547,7 @@ class Player(BasePlayer, netcmd.netCmd):
             self.markDirty()
         else:
             self.notify("Transaction failed!")
-        Game.glog.log2File("contract", "AddMainCoin|account:%s|iAdd:%s|receiptStatus:%s" % (self.data.account,iAdd,receiptStatus))
+        Game.glog.log2File("contract", "AddMainCoin|account:%s|iAdd:%s|receiptStatus:%s|iOpType:%s" % (self.data.account,iAdd,receiptStatus,iOpType))
         return {"mainCoin":self.base.getCoin()}
 
     # 提取子币信息
@@ -574,6 +574,8 @@ class Player(BasePlayer, netcmd.netCmd):
     #创建nft
     def rc_createNft(self,iTickets):
         nftInfo = []
+        if iTickets <= 0:return
+        iTickets = iTickets if iTickets <= 3 else 3
         for i in xrange(iTickets):
             iNftIndex = Game.rpc_diymap_info.GeneraDiyMapTranceNo()
             import subprocess
@@ -671,6 +673,10 @@ class Player(BasePlayer, netcmd.netCmd):
 
     def rc_gorestExhi(self,lSelectNft,lNft):
         return Game.rpc_diymap_info.rc_gorestExhi(lSelectNft,lNft)
+
+    def rc_claimExhi(self,lNft):
+        iClaim = Game.rpc_diymap_info.rc_claimExhi(lNft)
+        self.rc_AddMainCoin(iClaim,1)
 
     # 获取微信信息
     def G2C_getWXInfo(self):

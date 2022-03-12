@@ -425,4 +425,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_gorestExhi(lSelectNft,lNft)
         return 1, rs
 
+    #claim reward exhibition
+    def rc_claimExhi(self,lNft):
+        rs = self.player.rc_claimExhi(lNft)
+        return 1, rs
+
 from game.gm import report

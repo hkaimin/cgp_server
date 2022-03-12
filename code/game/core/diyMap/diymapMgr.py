@@ -364,6 +364,27 @@ class DiyMapInfo(utility.DirtyFlag):
         self.data.save(Game.store, forced=True, no_let=True)
         return {"lOwnNftData":self.packNftinfo(lNft)}
 
+    def rc_claimExhi(self,lNft):
+        iOwnRewards = 0
+        if self.exbihitionCache.get("iTotalScore",0):
+            for sIndex in lNft:
+                dLoad = self.nftPool.get(sIndex,{})
+                if dLoad.get("exhibition",0) and dLoad.get("exhiTime",0):
+                    iReward = int(
+                        (int(time.time()) - dLoad.get("exhiTime",0))/60.0 * 
+                        horse_define.EXHIBITION_EVERY_MINUTE * horse_define.EXCHANGE_RATE 
+                        * ((dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"])
+                        *1.0 / self.exbihitionCache.get("iTotalScore",0))) #贡献公式
+                    iOwnRewards += iReward
+
+        #看下gorest缓存有没有
+        for sIndex in lNft:
+            dGorestInx = self.exbihitionCache.get("gorestInx", {})
+            gorestInx = dGorestInx.get(sIndex, 0)
+            iOwnRewards += gorestInx
+
+        return iOwnRewards
+
     # 制作地图
     # roleId 角色ID
     # bgConf 背景配置
