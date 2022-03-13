@@ -13,6 +13,8 @@ MARKET_GET = 10 #市场交易百分之10税收
 HORSE_BREED_RANDOM = {150:1,450:2,750:3,900:4,970:5,1000:6} #随机繁殖次数上限
 EXHIBITION_EVERY_MINUTE = 10#每分钟产出主币数
 EXCHANGE_RATE = 100#汇率：合约币100个=1个游戏内显示，主要用于保留2位有效数
+MERGE_COST_MAIN = TICKET_COST_NUM*0.08 #合约的的8%
+MERGE_COST_SUB = TICKET_COST_NUM*0.8 #合约的的80%
 
 HORSE_INFO = { #血统配置 tRandom主属性 tRandom2副属性 tRandom3地形适应
 	1:{
@@ -54,6 +56,25 @@ HORSE_INFO = { #血统配置 tRandom主属性 tRandom2副属性 tRandom3地形�
 	10:{
 		"iType":"d","name":"阿帕卢萨马","tRandom":(200,240),"tRandomSub":(20,30)
 		,"res_key":"10","tRandom2":(150,250),"tRandomSub2":(20,30),"tRandom3":(300,600),"tRandomSub3":(25,33)
+	}
+}
+
+MERGE_INFO = {#合并相关配置
+	1:{
+		"lowMerge":{"success":750,"fail":200,"lost":50,"each_up":110},
+		"highMerge":{"success":900,"fail":100,"lost":0,"each_up":110},
+	},
+	2:{
+		"lowMerge":{"success":650,"fail":250,"lost":150,"each_up":110},
+		"highMerge":{"success":750,"fail":200,"lost":50,"each_up":110},
+	},
+	3:{
+		"lowMerge":{"success":450,"fail":300,"lost":250,"each_up":110},
+		"highMerge":{"success":600,"fail":250,"lost":150,"each_up":110},
+	},
+	4:{
+		"lowMerge":{"success":300,"fail":350,"lost":350,"each_up":110},
+		"highMerge":{"success":450,"fail":300,"lost":250,"each_up":110},
 	}
 }
 

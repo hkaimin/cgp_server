@@ -126,7 +126,7 @@ class DiyMapInfo(utility.DirtyFlag):
         self.nftPool[str(iIndex)] = dNftData
         dLoad = self.nftPool.get(str(iIndex),{})
         #fix
-        if not dLoad.get("breedMax",0):
+        if dLoad and not dLoad.get("breedMax",0):
             self.fixData(dLoad)
         self.data.modify()
         self.data.save(Game.store, forced=True, no_let=True)
@@ -136,7 +136,7 @@ class DiyMapInfo(utility.DirtyFlag):
         bFix = False
         for iIndex in self.nftMarket:
             dLoad = self.nftPool.get(str(iIndex),{})
-
+            if not dLoad:continue
             #fix
             if not dLoad.get("breedMax",0):
                 bFix = True
@@ -150,7 +150,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "sellStatus": dLoad["sellStatus"],
                 "score": dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"],
                 "money": dLoad.get("money",11) ,
-                "star": random.randint(1,5),#星星数
+                "star": dLoad.get("star",1) ,#星星数
                 "iSex": dLoad.get("iSex",1),#默认公的
                 "strength": dLoad["strength"],#体力
                 "MaxStrength": dLoad["MaxStrength"],
@@ -183,13 +183,15 @@ class DiyMapInfo(utility.DirtyFlag):
         return {"lMarketData":lMarketData}
 
     def rc_SellNft(self,nftIndex,money):
-        if int(nftIndex) not in self.nftMarket:
-            self.nftMarket.append(nftIndex)
         dLoad = self.nftPool.get(str(nftIndex),{})
-        dLoad["sellStatus"] = 1
-        dLoad["money"] = money
-        self.markDirty()
-        self.data.save(Game.store, forced=True, no_let=True)
+        if dLoad and not dLoad.get("exhibition",0):
+            if int(nftIndex) not in self.nftMarket:
+                self.nftMarket.append(nftIndex)
+            dLoad = self.nftPool.get(str(nftIndex),{})
+            dLoad["sellStatus"] = 1
+            dLoad["money"] = money
+            self.markDirty()
+            self.data.save(Game.store, forced=True, no_let=True)
         return self.rc_getNftMarket()
 
     def rc_BuyNft(self,nftIndex,sAddress):
@@ -282,7 +284,7 @@ class DiyMapInfo(utility.DirtyFlag):
         bFix = False
         for sIndex in lHorse:
             dLoad = self.nftPool.get(sIndex,{})
-
+            if not dLoad:continue
             #fix
             if not dLoad.get("breedMax",0):
                 bFix = True
@@ -296,7 +298,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "sellStatus": dLoad["sellStatus"],
                 "score": dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"],
                 "money": dLoad.get("money",11) ,
-                "star": random.randint(1,5),#星星数
+                "star": dLoad.get("star",1) ,,#星星数
                 "iSex": dLoad.get("iSex",1),#默认公的
                 "strength": dLoad["strength"],#体力
                 "MaxStrength": dLoad["MaxStrength"],
