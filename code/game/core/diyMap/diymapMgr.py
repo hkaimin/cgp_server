@@ -138,7 +138,7 @@ class DiyMapInfo(utility.DirtyFlag):
             dLoad = self.nftPool.get(str(iIndex),{})
             if not dLoad:continue
             #fix
-            if not dLoad.get("breedMax",0):
+            if not dLoad.get("breedMax",0) or not dLoad.get("star",0):
                 bFix = True
                 self.fixData(dLoad)
             
@@ -241,6 +241,7 @@ class DiyMapInfo(utility.DirtyFlag):
         iRanInt = random.randint(1,1000)
         iRandomBreedMax = utility.GetLeftValue(iRanInt,horse_define.HORSE_BREED_RANDOM)
         dLoad["breedMax"] = iRandomBreedMax
+        dLoad["star"] = 1
 
     def rc_getTotalExhi(self,lNft):
         if self.exbihitionDirty:
@@ -286,7 +287,7 @@ class DiyMapInfo(utility.DirtyFlag):
             dLoad = self.nftPool.get(sIndex,{})
             if not dLoad:continue
             #fix
-            if not dLoad.get("breedMax",0):
+            if not dLoad.get("breedMax",0) or not dLoad.get("star",0):
                 bFix = True
                 self.fixData(dLoad)
 

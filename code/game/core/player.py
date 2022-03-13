@@ -600,7 +600,7 @@ class Player(BasePlayer, netcmd.netCmd):
                 iRanInt = random.randint(1,1000)
                 iRandomBreedMax = utility.GetLeftValue(iRanInt,horse_define.HORSE_BREED_RANDOM)
                 dNftData = {"iRandomHorseType":iRandomHorseType,"sRanName":sRanName
-                    ,"owner":self.data.account,"sellStatus":0,"createTime":int(time.time()),"star":0,"iSex":iSex}
+                    ,"owner":self.data.account,"sellStatus":0,"createTime":int(time.time()),"star":1,"iSex":iSex}
                 Game.rpc_diymap_info.SaveNftInfo(iNftIndex,dNftData)
                 nftInfo.append({"name":sRanName,"res_key":horse_define.HORSE_INFO[iRandomHorseType]["res_key"]
                     ,"iType":horse_define.HORSE_INFO[iRandomHorseType]["iType"],"star":1,"breedMax":iRandomBreedMax,"energy":horse_define.ENERGY_CONFIG})
