@@ -298,7 +298,7 @@ class DiyMapInfo(utility.DirtyFlag):
                 "sellStatus": dLoad["sellStatus"],
                 "score": dLoad["strength"] + dLoad["speed"] + dLoad["dexterity"] + dLoad["burse"],
                 "money": dLoad.get("money",11) ,
-                "star": dLoad.get("star",1) ,,#星星数
+                "star": dLoad.get("star",1) ,#星星数 
                 "iSex": dLoad.get("iSex",1),#默认公的
                 "strength": dLoad["strength"],#体力
                 "MaxStrength": dLoad["MaxStrength"],
