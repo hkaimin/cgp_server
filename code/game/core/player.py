@@ -683,13 +683,13 @@ class Player(BasePlayer, netcmd.netCmd):
         dStar = horse_define.MERGE_INFO.get(iStar,{})
         dLow = dStar.get("lowMerge",{})
         dHigh = dStar.get("highMerge",{})
-        return {"low_cost_main":horse_define.MERGE_INFO.MERGE_COST_MAIN,
-                "low_cost_sub":horse_define.MERGE_INFO.MERGE_COST_SUB,
+        return {"low_cost_main":horse_define.MERGE_COST_MAIN,
+                "low_cost_sub":horse_define.MERGE_COST_SUB,
                 "low_success":dLow.get("success",0),
                 "low_fail":dLow.get("fail",0),
                 "low_fail_lost":dLow.get("lost",0),
-                "high_cost_main":horse_define.MERGE_INFO.HIGH_MERGE_COST_MAIN,
-                "high_cost_sub":horse_define.MERGE_INFO.HIGH_MERGE_COST_SUB,
+                "high_cost_main":horse_define.HIGH_MERGE_COST_MAIN,
+                "high_cost_sub":horse_define.HIGH_MERGE_COST_SUB,
                 "high_success":dHigh.get("success",0),
                 "high_fail":dHigh.get("fail",0),
                 "high_fail_lost":dHigh.get("lost",0),
