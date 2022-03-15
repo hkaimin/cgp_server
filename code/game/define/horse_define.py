@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+EXCHANGE_RATE = 100#汇率：合约币100个=1个游戏内显示，主要用于保留2位有效数
+EXHIBITION_EVERY_MINUTE = 10#每分钟产出主币数
 TICKET_COST_TYPE = 1 #门票价格消耗类型 1为主币
 TICKET_COST_NUM  = 100 #门票价格消耗数量
+
 ENERGY_CONFIG = 100  #游戏体力上限
 ENERGY_COST = {#1拉力 2快跑 3障碍 4快步 5综合
 	1:10,2:10,3:10,4:10,5:15
@@ -11,11 +14,6 @@ LAND_MAX_NUM = 500 #地形最大适应值
 HORSE_TYPE_RANDOM = {15:1,30:2,65:3,100:4,175:5,250:6,375:7,500:8,750:9,1000:10} #随机血统概率比例
 MARKET_GET = 10 #市场交易百分之10税收
 HORSE_BREED_RANDOM = {150:1,450:2,750:3,900:4,970:5,1000:6} #随机繁殖次数上限
-EXHIBITION_EVERY_MINUTE = 10#每分钟产出主币数
-EXCHANGE_RATE = 100#汇率：合约币100个=1个游戏内显示，主要用于保留2位有效数
-MERGE_COST_MAIN = TICKET_COST_NUM*0.08 #合约的的8%
-MERGE_COST_SUB = TICKET_COST_NUM*0.8 #合约的的80%
-
 HORSE_INFO = { #血统配置 tRandom主属性 tRandom2副属性 tRandom3地形适应
 	1:{
 		"iType":"s","name":"纯血马","tRandom":(1200,1400),"tRandomSub":(20,30)
@@ -59,22 +57,30 @@ HORSE_INFO = { #血统配置 tRandom主属性 tRandom2副属性 tRandom3地形�
 	}
 }
 
+MERGE_COST_MAIN = TICKET_COST_NUM*0.08 #合约的的8%
+MERGE_COST_SUB = TICKET_COST_NUM*0.8 #合约的的80%
+HIGH_MERGE_COST_MAIN = TICKET_COST_NUM*0.1 #合约的的10%
+HIGH_MERGE_COST_SUB = TICKET_COST_NUM*1 #合约的的100%
 MERGE_INFO = {#合并相关配置
 	1:{
-		"lowMerge":{"success":750,"fail":200,"lost":50,"each_up":110},
-		"highMerge":{"success":900,"fail":100,"lost":0,"each_up":110},
+		"lowMerge":{"success":750,"fail":200,"lost":50},
+		"highMerge":{"success":900,"fail":100,"lost":0},
+		"up_rate":{30:70,100:80,200:90,350:100,650:110,800:120,900:130,970:140,1000:150},
 	},
 	2:{
-		"lowMerge":{"success":650,"fail":250,"lost":150,"each_up":110},
-		"highMerge":{"success":750,"fail":200,"lost":50,"each_up":110},
+		"lowMerge":{"success":650,"fail":250,"lost":150},
+		"highMerge":{"success":750,"fail":200,"lost":50},
+		"up_rate":{30:70,100:80,200:90,350:100,650:110,800:120,900:130,970:140,1000:150},
 	},
 	3:{
-		"lowMerge":{"success":450,"fail":300,"lost":250,"each_up":110},
-		"highMerge":{"success":600,"fail":250,"lost":150,"each_up":110},
+		"lowMerge":{"success":450,"fail":300,"lost":250},
+		"highMerge":{"success":600,"fail":250,"lost":150},
+		"up_rate":{30:70,100:80,200:90,350:100,650:110,800:120,900:130,970:140,1000:150},
 	},
 	4:{
-		"lowMerge":{"success":300,"fail":350,"lost":350,"each_up":110},
-		"highMerge":{"success":450,"fail":300,"lost":250,"each_up":110},
+		"lowMerge":{"success":300,"fail":350,"lost":350},
+		"highMerge":{"success":450,"fail":300,"lost":250},
+		"up_rate":{30:70,100:80,200:90,350:100,650:110,800:120,900:130,970:140,1000:150},
 	}
 }
 

@@ -679,6 +679,22 @@ class Player(BasePlayer, netcmd.netCmd):
         self.rc_AddMainCoin(iClaim,1)
         return {"lOwnNftData":lOwnNftData,"mainCoin":self.base.getCoin()}
 
+    def rc_getMergeInfo(self,iStar):
+        dStar = horse_define.MERGE_INFO.get(iStar,{})
+        dLow = dStar.get("lowMerge",{})
+        dHigh = dStar.get("highMerge",{})
+        return {"low_cost_main":horse_define.MERGE_INFO.MERGE_COST_MAIN,
+                "low_cost_sub":horse_define.MERGE_INFO.MERGE_COST_SUB,
+                "low_success":dLow.get("success",0),
+                "low_fail":dLow.get("fail",0),
+                "low_fail_lost":dLow.get("lost",0),
+                "high_cost_main":horse_define.MERGE_INFO.HIGH_MERGE_COST_MAIN,
+                "high_cost_sub":horse_define.MERGE_INFO.HIGH_MERGE_COST_SUB,
+                "high_success":dHigh.get("success",0),
+                "high_fail":dHigh.get("fail",0),
+                "high_fail_lost":dHigh.get("lost",0),
+               }
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)

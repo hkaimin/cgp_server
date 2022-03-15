@@ -430,4 +430,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_claimExhi(lNft)
         return 1, rs
 
+    #get merge info
+    def rc_getMergeInfo(self,iStar):
+        rs = self.player.rc_getMergeInfo(iStar)
+        return 1, rs
+
 from game.gm import report
