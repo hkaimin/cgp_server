@@ -628,7 +628,6 @@ class Player(BasePlayer, netcmd.netCmd):
                 self.notify("processing 30%...")
                 break
         
-
         if receiptStatus == "success":
             #转账给卖家
             iPay = int(dLoad.get("money",11)-int(dLoad.get("money",11)*horse_define.MARKET_GET/100.0))*horse_define.EXCHANGE_RATE
@@ -658,6 +657,7 @@ class Player(BasePlayer, netcmd.netCmd):
                         self.notify("processing 90%...")
                         break
                 if receiptStatus == "success":
+                    Game.rpc_diymap_info.SetNftOwner(nftIndex,sAddress)
                     return {"nftIndex":nftIndex}
 
         return {"nftIndex":0}
@@ -712,23 +712,23 @@ class Player(BasePlayer, netcmd.netCmd):
 
         #提取nft到creator 如果成功或者lost都是要回收nft
         if iRandMergeSuccess == 1 or iRandMergeSuccess == 3:
-            pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%sOwner,'3','%s'%iNft,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
-            tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
-            pPro.wait()
-            pPro2 = subprocess.Popen(['sh','/root/contract/nft/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
-            pPro2.wait()
-            receiptStatus = "fail"
-            for sRes in pPro2.stdout.readlines():
-                if sRes.find("status: true") >= 0:
-                    receiptStatus = "success"
-                    break
-            print 'rc_doMergeNft:receiptStatus-------',receiptStatus
-            if receiptStatus == "fail":
-                return {"result":2}
-            return {"result":1}
+            # pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%sOwner,'3','%s'%iNft,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+            # tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
+            # pPro.wait()
+            # pPro2 = subprocess.Popen(['sh','/root/contract/nft/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
+            # pPro2.wait()
+            # receiptStatus = "fail"
+            # for sRes in pPro2.stdout.readlines():
+            #     if sRes.find("status: true") >= 0:
+            #         receiptStatus = "success"
+            #         break
+            # print 'rc_doMergeNft:receiptStatus-------',receiptStatus
+            # if receiptStatus == "fail":
+            #     return {"result":2,"outofHorseId":0}
+            return {"result":1,"outofHorseId":iNft}
 
         if iRandMergeSuccess != 1:#融合失败
-            return {"result":2}
+            return {"result":2,"outofHorseId":0}
 
     # 获取微信信息
     def G2C_getWXInfo(self):

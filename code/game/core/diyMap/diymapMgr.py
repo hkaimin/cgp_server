@@ -208,6 +208,13 @@ class DiyMapInfo(utility.DirtyFlag):
         self.data.save(Game.store, forced=True, no_let=True)
         return self.rc_getNftMarket()
 
+    def SetNftOwner(self,nftIndex,sAddress):
+        dLoad = self.nftPool.get(str(nftIndex),{})
+        if not dLoad:return
+        dLoad["owner"] = sAddress
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
+
     def getRandomMax(self,maxNum,tRandomSub):
         return int(random.randint(tRandomSub[0],tRandomSub[1])/100.0 * maxNum)
 
