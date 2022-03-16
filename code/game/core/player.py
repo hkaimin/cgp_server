@@ -695,6 +695,32 @@ class Player(BasePlayer, netcmd.netCmd):
                 "high_fail_lost":dHigh.get("lost",0),
                }
 
+    #do merge
+    def rc_doMergeNft(self,iStar,iMergeType,iNft,sOwner):
+        sMergeType = "lowMerge" if iMergeType == 1 else "highMerge"
+        dRate = horse_define.MERGE_INFO.get(iStar,{}).get(sMergeType,{}).get("dRate",{})
+        up_rate = horse_define.MERGE_INFO.get(iStar,{}).get(sMergeType,{}).get("up_rate",{})
+        iRanInt = random.randint(1,1000)
+        iRandMergeSuccess = utility.GetLeftValue(iRanInt,dRate)
+        print 'rc_doMergeNft:iRandMergeSuccess-------',iRandMergeSuccess
+        iRanInt = random.randint(1,1000)
+        iRandMergeAdd = utility.GetLeftValue(iRanInt,up_rate)
+        print 'rc_doMergeNft:iRandMergeAdd-------',iRandMergeAdd
+
+        #提取nft到creator 如果成功或者lost都是要回收nft
+        # if iRandMergeSuccess == 1 or iRandMergeSuccess == 3:
+        #     pPro = subprocess.Popen(['sh','/root/contract/nft/contract.sh','%s'%sOwner,'3','%s'%iNft,'%s'%int(time.time()),'1'],stdout=subprocess.PIPE,shell=False,close_fds=True)
+        #     tHash = "%s"%pPro.stdout.readlines()[0].replace("\n", "")
+        #     pPro.wait()
+        #     pPro2 = subprocess.Popen(['sh','/root/contract/nft/contract2.sh',"%s" % (tHash)],stdout=subprocess.PIPE,shell=False,close_fds=True)
+        #     pPro2.wait()
+        #     receiptStatus = "fail"
+        #     for sRes in pPro2.stdout.readlines():
+        #         if sRes.find("status: true") >= 0:
+        #             receiptStatus = "success"
+        #             break
+        #     print 'rc_doMergeNft:receiptStatus-------',receiptStatus
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)

@@ -63,23 +63,23 @@ HIGH_MERGE_COST_MAIN = TICKET_COST_NUM*0.1 #合约的的10%
 HIGH_MERGE_COST_SUB = TICKET_COST_NUM*1 #合约的的100%
 MERGE_INFO = {#合并相关配置
 	1:{
-		"lowMerge":{"success":750,"fail":200,"lost":50},
-		"highMerge":{"success":900,"fail":100,"lost":0},
+		"lowMerge":{"success":750,"fail":200,"lost":50,"dRate":{750:1,950:2,1000:3}},
+		"highMerge":{"success":900,"fail":100,"lost":0,"dRate":{900:1,1000:2,1001:3}},
 		"up_rate":{30:70,100:80,200:90,350:100,650:110,800:120,900:130,970:140,1000:150},
 	},
 	2:{
-		"lowMerge":{"success":650,"fail":250,"lost":150},
-		"highMerge":{"success":750,"fail":200,"lost":50},
+		"lowMerge":{"success":600,"fail":250,"lost":150,"dRate":{600:1,850:2,1000:3}},
+		"highMerge":{"success":750,"fail":200,"lost":50,"dRate":{750:1,950:2,1000:3}},
 		"up_rate":{30:70,100:80,200:90,350:100,650:110,800:120,900:130,970:140,1000:150},
 	},
 	3:{
-		"lowMerge":{"success":450,"fail":300,"lost":250},
-		"highMerge":{"success":600,"fail":250,"lost":150},
+		"lowMerge":{"success":450,"fail":300,"lost":250,"dRate":{450:1,750:2,1000:3}},
+		"highMerge":{"success":600,"fail":250,"lost":150,"dRate":{600:1,850:2,1000:3}},
 		"up_rate":{30:70,100:80,200:90,350:100,650:110,800:120,900:130,970:140,1000:150},
 	},
 	4:{
-		"lowMerge":{"success":300,"fail":350,"lost":350},
-		"highMerge":{"success":450,"fail":300,"lost":250},
+		"lowMerge":{"success":300,"fail":350,"lost":350,"dRate":{300:1,650:2,1000:3}},
+		"highMerge":{"success":450,"fail":300,"lost":250,"dRate":{450:1,750:2,1000:3}},
 		"up_rate":{30:70,100:80,200:90,350:100,650:110,800:120,900:130,970:140,1000:150},
 	}
 }

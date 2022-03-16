@@ -435,4 +435,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_getMergeInfo(iStar)
         return 1, rs
 
+    #do merge
+    def rc_doMergeNft(self,iStar,iMergeType,iNft,sOwner):
+        rs = self.player.rc_doMergeNft(iStar,iMergeType,iNft,sOwner)
+        return 1, rs
+
 from game.gm import report
