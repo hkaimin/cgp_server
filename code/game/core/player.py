@@ -699,7 +699,7 @@ class Player(BasePlayer, netcmd.netCmd):
     def rc_doMergeNft(self,iStar,iMergeType,iNft,sOwner):
         sMergeType = "lowMerge" if iMergeType == 1 else "highMerge"
         dRate = horse_define.MERGE_INFO.get(iStar,{}).get(sMergeType,{}).get("dRate",{})
-        up_rate = horse_define.MERGE_INFO.get(iStar,{}).get(sMergeType,{}).get("up_rate",{})
+        up_rate = horse_define.MERGE_INFO.get(iStar,{}).get("up_rate",{})
         iRanInt = random.randint(1,1000)
         iRandMergeSuccess = utility.GetLeftValue(iRanInt,dRate)
         print 'rc_doMergeNft:iRandMergeSuccess-------',iRandMergeSuccess
