@@ -697,6 +697,8 @@ class Player(BasePlayer, netcmd.netCmd):
 
     #do merge
     def rc_doMergeNft(self,iStar,iMergeType,iNft,sOwner):
+        import subprocess
+        
         sMergeType = "lowMerge" if iMergeType == 1 else "highMerge"
         dRate = horse_define.MERGE_INFO.get(iStar,{}).get(sMergeType,{}).get("dRate",{})
         up_rate = horse_define.MERGE_INFO.get(iStar,{}).get("up_rate",{})
