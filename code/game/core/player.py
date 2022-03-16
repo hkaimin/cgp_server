@@ -702,6 +702,7 @@ class Player(BasePlayer, netcmd.netCmd):
         up_rate = horse_define.MERGE_INFO.get(iStar,{}).get("up_rate",{})
         iRanInt = random.randint(1,1000)
         iRandMergeSuccess = utility.GetLeftValue(iRanInt,dRate)
+        iRandMergeSuccess = 2
         print 'rc_doMergeNft:iRandMergeSuccess-------',iRandMergeSuccess
         iRanInt = random.randint(1,1000)
         iRandMergeAdd = utility.GetLeftValue(iRanInt,up_rate)
@@ -720,6 +721,9 @@ class Player(BasePlayer, netcmd.netCmd):
         #             receiptStatus = "success"
         #             break
         #     print 'rc_doMergeNft:receiptStatus-------',receiptStatus
+
+        if iRandMergeSuccess != 1:#融合失败
+            return {"result":2}
 
     # 获取微信信息
     def G2C_getWXInfo(self):
