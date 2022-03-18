@@ -696,7 +696,7 @@ class Player(BasePlayer, netcmd.netCmd):
                }
 
     #do merge
-    def rc_doMergeNft(self,iStar,iMergeType,iNft,sOwner):
+    def rc_doMergeNft(self,iStar,iMergeType,iNft,sOwner,iSelectNft):
         import subprocess
 
         sMergeType = "lowMerge" if iMergeType == 1 else "highMerge"
@@ -725,6 +725,10 @@ class Player(BasePlayer, netcmd.netCmd):
             # print 'rc_doMergeNft:receiptStatus-------',receiptStatus
             # if receiptStatus == "fail":
             #     return {"result":2,"outofHorseId":0}
+
+            if iRandMergeSuccess == 1:
+                showData = Game.rpc_diymap_info.SetNftMerge(str(iSelectNft),iRandMergeAdd)
+                return {"result":1,"outofHorseId":iNft,"showData":showData}
             return {"result":1,"outofHorseId":iNft}
 
         if iRandMergeSuccess != 1:#融合失败
