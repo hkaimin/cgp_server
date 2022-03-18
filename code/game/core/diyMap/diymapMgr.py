@@ -221,19 +221,19 @@ class DiyMapInfo(utility.DirtyFlag):
         if dLoad["star"] >=5 :return
         iAddPre = iAdd*1.0 / 1000
 
-        # dLoad["star"] = dLoad["star"] + 1
-        # dLoad["strength"]=int(dLoad["strength"]*(1.0+iAddPre))#体力
-        # dLoad["MaxStrength"]=int(dLoad["MaxStrength"]*(1.0+iAddPre))
-        # dLoad["speed"]=int(dLoad["speed"]*(1.0+iAddPre))#速度
-        # dLoad["MaxSpeed"]=int(dLoad["MaxSpeed"]*(1.0+iAddPre))
-        # dLoad["dexterity"]=int(dLoad["dexterity"]*(1.0+iAddPre))#灵巧
-        # dLoad["MaxDexterity"]=int(dLoad["MaxDexterity"]*(1.0+iAddPre))
-        # dLoad["burse"]=int(dLoad["burse"]*(1.0+iAddPre))#爆发
-        # dLoad["MaxBurse"]=int(dLoad["MaxBurse"]*(1.0+iAddPre))
-        # dLoad["stamina"]=int(dLoad["stamina"]*(1.0+iAddPre))#耐力
-        # dLoad["start"]=int(dLoad["start"]*(1.0+iAddPre))#启动
-        # dLoad["wisdom"]=int(dLoad["wisdom"]*(1.0+iAddPre))#智慧
-        # dLoad["constitution"]=int(dLoad["constitution"]*(1.0+iAddPre))#体质
+        dLoad["star"] = dLoad["star"] + 1
+        dLoad["strength"]=int(dLoad["strength"]*(1.0+iAddPre))#体力
+        dLoad["MaxStrength"]=int(dLoad["MaxStrength"]*(1.0+iAddPre))
+        dLoad["speed"]=int(dLoad["speed"]*(1.0+iAddPre))#速度
+        dLoad["MaxSpeed"]=int(dLoad["MaxSpeed"]*(1.0+iAddPre))
+        dLoad["dexterity"]=int(dLoad["dexterity"]*(1.0+iAddPre))#灵巧
+        dLoad["MaxDexterity"]=int(dLoad["MaxDexterity"]*(1.0+iAddPre))
+        dLoad["burse"]=int(dLoad["burse"]*(1.0+iAddPre))#爆发
+        dLoad["MaxBurse"]=int(dLoad["MaxBurse"]*(1.0+iAddPre))
+        dLoad["stamina"]=int(dLoad["stamina"]*(1.0+iAddPre))#耐力
+        dLoad["start"]=int(dLoad["start"]*(1.0+iAddPre))#启动
+        dLoad["wisdom"]=int(dLoad["wisdom"]*(1.0+iAddPre))#智慧
+        dLoad["constitution"]=int(dLoad["constitution"]*(1.0+iAddPre))#体质
 
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
