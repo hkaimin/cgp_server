@@ -239,7 +239,7 @@ class DiyMapInfo(utility.DirtyFlag):
         self.data.save(Game.store, forced=True, no_let=True)
         return {"iType":horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"]
                 ,"res_key":horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"]
-                ,"star":dLoad["star"],"name":dLoad["name"]}
+                ,"star":dLoad["star"],"name":dLoad["sRanName"]}
 
     def getRandomMax(self,maxNum,tRandomSub):
         return int(random.randint(tRandomSub[0],tRandomSub[1])/100.0 * maxNum)
