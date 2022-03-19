@@ -738,8 +738,8 @@ class Player(BasePlayer, netcmd.netCmd):
         dBreed = horse_define.BREED_INFO.get(tKey,{})
         if not dBreed:
             dBreed = horse_define.BREED_INFO.get(tKey2,{})
-        dLow = dStar.get("lowBreed",{})
-        dHigh = dStar.get("highBreed",{})
+        dLow = dBreed.get("lowBreed",{})
+        dHigh = dBreed.get("highBreed",{})
         return {"low_cost_main":horse_define.BREED_COST_MAIN,
                 "low_cost_sub":horse_define.BREED_COST_SUB,
                 "low_success":dLow.get("success",0),
