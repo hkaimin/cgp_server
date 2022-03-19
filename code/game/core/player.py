@@ -750,7 +750,7 @@ class Player(BasePlayer, netcmd.netCmd):
                }
 
     def rc_doBreedNft(self,iMergeType,iLeftNft,sLeftType,iRightNft,sRigthType):
-        sMergeType = "lowMerge" if iMergeType == 1 else "highMerge"
+        sMergeType = "lowBreed" if iMergeType == 1 else "highBreed"
         tKey = (sLeftType,sRigthType)
         tKey2 = (sRigthType,sLeftType)
         dBreed = horse_define.BREED_INFO.get(tKey,{})
