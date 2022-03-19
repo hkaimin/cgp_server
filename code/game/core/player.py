@@ -704,7 +704,6 @@ class Player(BasePlayer, netcmd.netCmd):
         up_rate = horse_define.MERGE_INFO.get(iStar,{}).get("up_rate",{})
         iRanInt = random.randint(1,1000)
         iRandMergeSuccess = utility.GetLeftValue(iRanInt,dRate)
-        iRandMergeSuccess = 1
         iRanInt = random.randint(1,1000)
         iRandMergeAdd = utility.GetLeftValue(iRanInt,up_rate)
 
@@ -749,6 +748,28 @@ class Player(BasePlayer, netcmd.netCmd):
                 "high_success":dHigh.get("success",0),
                 "high_fail":dHigh.get("fail",0),
                }
+
+    def rc_doBreedNft(self,iMergeType,iLeftNft,sLeftType,iRightNft,sRigthType):
+        sMergeType = "lowMerge" if iMergeType == 1 else "highMerge"
+        tKey = (sLeftType,sRigthType)
+        tKey2 = (sRigthType,sLeftType)
+        dBreed = horse_define.BREED_INFO.get(tKey,{})
+        if not dBreed:
+            dBreed = horse_define.BREED_INFO.get(tKey2,{})
+
+        iSuccess = dBreed.get(sMergeType,{}).get("success",1000)
+        dSuccess = dBreed.get(sMergeType,{}).get("dSuccess",{})
+        up_rate = dBreed.get("up_rate",{})
+
+        iRanInt = random.randint(1,1000)
+        iRandMergeSuccess = utility.GetLeftValue(iRanInt,dSuccess)
+        iRandMergeSuccess = 2
+        iRanInt = random.randint(1,1000)
+        iRandMergeAdd = utility.GetLeftValue(iRanInt,up_rate)
+
+        print 'iSuccess,up_rate,iRandMergeAdd-----',iSuccess,up_rate,iRandMergeAdd
+        return {"result":iRandMergeSuccess}
+
 
     # 获取微信信息
     def G2C_getWXInfo(self):

@@ -445,4 +445,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_getBreedInfo(sType1,sType2)
         return 1, rs
 
+    #do breed
+    def rc_doBreedNft(self,iMergeType,iLeftNft,sLeftType,iRightNft,sRigthType):
+        rs = self.player.rc_doBreedNft(iMergeType,iLeftNft,sLeftType,iRightNft,sRigthType)
+        return 1, rs
+
 from game.gm import report
