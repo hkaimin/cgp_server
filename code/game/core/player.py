@@ -778,7 +778,7 @@ class Player(BasePlayer, netcmd.netCmd):
         dCreate = self.rc_createNft(1)
         Game.rpc_diymap_info.SetNftBreed(iSelectNft,iRandMergeAdd,dCreate.get("nftIndex",{}).get("id",0))
 
-        print 'iSuccess,up_rate,iRandMergeAdd-----',iSuccess,up_rate,iRandMergeAdd,dRate,sNFTType,,dCreate.get("nftIndex",{}).get("id",0)
+        print 'iSuccess,up_rate,iRandMergeAdd-----',iSuccess,up_rate,iRandMergeAdd,dRate,sNFTType,dCreate.get("nftIndex",{}).get("id",0)
         return dCreate
 
 
