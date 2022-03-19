@@ -776,7 +776,7 @@ class Player(BasePlayer, netcmd.netCmd):
         if sRigthType == sNFTType:iSelectNft = iRightNft
 
         dCreate = self.rc_createNft(1)
-        Game.rpc_diymap_info.SetNftBreed(nftParentIndex,iRandMergeAdd,dCreate["id"])
+        Game.rpc_diymap_info.SetNftBreed(iSelectNft,iRandMergeAdd,dCreate["id"])
 
         print 'iSuccess,up_rate,iRandMergeAdd-----',iSuccess,up_rate,iRandMergeAdd,dRate,sNFTType
         return dCreate
