@@ -606,7 +606,7 @@ class Player(BasePlayer, netcmd.netCmd):
                     ,"iType":horse_define.HORSE_INFO[iRandomHorseType]["iType"],"star":1,"breedMax":iRandomBreedMax,"energy":horse_define.ENERGY_CONFIG})
 
             Game.glog.log2File("contract", "createNft|account:%s|iNftIndex:%s|iRandomHorseType:%s|sRanName:%s|receiptStatus:%s" % (self.data.account,iNftIndex,iRandomHorseType,sRanName,receiptStatus))
-        return {"nftInfo":nftInfo}
+        return {"nftInfo":nftInfo,"result":1}
 
     def rc_PBuyNft(self,nftIndex,sAddress):
         dLoad = Game.rpc_diymap_info.GetNftInfo(str(nftIndex))
@@ -763,12 +763,12 @@ class Player(BasePlayer, netcmd.netCmd):
 
         iRanInt = random.randint(1,1000)
         iRandMergeSuccess = utility.GetLeftValue(iRanInt,dSuccess)
-        iRandMergeSuccess = 2
+        iRandMergeSuccess = 1
         iRanInt = random.randint(1,1000)
         iRandMergeAdd = utility.GetLeftValue(iRanInt,up_rate)
 
         print 'iSuccess,up_rate,iRandMergeAdd-----',iSuccess,up_rate,iRandMergeAdd
-        return {"result":iRandMergeSuccess}
+        return self.rc_createNft(1)
 
 
     # 获取微信信息
