@@ -724,6 +724,7 @@ class Player(BasePlayer, netcmd.netCmd):
 
             if iRandMergeSuccess == 1:
                 showData = Game.rpc_diymap_info.SetNftMerge(str(iSelectNft),iRandMergeAdd)
+                Game.rpc_diymap_info.DelNftPool(iNft)
                 return {"result":1,"outofHorseId":iNft,"showData":showData}
             return {"result":1,"outofHorseId":iNft}
 
@@ -767,8 +768,18 @@ class Player(BasePlayer, netcmd.netCmd):
         iRanInt = random.randint(1,1000)
         iRandMergeAdd = utility.GetLeftValue(iRanInt,up_rate)
 
-        print 'iSuccess,up_rate,iRandMergeAdd-----',iSuccess,up_rate,iRandMergeAdd
-        return self.rc_createNft(1)
+        dRate = dBreed.get(sMergeType,{}).get("dRate",{})
+        iNewRanType = random.randint(1,1000)
+        sNFTType = utility.GetLeftValue(iNewRanType,dRate)
+
+        iSelectNft = iLeftNft
+        if sRigthType == sNFTType:iSelectNft = iRightNft
+
+        dCreate = self.rc_createNft(1)
+        Game.rpc_diymap_info.SetNftBreed(nftParentIndex,iRandMergeAdd,dCreate["id"])
+
+        print 'iSuccess,up_rate,iRandMergeAdd-----',iSuccess,up_rate,iRandMergeAdd,dRate,sNFTType
+        return dCreate
 
 
     # 获取微信信息

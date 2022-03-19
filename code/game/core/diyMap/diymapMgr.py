@@ -241,6 +241,37 @@ class DiyMapInfo(utility.DirtyFlag):
                 ,"res_key":horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"]
                 ,"star":dLoad["star"],"name":dLoad["sRanName"]}
 
+    def DelNftPool(self,nftIndex):
+        dLoad = self.nftPool.get(str(nftIndex),{})
+        if dLoad:
+            del self.nftPool[str(nftIndex)]
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
+
+    def SetNftBreed(self,nftParentIndex,iAdd,nftCreateIndex):
+        dLoad = self.nftPool.get(str(nftParentIndex),{})
+        if not dLoad:return
+        dLoadCreate = self.nftPool.get(str(nftCreateIndex),{})
+        if not dLoadCreate:return
+
+        iAddPre = iAdd*1.0 / 1000
+
+        dLoadCreate["MaxStrength"]=int(dLoad["MaxStrength"]*(1.0+iAddPre))
+        dLoadCreate["strength"]=int(dLoad["MaxStrength"]/2.0)#体力
+        dLoadCreate["MaxSpeed"]=int(dLoad["MaxSpeed"]*(1.0+iAddPre))
+        dLoadCreate["speed"]=int(dLoad["MaxSpeed"]/2.0)#速度
+        dLoadCreate["MaxDexterity"]=int(dLoad["MaxDexterity"]*(1.0+iAddPre))
+        dLoadCreate["dexterity"]=int(dLoad["MaxDexterity"]/2.0)#灵巧
+        dLoadCreate["MaxBurse"]=int(dLoad["MaxBurse"]*(1.0+iAddPre))
+        dLoadCreate["burse"]=int(dLoad["MaxBurse"]/2.0)#爆发
+        dLoadCreate["stamina"]=int(dLoad["stamina"]*(1.0+iAddPre))#耐力
+        dLoadCreate["start"]=int(dLoad["start"]*(1.0+iAddPre))#启动
+        dLoadCreate["wisdom"]=int(dLoad["wisdom"]*(1.0+iAddPre))#智慧
+        dLoadCreate["constitution"]=int(dLoad["constitution"]*(1.0+iAddPre))#体质
+
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
+
     def getRandomMax(self,maxNum,tRandomSub):
         return int(random.randint(tRandomSub[0],tRandomSub[1])/100.0 * maxNum)
 
