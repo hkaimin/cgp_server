@@ -250,15 +250,15 @@ class DiyMapInfo(utility.DirtyFlag):
 
     def SetNftBreed(self,dLoad,iAdd,dLoadCreate):
         iAddPre = iAdd*1.0 / 1000
-        dLoadCreate["iType"] = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"]
+        dLoadCreate["iRandomHorseType"] = dLoad["iRandomHorseType"]
         dLoadCreate["MaxStrength"]=int(dLoad["MaxStrength"]*(1.0+iAddPre))
-        dLoadCreate["strength"]=int(dLoad["MaxStrength"]/2.0)#体力
+        dLoadCreate["strength"]=int(dLoadCreate["MaxStrength"]/2.0)#体力
         dLoadCreate["MaxSpeed"]=int(dLoad["MaxSpeed"]*(1.0+iAddPre))
-        dLoadCreate["speed"]=int(dLoad["MaxSpeed"]/2.0)#速度
+        dLoadCreate["speed"]=int(dLoadCreate["MaxSpeed"]/2.0)#速度
         dLoadCreate["MaxDexterity"]=int(dLoad["MaxDexterity"]*(1.0+iAddPre))
-        dLoadCreate["dexterity"]=int(dLoad["MaxDexterity"]/2.0)#灵巧
+        dLoadCreate["dexterity"]=int(dLoadCreate["MaxDexterity"]/2.0)#灵巧
         dLoadCreate["MaxBurse"]=int(dLoad["MaxBurse"]*(1.0+iAddPre))
-        dLoadCreate["burse"]=int(dLoad["MaxBurse"]/2.0)#爆发
+        dLoadCreate["burse"]=int(dLoadCreate["MaxBurse"]/2.0)#爆发
         dLoadCreate["stamina"]=int(dLoad["stamina"]*(1.0+iAddPre))#耐力
         dLoadCreate["start"]=int(dLoad["start"]*(1.0+iAddPre))#启动
         dLoadCreate["wisdom"]=int(dLoad["wisdom"]*(1.0+iAddPre))#智慧
