@@ -572,7 +572,7 @@ class Player(BasePlayer, netcmd.netCmd):
         return {"subCoin":self.base.getDiamond()}
 
     #创建
-    def rc_createNft(self,iTickets):
+    def rc_createNft(self,iTickets,iAdd=0,iParentNft=0):
         nftInfo = []
         if iTickets <= 0:return
         iTickets = iTickets if iTickets <= 3 else 3
@@ -601,7 +601,7 @@ class Player(BasePlayer, netcmd.netCmd):
                 iRandomBreedMax = utility.GetLeftValue(iRanInt,horse_define.HORSE_BREED_RANDOM)
                 dNftData = {"iRandomHorseType":iRandomHorseType,"sRanName":sRanName
                     ,"owner":self.data.account,"sellStatus":0,"createTime":int(time.time()),"star":1,"iSex":iSex}
-                Game.rpc_diymap_info.SaveNftInfo(iNftIndex,dNftData)
+                Game.rpc_diymap_info.SaveNftInfo(iNftIndex,dNftData,iAdd=iAdd,iParentNft=iParentNft)
                 nftInfo.append({"id":iNftIndex,"name":sRanName,"res_key":horse_define.HORSE_INFO[iRandomHorseType]["res_key"]
                     ,"iType":horse_define.HORSE_INFO[iRandomHorseType]["iType"],"star":1,"breedMax":iRandomBreedMax,"energy":horse_define.ENERGY_CONFIG})
 
@@ -769,7 +769,7 @@ class Player(BasePlayer, netcmd.netCmd):
         iRandMergeAdd = utility.GetLeftValue(iRanInt,up_rate)
 
         dRate = dBreed.get(sMergeType,{}).get("dRate",{})
-        iNewRanType = random.randint(1,1000)
+        iNewRanType = random.randint(1,iSuccess)
         sNFTType = utility.GetLeftValue(iNewRanType,dRate)
 
         iSelectNft = iLeftNft

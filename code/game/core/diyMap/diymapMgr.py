@@ -122,12 +122,12 @@ class DiyMapInfo(utility.DirtyFlag):
     def GetNftInfo(self,iIndex):
         return self.nftPool.get(iIndex,{})
 
-    def SaveNftInfo(self,iIndex,dNftData):
+    def SaveNftInfo(self,iIndex,dNftData,iAdd=0,iParentNft=0):
         self.nftPool[str(iIndex)] = dNftData
         dLoad = self.nftPool.get(str(iIndex),{})
         #fix
         if dLoad and not dLoad.get("breedMax",0):
-            self.fixData(dLoad)
+            self.fixData(dLoad,iAdd=iAdd,iParentNft=0)
         self.data.modify()
         self.data.save(Game.store, forced=True, no_let=True)
 
@@ -248,14 +248,8 @@ class DiyMapInfo(utility.DirtyFlag):
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
 
-    def SetNftBreed(self,nftParentIndex,iAdd,nftCreateIndex):
-        dLoad = self.nftPool.get(str(nftParentIndex),{})
-        if not dLoad:return
-        dLoadCreate = self.nftPool.get(str(nftCreateIndex),{})
-        if not dLoadCreate:return
-
+    def SetNftBreed(self,dLoad,iAdd,dLoadCreate):
         iAddPre = iAdd*1.0 / 1000
-
         dLoadCreate["iType"] = dLoad["iType"]
         dLoadCreate["MaxStrength"]=int(dLoad["MaxStrength"]*(1.0+iAddPre))
         dLoadCreate["strength"]=int(dLoad["MaxStrength"]/2.0)#体力
@@ -278,7 +272,7 @@ class DiyMapInfo(utility.DirtyFlag):
     def getRandomMax(self,maxNum,tRandomSub):
         return int(random.randint(tRandomSub[0],tRandomSub[1])/100.0 * maxNum)
 
-    def fixData(self,dLoad):
+    def fixData(self,dLoad,iAdd=0,iParentNft=0):
         tRandom = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandom"] #主属性
         tRandomSub = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["tRandomSub"]
         iRandomMax = random.randint(tRandom[0],tRandom[1])
@@ -309,6 +303,9 @@ class DiyMapInfo(utility.DirtyFlag):
         iRandomBreedMax = utility.GetLeftValue(iRanInt,horse_define.HORSE_BREED_RANDOM)
         dLoad["breedMax"] = iRandomBreedMax
         dLoad["star"] = 1
+        if iParentNft > 0:
+            dParentLoad = self.nftPool.get(str(iParentNft),{})
+            self.SetNftBreed(dLoad,iAdd,dParentLoad)
 
     def rc_getTotalExhi(self,lNft):
         if self.exbihitionDirty:
