@@ -761,10 +761,10 @@ class Player(BasePlayer, netcmd.netCmd):
 
     def rc_doBreedNft(self,iMergeType,iLeftNft,sLeftType,iRightNft,sRigthType):
         dTemp = Game.rpc_diymap_info.GetNftInfo(str(iLeftNft))
-        if dTemp.get("breed",0) == dLoad["breedMax"]:
+        if dTemp.get("breed",0) == dTemp["breedMax"]:
             return {}
         dTemp = Game.rpc_diymap_info.GetNftInfo(str(iRightNft))
-        if dTemp.get("breed",0) == dLoad["breedMax"]:
+        if dTemp.get("breed",0) == dTemp["breedMax"]:
             return {}
 
         sMergeType = "lowBreed" if iMergeType == 1 else "highBreed"
