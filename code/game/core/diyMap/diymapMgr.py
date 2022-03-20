@@ -277,10 +277,10 @@ class DiyMapInfo(utility.DirtyFlag):
             iAdddexterity = dLoad["dexterity"]+lAdd[2]
             iAddburse = dLoad["burse"]+lAdd[3]
 
-            dLoad["strength"]=iAddstrength>=dLoad["MaxStrength"] ? dLoad["MaxStrength"]:iAddstrength#体力
-            dLoad["speed"]=iAddspeed>=dLoad["MaxSpeed"] ? dLoad["MaxSpeed"]:iAddspeed#速度
-            dLoad["dexterity"]=iAdddexterity>=dLoad["MaxDexterity"] ? dLoad["MaxDexterity"]:iAdddexterity#灵巧
-            dLoad["burse"]=iAddburse>=dLoad["MaxBurse"] ? dLoad["MaxBurse"]:iAddburse#爆发
+            dLoad["strength"]= dLoad["MaxStrength"] if iAddstrength>=dLoad["MaxStrength"] else iAddstrength#体力
+            dLoad["speed"]= dLoad["MaxSpeed"] if iAddspeed>=dLoad["MaxSpeed"] else iAddspeed #速度
+            dLoad["dexterity"]=dLoad["MaxDexterity"] if iAdddexterity>=dLoad["MaxDexterity"] else iAdddexterity#灵巧
+            dLoad["burse"]=dLoad["MaxBurse"] if iAddburse>=dLoad["MaxBurse"] else iAddburse#爆发
 
             self.markDirty()
             self.data.save(Game.store, forced=True, no_let=True)
