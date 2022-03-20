@@ -289,10 +289,10 @@ class DiyMapInfo(utility.DirtyFlag):
             self.data.save(Game.store, forced=True, no_let=True)
 
             return {
-                "strength":dLoad["strength"],"MaxStrength":dLoad["MaxStrength"],"iAddstrength":iAddstrength,
-                "speed":dLoad["speed"],"MaxSpeed":dLoad["MaxSpeed"],"iAddspeed":iAddspeed,
-                "dexterity":dLoad["dexterity"],"MaxDexterity":dLoad["MaxDexterity"],"iAdddexterity":iAdddexterity,
-                "burse":dLoad["burse"],"MaxBurse":dLoad["MaxBurse"],"iAddburse":iAddburse,
+                "strength":dLoad["strength"],"MaxStrength":dLoad["MaxStrength"],"iAddstrength":lAdd[0],
+                "speed":dLoad["speed"],"MaxSpeed":dLoad["MaxSpeed"],"iAddspeed":lAdd[1],
+                "dexterity":dLoad["dexterity"],"MaxDexterity":dLoad["MaxDexterity"],"iAdddexterity":lAdd[2],
+                "burse":dLoad["burse"],"MaxBurse":dLoad["MaxBurse"],"iAddburse":lAdd[3],
                 "iType":horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"]
                 ,"res_key":horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"]
                 ,"star":dLoad["star"],"name":dLoad["sRanName"],"score":dLoad["strength"]+dLoad["speed"]+dLoad["dexterity"]+dLoad["burse"],
