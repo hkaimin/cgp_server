@@ -305,7 +305,7 @@ class DiyMapInfo(utility.DirtyFlag):
         dLoad["star"] = 1
         if iParentNft > 0:
             dParentLoad = self.nftPool.get(str(iParentNft),{})
-            self.SetNftBreed(dLoad,iAdd,dParentLoad)
+            self.SetNftBreed(dParentLoad,iAdd,dLoad)
 
     def rc_getTotalExhi(self,lNft):
         if self.exbihitionDirty:
