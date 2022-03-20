@@ -215,6 +215,17 @@ class DiyMapInfo(utility.DirtyFlag):
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
 
+    def SetNftBreedTimes(self,iLeftNft,iRightNft):
+        dLoad = self.nftPool.get(str(iLeftNft),{})
+        if not dLoad:return
+        dLoad["breed"] = dLoad.get("breed",0) + 1 if dLoad.get("breed",0) < dLoad["breedMax"] else dLoad["breedMax"]
+        
+        dLoad = self.nftPool.get(str(iRightNft),{})
+        if not dLoad:return
+        dLoad["breed"] = dLoad.get("breed",0) + 1 if dLoad.get("breed",0) < dLoad["breedMax"] else dLoad["breedMax"]
+        self.markDirty()
+        self.data.save(Game.store, forced=True, no_let=True)
+
     def SetNftMerge(self,nftIndex,iAdd):
         dLoad = self.nftPool.get(str(nftIndex),{})
         if not dLoad:return

@@ -760,20 +760,26 @@ class Player(BasePlayer, netcmd.netCmd):
                }
 
     def rc_doBreedNft(self,iMergeType,iLeftNft,sLeftType,iRightNft,sRigthType):
+        dTemp = Game.rpc_diymap_info.GetNftInfo(str(iLeftNft))
+        if dTemp.get("breed",0) == dLoad["breedMax"]:
+            return {}
+        dTemp = Game.rpc_diymap_info.GetNftInfo(str(iRightNft))
+        if dTemp.get("breed",0) == dLoad["breedMax"]:
+            return {}
+
         sMergeType = "lowBreed" if iMergeType == 1 else "highBreed"
         tKey = (sLeftType,sRigthType)
         tKey2 = (sRigthType,sLeftType)
         dBreed = horse_define.BREED_INFO.get(tKey,{})
         if not dBreed:
             dBreed = horse_define.BREED_INFO.get(tKey2,{})
-
+        Game.rpc_diymap_info.SetNftBreedTimes(iLeftNft,iRightNft)
         iSuccess = dBreed.get(sMergeType,{}).get("success",1000)
         dSuccess = dBreed.get(sMergeType,{}).get("dSuccess",{})
         up_rate = dBreed.get("up_rate",{})
 
         iRanInt = random.randint(1,1000)
         iRandMergeSuccess = utility.GetLeftValue(iRanInt,dSuccess)
-        iRandMergeSuccess = 1
         iRanInt = random.randint(1,1000)
         iRandMergeAdd = utility.GetLeftValue(iRanInt,up_rate)
 
