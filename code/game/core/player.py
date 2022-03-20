@@ -602,8 +602,17 @@ class Player(BasePlayer, netcmd.netCmd):
                 dNftData = {"iRandomHorseType":iRandomHorseType,"sRanName":sRanName
                     ,"owner":self.data.account,"sellStatus":0,"createTime":int(time.time()),"star":1,"iSex":iSex}
                 Game.rpc_diymap_info.SaveNftInfo(iNftIndex,dNftData,iAdd=iAdd,iParentNft=iParentNft)
-                nftInfo.append({"id":iNftIndex,"name":sRanName,"res_key":horse_define.HORSE_INFO[iRandomHorseType]["res_key"]
-                    ,"iType":horse_define.HORSE_INFO[iRandomHorseType]["iType"],"star":1,"breedMax":iRandomBreedMax,"energy":horse_define.ENERGY_CONFIG})
+
+                iType = horse_define.HORSE_INFO[iRandomHorseType]["iType"]
+                sResKey = horse_define.HORSE_INFO[iRandomHorseType]["res_key"]
+                if iParentNft > 0:
+                    dTemp = Game.rpc_diymap_info.GetNftInfo(str(iParentNft))
+                    iType = horse_define.HORSE_INFO[dTemp["iRandomHorseType"]]["iType"]
+                    sResKey = horse_define.HORSE_INFO[dTemp["iRandomHorseType"]]["res_key"]
+                    print '---hkm-----0000-iType,sResKey--',iType,sResKey
+
+                nftInfo.append({"id":iNftIndex,"name":sRanName,"res_key":sResKey
+                    ,"iType":iType,"star":1,"breedMax":iRandomBreedMax,"energy":horse_define.ENERGY_CONFIG})
 
             Game.glog.log2File("contract", "createNft|account:%s|iNftIndex:%s|iRandomHorseType:%s|sRanName:%s|receiptStatus:%s" % (self.data.account,iNftIndex,iRandomHorseType,sRanName,receiptStatus))
         return {"nftInfo":nftInfo,"result":1}

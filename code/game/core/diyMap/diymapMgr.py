@@ -127,7 +127,7 @@ class DiyMapInfo(utility.DirtyFlag):
         dLoad = self.nftPool.get(str(iIndex),{})
         #fix
         if dLoad and not dLoad.get("breedMax",0):
-            self.fixData(dLoad,iAdd=iAdd,iParentNft=0)
+            self.fixData(dLoad,iAdd=iAdd,iParentNft=iParentNft)
         self.data.modify()
         self.data.save(Game.store, forced=True, no_let=True)
 
@@ -250,7 +250,7 @@ class DiyMapInfo(utility.DirtyFlag):
 
     def SetNftBreed(self,dLoad,iAdd,dLoadCreate):
         iAddPre = iAdd*1.0 / 1000
-        dLoadCreate["iType"] = dLoad["iType"]
+        dLoadCreate["iType"] = horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"]
         dLoadCreate["MaxStrength"]=int(dLoad["MaxStrength"]*(1.0+iAddPre))
         dLoadCreate["strength"]=int(dLoad["MaxStrength"]/2.0)#体力
         dLoadCreate["MaxSpeed"]=int(dLoad["MaxSpeed"]*(1.0+iAddPre))
