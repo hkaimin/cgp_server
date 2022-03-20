@@ -192,7 +192,7 @@ class DiyMapInfo(utility.DirtyFlag):
             dLoad["money"] = money
             self.markDirty()
             self.data.save(Game.store, forced=True, no_let=True)
-        return self.rc_getNftMarket()
+        return {"result":1}
 
     def rc_BuyNft(self,nftIndex,sAddress):
         lNftMarket = []
