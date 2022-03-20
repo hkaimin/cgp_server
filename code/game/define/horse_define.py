@@ -6,9 +6,6 @@ TICKET_COST_TYPE = 1 #门票价格消耗类型 1为主币
 TICKET_COST_NUM  = 100 #门票价格消耗数量
 
 ENERGY_CONFIG = 100  #游戏体力上限
-ENERGY_COST = {#1拉力 2快跑 3障碍 4快步 5综合
-	1:10,2:10,3:10,4:10,5:15
-} #进行一次马操作的体力消耗
 ENERGY_RESUME_CYCLE = 12*60*60 #12小时恢复
 LAND_MAX_NUM = 500 #地形最大适应值
 HORSE_TYPE_RANDOM = {15:1,30:2,65:3,100:4,175:5,250:6,375:7,500:8,750:9,1000:10} #随机血统概率比例
@@ -164,5 +161,22 @@ BREED_INFO = {#繁殖相关配置
 		"highBreed":{"success":850,"fail":150,"dSuccess":{850:1,1000:2},"dRate":{425:"s",850:"s"}},
 		"up_rate":{30:70,100:80,200:90,350:100,650:110,800:120,900:130,970:140,1000:150},
 	},
+}
 
+TRAIN_CONF = {#1拉力 2快跑 3障碍 4快步 5综合
+	1:{
+		"costEnergy":10,"addList":[2,0,1,0],"costSubCoin":3
+	},
+	2:{
+		"costEnergy":10,"addList":[0,2,0,1],"costSubCoin":3
+	},
+	3:{
+		"costEnergy":10,"addList":[1,0,2,0],"costSubCoin":3
+	},
+	4:{
+		"costEnergy":10,"addList":[0,1,0,2],"costSubCoin":3
+	},
+	5:{
+		"costEnergy":15,"addList":[1,1,1,1],"costSubCoin":4.5
+	},
 }

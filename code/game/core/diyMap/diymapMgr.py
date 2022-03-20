@@ -264,8 +264,6 @@ class DiyMapInfo(utility.DirtyFlag):
         dLoadCreate["wisdom"]=int(dLoad["wisdom"]*(1.0+iAddPre))#智慧
         dLoadCreate["constitution"]=int(dLoad["constitution"]*(1.0+iAddPre))#体质
 
-        print '---xxx--iType,iAddPre,MaxStrength_old,MaxStrength--',dLoadCreate["iRandomHorseType"],iAddPre,dLoad["MaxStrength"],dLoadCreate["MaxStrength"]
-
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
 

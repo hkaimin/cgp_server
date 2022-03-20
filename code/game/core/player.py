@@ -787,6 +787,8 @@ class Player(BasePlayer, netcmd.netCmd):
         dCreate = self.rc_createNft(1,iRandMergeAdd,iSelectNft)
         return dCreate
 
+    def rc_getTrainInfo(self,iType):
+        return horse_define.TRAIN_CONF.get(iType,{})
 
     # 获取微信信息
     def G2C_getWXInfo(self):
