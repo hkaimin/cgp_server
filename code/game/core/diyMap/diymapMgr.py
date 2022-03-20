@@ -271,7 +271,7 @@ class DiyMapInfo(utility.DirtyFlag):
         dLoad = self.nftPool.get(str(nftIndex),{})
         if dLoad:
             dTrain = horse_define.TRAIN_CONF.get(iType,{})
-            if dLoad["energy"] < dTrain["costEnergy"]:return
+            if dLoad.get("energy",horse_define.ENERGY_CONFIG) < dTrain["costEnergy"]:return
 
             lAdd = dTrain["addList"]
             iAddstrength = dLoad["strength"]+lAdd[0]
@@ -279,7 +279,7 @@ class DiyMapInfo(utility.DirtyFlag):
             iAdddexterity = dLoad["dexterity"]+lAdd[2]
             iAddburse = dLoad["burse"]+lAdd[3]
 
-            dLoad["energy"]= dLoad["energy"] - dTrain["costEnergy"]
+            dLoad["energy"]= dLoad.get("energy",horse_define.ENERGY_CONFIG) - dTrain["costEnergy"]
             dLoad["strength"]= dLoad["MaxStrength"] if iAddstrength>=dLoad["MaxStrength"] else iAddstrength#体力
             dLoad["speed"]= dLoad["MaxSpeed"] if iAddspeed>=dLoad["MaxSpeed"] else iAddspeed #速度
             dLoad["dexterity"]=dLoad["MaxDexterity"] if iAdddexterity>=dLoad["MaxDexterity"] else iAdddexterity#灵巧
