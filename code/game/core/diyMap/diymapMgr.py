@@ -256,6 +256,7 @@ class DiyMapInfo(utility.DirtyFlag):
 
         iAddPre = iAdd*1.0 / 1000
 
+        dLoadCreate["iType"] = dLoad["iType"]
         dLoadCreate["MaxStrength"]=int(dLoad["MaxStrength"]*(1.0+iAddPre))
         dLoadCreate["strength"]=int(dLoad["MaxStrength"]/2.0)#体力
         dLoadCreate["MaxSpeed"]=int(dLoad["MaxSpeed"]*(1.0+iAddPre))
@@ -268,7 +269,7 @@ class DiyMapInfo(utility.DirtyFlag):
         dLoadCreate["start"]=int(dLoad["start"]*(1.0+iAddPre))#启动
         dLoadCreate["wisdom"]=int(dLoad["wisdom"]*(1.0+iAddPre))#智慧
         dLoadCreate["constitution"]=int(dLoad["constitution"]*(1.0+iAddPre))#体质
-
+        
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
 
