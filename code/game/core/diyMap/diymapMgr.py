@@ -267,6 +267,36 @@ class DiyMapInfo(utility.DirtyFlag):
         self.markDirty()
         self.data.save(Game.store, forced=True, no_let=True)
 
+    def SetNftTrain(self,nftIndex,iType):
+        dLoad = self.nftPool.get(str(nftIndex),{})
+        if dLoad:
+            dTrain = horse_define.TRAIN_CONF.get(iType,{})
+            lAdd = dTrain["addList"]
+            iAddstrength = dLoad["strength"]+lAdd[0]
+            iAddspeed = dLoad["speed"]+lAdd[1]
+            iAdddexterity = dLoad["dexterity"]+lAdd[2]
+            iAddburse = dLoad["burse"]+lAdd[3]
+
+            dLoad["strength"]=iAddstrength>=dLoad["MaxStrength"] ? dLoad["MaxStrength"]:iAddstrength#体力
+            dLoad["speed"]=iAddspeed>=dLoad["MaxSpeed"] ? dLoad["MaxSpeed"]:iAddspeed#速度
+            dLoad["dexterity"]=iAdddexterity>=dLoad["MaxDexterity"] ? dLoad["MaxDexterity"]:iAdddexterity#灵巧
+            dLoad["burse"]=iAddburse>=dLoad["MaxBurse"] ? dLoad["MaxBurse"]:iAddburse#爆发
+
+            self.markDirty()
+            self.data.save(Game.store, forced=True, no_let=True)
+
+            return {
+                "strength":strength,"MaxStrength":dLoad["MaxStrength"],"iAddstrength":iAddstrength,
+                "speed":speed,"MaxSpeed":dLoad["MaxSpeed"],"iAddspeed":iAddspeed,
+                "dexterity":dexterity,"MaxDexterity":dLoad["MaxDexterity"],"iAdddexterity":iAdddexterity,
+                "burse":burse,"MaxBurse":dLoad["MaxBurse"],"iAddburse":iAddburse,
+                "iType":horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["iType"]
+                ,"res_key":horse_define.HORSE_INFO[dLoad["iRandomHorseType"]]["res_key"]
+                ,"star":dLoad["star"],"name":dLoad["sRanName"]
+            }
+
+        return {}
+
     def getRandomMax(self,maxNum,tRandomSub):
         return int(random.randint(tRandomSub[0],tRandomSub[1])/100.0 * maxNum)
 

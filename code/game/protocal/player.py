@@ -455,4 +455,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_getTrainInfo(iType)
         return 1, rs
 
+    #get breed info
+    def rc_doTrainNft(self,nftIndex,iType):
+        rs = self.player.rc_doTrainNft(nftIndex,iType)
+        return 1, rs
+
 from game.gm import report

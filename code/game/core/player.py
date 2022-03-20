@@ -790,6 +790,9 @@ class Player(BasePlayer, netcmd.netCmd):
     def rc_getTrainInfo(self,iType):
         return horse_define.TRAIN_CONF.get(iType,{})
 
+    def rc_doTrainNft(self,nftIndex,iType):
+        return Game.rpc_diymap_info.SetNftTrain(nftIndex,iType)
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)
