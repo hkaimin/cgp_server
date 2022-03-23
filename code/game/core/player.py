@@ -685,7 +685,7 @@ class Player(BasePlayer, netcmd.netCmd):
 
     def rc_claimExhi(self,lNft):
         iClaim,lOwnNftData = Game.rpc_diymap_info.rc_claimExhi(lNft)
-        self.rc_AddMainCoin(iClaim,1)
+        self.rc_AddMainCoin(iClaim,horse_define.CLAIM_EXHI_EVENT)
         return {"lOwnNftData":lOwnNftData,"mainCoin":self.base.getCoin()}
 
     def rc_getMergeInfo(self,iStar):
@@ -822,6 +822,31 @@ class Player(BasePlayer, netcmd.netCmd):
                   "min":dCargo["dRewardArea"][0],
                   "max":dCargo["dRewardArea"][1],
                }
+
+    def rc_doCargoNft(self,iType,nftIndex,iScore):
+        dCargo = horse_define.CARGO_TRANS.get(iType,{})
+        iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,1)
+        iRandRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
+        iRanInt = random.randint(1,1000)
+        iSuccess = sutility.GetLeftValue(iRanInt,dCargo["dSuccess"])
+        '''
+        胜利收益公式 = 星级对应倍数*
+       【 难度1基本奖励最低最高间随机值 * 难度等级对应倍数差异  + 
+         难度1基本奖励最低最高间随机值*难度等级对应倍数差异*
+         { [ (马综合评分-100）/100 取整数 ] * 20%+ [ (马综合评分-100）/100 取余数 ]/100 * 10% }】
+        '''
+        iRanRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
+        iCacl = iStarRate*(
+            iRanRate/1000.0*dCargo["rateToMini"] 
+            + 
+            iRanRate/1000.0*dCargo["rateToMini"]
+            *
+            ( int((iScore - 100)/100.0 ) *0.2 + (iScore - 100)%100/100.0 * 0.1 )
+        )
+        print '-hhhhh--iSuccess,iRanRate,iCacl----',iSuccess,iRanRate,iCacl
+        self.rc_AddMainCoin(iCacl,horse_define.CARGO_EVENT)
+
+        return {"result":iSuccess,"iCacl":iCacl}
 
     # 获取微信信息
     def G2C_getWXInfo(self):
