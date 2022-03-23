@@ -825,7 +825,7 @@ class Player(BasePlayer, netcmd.netCmd):
 
     def rc_doCargoNft(self,iType,nftIndex,iScore,iStar):
         dCargo = horse_define.CARGO_TRANS.get(iType,{})
-        iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,1)
+        iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,{}).get("rate",1)
         iRandRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
         iRanInt = random.randint(1,1000)
         iSuccess = utility.GetLeftValue(iRanInt,dCargo["dSuccess"])
