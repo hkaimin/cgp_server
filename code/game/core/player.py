@@ -823,7 +823,7 @@ class Player(BasePlayer, netcmd.netCmd):
                   "max":dCargo["dRewardArea"][1],
                }
 
-    def rc_doCargoNft(self,iType,nftIndex,iScore):
+    def rc_doCargoNft(self,iType,nftIndex,iScore,iStar):
         dCargo = horse_define.CARGO_TRANS.get(iType,{})
         iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,1)
         iRandRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
