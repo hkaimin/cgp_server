@@ -802,7 +802,7 @@ class Player(BasePlayer, netcmd.netCmd):
     def rc_getCargoInfo(self,iType,iStar):
         dCargo = horse_define.CARGO_TRANS.get(iType,{})
         iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,{}).get("rate",1)
-        iMaxOff = 2.2 if iStar > 1 else 0
+        iMaxOff = 2200 if iStar > 1 else 0
         return {
                   "success":dCargo["success"],
                   "min":int(iStarRate*dCargo["dRewardArea"][0]),
