@@ -461,8 +461,8 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         return 1, rs
 
     #get cargo info
-    def rc_getCargoInfo(self,iType):
-        rs = self.player.rc_getCargoInfo(iType)
+    def rc_getCargoInfo(self,iType,iStar):
+        rs = self.player.rc_getCargoInfo(iType,iStar)
         return 1, rs
 
     #do cargo

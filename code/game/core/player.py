@@ -799,9 +799,9 @@ class Player(BasePlayer, netcmd.netCmd):
     def rc_doTrainNft(self,nftIndex,iType):
         return Game.rpc_diymap_info.SetNftTrain(nftIndex,iType)
 
-    def rc_getCargoInfo(self,iType):
+    def rc_getCargoInfo(self,iType,iStar):
         dCargo = horse_define.CARGO_TRANS.get(iType,{})
-        # iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,1)
+        iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,{}).get("rate",1)
         # iRandRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
         '''
         胜利收益公式 = 星级对应倍数*
@@ -819,8 +819,8 @@ class Player(BasePlayer, netcmd.netCmd):
 
         return {
                   "success":dCargo["success"],
-                  "min":dCargo["dRewardArea"][0],
-                  "max":dCargo["dRewardArea"][1],
+                  "min":int(iStarRate*dCargo["dRewardArea"][0]),
+                  "max":int(iStarRate*dCargo["dRewardArea"][1]),
                }
 
     def rc_doCargoNft(self,iType,nftIndex,iScore,iStar):
