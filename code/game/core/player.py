@@ -828,7 +828,7 @@ class Player(BasePlayer, netcmd.netCmd):
         iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,1)
         iRandRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
         iRanInt = random.randint(1,1000)
-        iSuccess = sutility.GetLeftValue(iRanInt,dCargo["dSuccess"])
+        iSuccess = utility.GetLeftValue(iRanInt,dCargo["dSuccess"])
         '''
         胜利收益公式 = 星级对应倍数*
        【 难度1基本奖励最低最高间随机值 * 难度等级对应倍数差异  + 
