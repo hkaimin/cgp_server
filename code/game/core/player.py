@@ -830,10 +830,11 @@ class Player(BasePlayer, netcmd.netCmd):
             *
             ( int((iScore - 100)/100.0 ) *0.2 + (iScore - 100)%100/100.0 * 0.1 )
         )
+        print '-----iMax,iCacl--------',iMax,iCacl
         if iCacl*100 > iMax:
-            iCacl = iMax/100.0 - 2.5
+            iCacl = iMax/100.0 - 0.5
         if iSuccess == 1:
-            self.rc_AddSubCoin(iCacl*horse_define.EXCHANGE_RATE,horse_define.CARGO_EVENT)
+            self.rc_AddSubCoin(iCacl*100,horse_define.CARGO_EVENT)
 
         return {"result":iSuccess,"iCacl":int(iCacl*100)/100.0}
 
