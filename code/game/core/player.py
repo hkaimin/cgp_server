@@ -850,6 +850,36 @@ class Player(BasePlayer, netcmd.netCmd):
                   "cost":int(iStarRate*1.17*100),
                }
 
+    def rc_doPeddNft(self,iType,nftIndex,iScore,iStar):
+        dCargo = horse_define.PEDDLERY_TRANS.get(iType,{})
+        iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,{}).get("rate",1)
+        iRandRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
+        iRanInt = random.randint(1,1000)
+        iSuccess = utility.GetLeftValue(iRanInt,dCargo["dSuccess"])
+        '''
+        胜利收益公式 = 星级对应倍数*
+       【 难度1基本奖励最低最高间随机值 * 难度等级对应倍数差异  + 
+         难度1基本奖励最低最高间随机值*难度等级对应倍数差异*
+         { [ (马综合评分-100）/100 取整数 ] * 20%+ [ (马综合评分-100）/100 取余数 ]/100 * 10% }】
+        '''
+        iMax = int(iStarRate*dCargo["dRewardArea"][1])
+
+        iRanRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
+        iCacl = iStarRate*(
+            iRanRate/1000.0*dCargo["rateToMini"] 
+            + 
+            iRanRate/1000.0*dCargo["rateToMini"]
+            *
+            ( int((iScore - 100)/100.0 ) *0.2 + (iScore - 100)%100/100.0 * 0.1 )
+        )
+        print '-----iMax,iCacl--------',iMax,iCacl
+        if iCacl*1000 > iMax:
+            iCacl = iMax/1000.0 - random.randint(500,700)/1000.0
+        if iSuccess == 1:
+            self.rc_AddMainCoin(iCacl*100,horse_define.PEDDLERY_EVENT)
+
+        return {"result":iSuccess,"iCacl":int(iCacl*100)/100.0}
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)

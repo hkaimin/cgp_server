@@ -231,6 +231,6 @@ CARGO_STAR_TRANS = {
 #-----增加币的事件定义
 CLAIM_EXHI_EVENT = 1 #获取质押奖励
 CARGO_EVENT = 2 #获取低级打金奖励
-PEDDLERY_EVENT = 3 #获取低级打金奖励
+PEDDLERY_EVENT = 3 #获取高级打金奖励
 
 
