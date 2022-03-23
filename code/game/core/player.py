@@ -844,7 +844,7 @@ class Player(BasePlayer, netcmd.netCmd):
             ( int((iScore - 100)/100.0 ) *0.2 + (iScore - 100)%100/100.0 * 0.1 )
         )
         print '-hhhhh--iSuccess,iRanRate,iCacl----',iSuccess,iRanRate,iCacl
-        self.rc_AddMainCoin(iCacl,horse_define.CARGO_EVENT)
+        self.rc_AddMainCoin(iCacl*horse_define.EXCHANGE_RATE,horse_define.CARGO_EVENT)
 
         return {"result":iSuccess,"iCacl":iCacl}
 
