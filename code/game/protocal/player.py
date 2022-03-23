@@ -467,7 +467,7 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
 
     #do cargo
     def rc_doCargoNft(self,iType,nftIndex,iScore):
-        rs = self.player.rc_doCargoNft(iType)
+        rs = self.player.rc_doCargoNft(iType,nftIndex,iScore)
         return 1, rs
 
 from game.gm import report
