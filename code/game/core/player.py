@@ -802,21 +802,6 @@ class Player(BasePlayer, netcmd.netCmd):
     def rc_getCargoInfo(self,iType,iStar):
         dCargo = horse_define.CARGO_TRANS.get(iType,{})
         iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,{}).get("rate",1)
-        # iRandRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
-        '''
-        胜利收益公式 = 星级对应倍数*
-       【 难度1基本奖励最低最高间随机值 * 难度等级对应倍数差异  + 
-         难度1基本奖励最低最高间随机值*难度等级对应倍数差异*
-         { [ (马综合评分-100）/100 取整数 ] * 20%+ [ (马综合评分-100）/100 取余数 ]/100 * 10% }】
-        '''
-        # iCacl1 = iStarRate*(
-        #     dCargo["dRewardArea"][0]/1000.0*dCargo["rateToMini"] 
-        #     + 
-        #     dCargo["dRewardArea"][1]/1000.0*dCargo["rateToMini"]
-        #     *
-        #     ( int((iScore - 100)/100.0 ) *0.2 + (iScore - 100)%100/100.0 * 0.1 )
-        # )
-
         return {
                   "success":dCargo["success"],
                   "min":int(iStarRate*dCargo["dRewardArea"][0]),
@@ -844,9 +829,10 @@ class Player(BasePlayer, netcmd.netCmd):
             ( int((iScore - 100)/100.0 ) *0.2 + (iScore - 100)%100/100.0 * 0.1 )
         )
         print '-hhhhh--iSuccess,iRanRate,iCacl----',iSuccess,iRanRate,iCacl
-        self.rc_AddSubCoin(iCacl*horse_define.EXCHANGE_RATE,horse_define.CARGO_EVENT)
+        if iSuccess == 1:
+            self.rc_AddSubCoin(iCacl*horse_define.EXCHANGE_RATE,horse_define.CARGO_EVENT)
 
-        return {"result":iSuccess,"iCacl":iCacl}
+        return {"result":iSuccess,"iCacl":int(iCacl*100)/100.0}
 
     # 获取微信信息
     def G2C_getWXInfo(self):
