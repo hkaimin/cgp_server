@@ -847,6 +847,7 @@ class Player(BasePlayer, netcmd.netCmd):
                   "max1":int(iStarRate*dCargo1["dRewardArea"][1]),
                   "max2":int(iStarRate*dCargo2["dRewardArea"][1]),
                   "max3":int(iStarRate*dCargo3["dRewardArea"][1]),
+                  "cost":int(iStarRate*1.17*100),
                }
 
     # 获取微信信息
