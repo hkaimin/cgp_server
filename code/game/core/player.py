@@ -832,7 +832,7 @@ class Player(BasePlayer, netcmd.netCmd):
         )
         print '-----iMax,iCacl--------',iMax,iCacl
         if iCacl*1000 > iMax:
-            iCacl = iMax/1000.0 - 0.5
+            iCacl = iMax/1000.0 - random.randint(500,700)/1000.0
         if iSuccess == 1:
             self.rc_AddSubCoin(iCacl*100,horse_define.CARGO_EVENT)
 
