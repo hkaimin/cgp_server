@@ -802,11 +802,10 @@ class Player(BasePlayer, netcmd.netCmd):
     def rc_getCargoInfo(self,iType,iStar):
         dCargo = horse_define.CARGO_TRANS.get(iType,{})
         iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,{}).get("rate",1)
-        iMaxOff = 2200 if iStar > 1 else 0
         return {
                   "success":dCargo["success"],
                   "min":int(iStarRate*dCargo["dRewardArea"][0]),
-                  "max":int(iStarRate*dCargo["dRewardArea"][1])+iMaxOff,
+                  "max":int(iStarRate*dCargo["dRewardArea"][1]),
                }
 
     def rc_doCargoNft(self,iType,nftIndex,iScore,iStar):
@@ -821,6 +820,8 @@ class Player(BasePlayer, netcmd.netCmd):
          难度1基本奖励最低最高间随机值*难度等级对应倍数差异*
          { [ (马综合评分-100）/100 取整数 ] * 20%+ [ (马综合评分-100）/100 取余数 ]/100 * 10% }】
         '''
+        iMax = int(iStarRate*dCargo["dRewardArea"][1])
+
         iRanRate = random.randint(dCargo["dRewardArea"][0],dCargo["dRewardArea"][1])
         iCacl = iStarRate*(
             iRanRate/1000.0*dCargo["rateToMini"] 
@@ -829,7 +830,8 @@ class Player(BasePlayer, netcmd.netCmd):
             *
             ( int((iScore - 100)/100.0 ) *0.2 + (iScore - 100)%100/100.0 * 0.1 )
         )
-        print '-hhhhh--iSuccess,iRanRate,iCacl----',iSuccess,iRanRate,iCacl
+        if iCacl*100 > iMax:
+            iCacl = iMax/100.0 - 2.5
         if iSuccess == 1:
             self.rc_AddSubCoin(iCacl*horse_define.EXCHANGE_RATE,horse_define.CARGO_EVENT)
 
