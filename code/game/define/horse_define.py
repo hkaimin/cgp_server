@@ -180,3 +180,41 @@ TRAIN_CONF = {#1拉力 2快跑 3障碍 4快步 5综合
 		"costEnergy":15,"addList":[1,1,1,1],"costSubCoin":4.5
 	},
 }
+
+#低级打金
+CARGO_TRANS = {
+	1:{
+		"success":800,"dSuccess":{800:1,1000:2},"dRewardArea":[800,1200],"rateToMini":1,"costEnergy":20,
+	},
+	2:{
+		"success":700,"dSuccess":{700:1,1000:2},"dRewardArea":[960,1440],"rateToMini":1.2,"costEnergy":20,
+	},
+	3:{
+		"success":500,"dSuccess":{500:1,1000:2},"dRewardArea":[1320,1980],"rateToMini":1.65,"costEnergy":20,
+	},
+	4:{
+		"success":300,"dSuccess":{300:1,1000:2},"dRewardArea":[2240,3360],"rateToMini":2.8,"costEnergy":20,
+	},
+}
+
+CARGO_STAR_TRANS = {
+	1:{
+		"rate":1
+	},
+	2:{
+		"rate":2.5
+	},
+	3:{
+		"rate":6.25
+	},
+	4:{
+		"rate":15.625
+	},
+	5:{
+		"rate":39.0625
+	},
+}
+
+
+
+

@@ -460,4 +460,9 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_doTrainNft(nftIndex,iType)
         return 1, rs
 
+    #get cargo info
+    def rc_getCargoInfo(self,iType):
+        rs = self.player.rc_getCargoInfo(iType)
+        return 1, rs
+
 from game.gm import report
