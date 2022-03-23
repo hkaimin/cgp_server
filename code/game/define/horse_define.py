@@ -197,6 +197,19 @@ CARGO_TRANS = {
 	},
 }
 
+#高级打金
+PEDDLERY_TRANS = {
+	1:{
+		"success":330,"dSuccess":{330:1,1000:2},"dRewardArea":[300,500],"rateToMini":1,"costEnergy":20,
+	},
+	2:{
+		"success":330,"dSuccess":{330:1,1000:2},"dRewardArea":[800,1600],"rateToMini":3,"costEnergy":20,
+	},
+	3:{
+		"success":330,"dSuccess":{330:1,1000:2},"dRewardArea":[1600,2000],"rateToMini":4.5,"costEnergy":20,
+	},
+}
+
 CARGO_STAR_TRANS = {
 	1:{
 		"rate":1

@@ -838,6 +838,17 @@ class Player(BasePlayer, netcmd.netCmd):
 
         return {"result":iSuccess,"iCacl":int(iCacl*100)/100.0}
 
+    def rc_getPeddInfo(self,iStar):
+        dCargo1 = horse_define.PEDDLERY_TRANS.get(1,{})
+        dCargo2 = horse_define.PEDDLERY_TRANS.get(2,{})
+        dCargo3 = horse_define.PEDDLERY_TRANS.get(3,{})
+        iStarRate = horse_define.CARGO_STAR_TRANS.get(iStar,{}).get("rate",1)
+        return {
+                  "max1":int(iStarRate*dCargo1["dRewardArea"][1]),
+                  "max2":int(iStarRate*dCargo2["dRewardArea"][1]),
+                  "max3":int(iStarRate*dCargo3["dRewardArea"][1]),
+               }
+
     # 获取微信信息
     def G2C_getWXInfo(self):
         bSaveWXInfo = self.Query("bSaveWXInfo", 0)

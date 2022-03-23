@@ -470,4 +470,14 @@ class PlayerRpcHandler(BasePlayerRpcHander, xiyouProtocal, paopaoProtocal, mapPr
         rs = self.player.rc_doCargoNft(iType,nftIndex,iScore,iStar)
         return 1, rs
 
+    #get pedd info
+    def rc_getPeddInfo(self,iStar):
+        rs = self.player.rc_getPeddInfo(iStar)
+        return 1, rs
+
+    #do pedd
+    def rc_doPeddNft(self,iType,nftIndex,iScore,iStar):
+        rs = self.player.rc_doPeddNft(iType,nftIndex,iScore,iStar)
+        return 1, rs
+
 from game.gm import report
