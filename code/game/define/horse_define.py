@@ -14,7 +14,7 @@ HORSE_BREED_RANDOM = {150:1,450:2,750:3,900:4,970:5,1000:6} #随机繁殖次数�
 HORSE_INFO = { #血统配置 tRandom主属性 tRandom2副属性 tRandom3地形适应
 	1:{
 		"iType":"s","name":"纯血马","tRandom":(1200,1400),"tRandomSub":(20,30)
-		,"res_key":"01","tRandom2":(410,510),"tRandomSub2":(20,30),"tRandom3":(900,1200),"tRandomSub3":(25,33)
+		,"res_key":"10","tRandom2":(410,510),"tRandomSub2":(20,30),"tRandom3":(900,1200),"tRandomSub3":(25,33)
 	},
 	2:{
 		"iType":"s","name":"阿拉伯马","tRandom":(1200,1400),"tRandomSub":(20,30)
@@ -50,7 +50,7 @@ HORSE_INFO = { #血统配置 tRandom主属性 tRandom2副属性 tRandom3地形�
 	},
 	10:{
 		"iType":"d","name":"阿帕卢萨马","tRandom":(200,240),"tRandomSub":(20,30)
-		,"res_key":"10","tRandom2":(150,250),"tRandomSub2":(20,30),"tRandom3":(300,600),"tRandomSub3":(25,33)
+		,"res_key":"01","tRandom2":(150,250),"tRandomSub2":(20,30),"tRandom3":(300,600),"tRandomSub3":(25,33)
 	}
 }
 
