@@ -284,6 +284,9 @@ class DiyMapInfo(utility.DirtyFlag):
             dTrain = horse_define.TRAIN_CONF.get(iType,{})
             if dLoad.get("energy",horse_define.ENERGY_CONFIG) < dTrain["costEnergy"]:return
 
+            if not dLoad.get("energyCostTime",0):
+                dLoad["energyCostTime"] = int(time.time())
+
             lAdd = dTrain["addList"]
             iAddstrength = dLoad["strength"]+lAdd[0]
             iAddspeed = dLoad["speed"]+lAdd[1]
@@ -397,6 +400,19 @@ class DiyMapInfo(utility.DirtyFlag):
             if not dLoad.get("breedMax",0) or not dLoad.get("star",0):
                 bFix = True
                 self.fixData(dLoad)
+
+            #恢复体力
+            if dLoad.get("energyCostTime",0):
+                iCD = int(time.time()) - dLoad.get("energyCostTime",0)
+                if iCD >= horse_define.ENERGY_RESUME_UNIT:#大于检查时间单位
+                    iAdd = int(horse_define.ENERGY_CONFIG*1.0 / (horse_define.ENERGY_RESUME_CYCLE / horse_define.ENERGY_RESUME_UNIT))
+                    if iAdd>0:
+                        bFix = True
+                        dLoad["energyCostTime"] = int(time.time())
+                        if dLoad.get("energy",horse_define.ENERGY_CONFIG) + iAdd >= horse_define.ENERGY_CONFIG:
+                            dLoad["energy"] = horse_define.ENERGY_CONFIG
+                        else:
+                            dLoad["energy"] += iAdd
 
             dHorse = {
                 "name":dLoad["sRanName"],
